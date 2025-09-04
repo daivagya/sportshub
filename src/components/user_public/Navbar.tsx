@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const { data: session } = useSession();
-  console.log(' session', session);
   const [menuOpen, setMenuOpen] = useState(false);
   const [avatarDropdownOpen, setAvatarDropdownOpen] = useState(false);
   const pathname = usePathname();
@@ -30,7 +29,14 @@ export default function Navbar() {
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white shadow-md px-6 py-3 flex items-center justify-between">
+    <nav
+      className="
+        sticky top-0 z-50 w-full
+        bg-white/40 backdrop-blur-md
+        shadow-lg border-b border-white/20
+        px-6 py-3 flex items-center justify-between
+      "
+    >
       {/* Left: Logo */}
       <div className="text-2xl font-bold text-green-600 tracking-tight">
         <Link href="/">Sportshub</Link>
@@ -73,7 +79,18 @@ export default function Navbar() {
             </button>
 
             {avatarDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-44 bg-white shadow-lg rounded-lg overflow-hidden">
+              <div className="absolute right-0 mt-2 w-56 bg-white/80 backdrop-blur-md shadow-xl rounded-xl overflow-hidden border border-gray-200">
+                {/* User Info */}
+                <div className="px-4 py-3 border-b border-gray-100">
+                  <p className="text-sm font-semibold text-gray-800">
+                    {session.user?.name || "User"}
+                  </p>
+                  <p className="text-xs text-gray-600 truncate">
+                    {session.user?.email}
+                  </p>
+                </div>
+
+                {/* Links */}
                 <Link
                   href="/profile"
                   className="block px-4 py-2 hover:bg-gray-50 text-gray-700"
@@ -96,12 +113,20 @@ export default function Navbar() {
             )}
           </div>
         ) : (
-          <Link
-            href="/login"
-            className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition-colors"
-          >
-            Sign In
-          </Link>
+          <>
+            <Link
+              href="/login"
+              className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition-colors"
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/register"
+              className="px-4 py-2 rounded-md border border-green-600 text-green-600 hover:bg-green-50 transition-colors"
+            >
+              Sign Up
+            </Link>
+          </>
         )}
       </div>
 
@@ -139,7 +164,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-center md:hidden py-4 space-y-2">
+        <div className="absolute top-full left-0 w-full bg-white/90 backdrop-blur-md shadow-md flex flex-col items-center md:hidden py-4 space-y-2 border-b border-gray-200">
           <Link href="/" className={linkClasses("/")}>
             Home
           </Link>
@@ -149,9 +174,6 @@ export default function Navbar() {
           <Link href="/venues" className={linkClasses("/venues")}>
             Venues
           </Link>
-          <Link href="/bookings" className={linkClasses("/book")}>
-            Bookings
-          </Link>
           {session && (
             <Link href="/my-bookings" className={linkClasses("/my-bookings")}>
               My Bookings
@@ -159,7 +181,16 @@ export default function Navbar() {
           )}
           {session ? (
             <>
-              <Link href="/profile" className="py-2 text-gray-700 hover:text-green-600 font-medium">
+              <div className="text-center py-2 border-t border-gray-200">
+                <p className="text-sm font-semibold text-gray-800">
+                  {session.user?.name || "User"}
+                </p>
+                <p className="text-xs text-gray-600">{session.user?.email}</p>
+              </div>
+              <Link
+                href="/profile"
+                className="py-2 text-gray-700 hover:text-green-600 font-medium"
+              >
                 Profile
               </Link>
               <button
@@ -170,12 +201,20 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <Link
-              href="/login"
-              className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition-colors"
-            >
-              Sign In
-            </Link>
+            <>
+              <Link
+                href="/login"
+                className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/register"
+                className="px-4 py-2 rounded-md border border-green-600 text-green-600 hover:bg-green-50 transition-colors"
+              >
+                Sign Up
+              </Link>
+            </>
           )}
         </div>
       )}

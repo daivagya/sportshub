@@ -27,48 +27,50 @@ export const authOptions: NextAuthOptions = {
         if (!user) return null;
 
         if (!user.emailVerified) {
-          throw new Error(
-            "Email not verified. Please verify your email first."
-          );
+          throw new Error("Email not verified. Please verify your email first.");
         }
 
-        const ok = await verifyPassword(password, user.passwordHash);
-        if (!ok) return null;
+        const isValid = await verifyPassword(password, user.passwordHash);
+        if (!isValid) return null;
 
+        // Include custom fields for JWT
         return {
           id: String(user.id),
           email: user.email,
           name: user.fullName,
           role: user.role,
-          image: user.avatarUrl,
+          image: user.avatarUrl ?? null,
           isVerified: user.emailVerified,
         };
       },
     }),
   ],
   callbacks: {
+    // Add role and id to JWT token
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as any).role ?? token.role;
-        token.name = user.name ?? token.name;
-        token.email = user.email ?? token.email;
-        token.image = user.image ?? token.image;
+        token.id = user.id;
+        token.role = user.role;
+        token.name = user.name;
+        token.email = user.email;
+        token.image = user.image ?? null;
       }
       return token;
     },
+
+    // Include role and id in session
     async session({ session, token }) {
-      session.user = {
-        ...session.user,
-        id: token.sub as string,
-        role: token.role as string,
-        name: token.name ?? "",
-        email: token.email ?? "",
-        image: token.image as string,
-      };
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
+        session.user.name = token.name ?? "";
+        session.user.email = token.email ?? "";
+        session.user.image = token.image as string;
+      }
       return session;
     },
   },
   pages: {
-    signIn: "/auth/login",
+    signIn: "/login", // your custom login page
   },
 };

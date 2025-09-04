@@ -4,10 +4,10 @@ import { AuthProvider } from "@/app/context/AuthenticationProvider";
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <Navbar />
         {children}
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </div>
   );
 };

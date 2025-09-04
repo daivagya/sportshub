@@ -19,6 +19,7 @@
     "chart.js": "^4.5.0",
     "cloudinary": "^2.7.0",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.18",
     "googleapis": "^159.0.0",
     "lucide-react": "^0.542.0",
     "next": "15.5.2",

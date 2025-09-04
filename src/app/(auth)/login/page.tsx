@@ -17,24 +17,30 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // Use NextAuth signIn method
       const res = await signIn("credentials", {
-        redirect: false, // handle redirect manually
+        redirect: false,
         email,
         password,
       });
 
-      console.log("📥 Login Response:", res);
-      if (!res) throw new Error("Something went wrong");
-      if (res.error) throw new Error(res.error);
+      console.log("Login Response:", res);
 
-      // Redirect to dashboard on success
-      router.push("/dashboard");
+      if (!res || res.error) throw new Error(res?.error || "Login failed");
+
+      // Redirect based on role
+      const sessionRes = await fetch("/api/auth/session");
+      const session = await sessionRes.json();
+
+      if (session?.user?.role === "OWNER") {
+        router.push("/manager/dashboard");
+      } else {
+        router.push("/"); // default for USER
+      }
     } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
-    }   
+    }
   };
   return (
     <div className="min-h-screen flex flex-col md:flex-row">

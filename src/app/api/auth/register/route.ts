@@ -35,6 +35,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to create user" });
   }
 
+  // 2. If role is OWNER, create FacilityOwner record
+  if (role === "OWNER") {
+    await prisma.facilityOwner.create({
+      data: {
+        userId: user.id,
+        // optional: add default values for facility fields
+        // facilityName: `${fullName}'s Facility`,
+        // address: null,
+        // phone: null,
+      },
+    });
+  }
+
   // Generate OTP
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   const otpHash = await bcrypt.hash(otp, 10);
@@ -48,7 +61,7 @@ export async function POST(req: Request) {
     },
   });
 
-  console.log("---------------------")
+  console.log("---------------------");
   //send otp to user
   await sendOTPEmail(email, otp);
 
