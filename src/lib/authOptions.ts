@@ -21,19 +21,16 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials) return null;
-
         const { email, password } = credentials;
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) return null;
-
         if (!user.emailVerified) {
-          throw new Error("Email not verified. Please verify your email first.");
+          throw new Error(
+            "Email not verified. Please verify your email first."
+          );
         }
-
         const isValid = await verifyPassword(password, user.passwordHash);
         if (!isValid) return null;
-
-        // Include custom fields for JWT
         return {
           id: String(user.id),
           email: user.email,
@@ -46,31 +43,25 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    // Add role and id to JWT token
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
-        token.name = user.name;
-        token.email = user.email;
-        token.image = user.image ?? null;
       }
       return token;
     },
-
-    // Include role and id in session
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as string;
-        session.user.name = token.name ?? "";
-        session.user.email = token.email ?? "";
-        session.user.image = token.image as string;
       }
       return session;
     },
+    // The custom "redirect" callback has been removed.
   },
   pages: {
-    signIn: "/login", // your custom login page
+    // This is correct. It tells NextAuth and your middleware
+    // to use the homepage for sign-in redirects.
+    signIn: "/",
   },
 };

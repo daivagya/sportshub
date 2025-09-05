@@ -2,33 +2,44 @@ import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 export default withAuth(
+  // The `withAuth` HOC ensures an authenticated user is present before this runs.
   function middleware(req) {
     const token = req.nextauth.token;
-    console.log("--------------------------",token)
-    // Not logged in
-    if (!token) return NextResponse.redirect(new URL("/", req.url));
+    const { pathname } = req.nextUrl; // If a logged-in user tries to visit the login page, redirect them away.
 
-    const role = token.role;
+    if (pathname === "/login") {
+      const url = token?.role === "OWNER" ? "/manager/dashboard" : "/";
+      return NextResponse.redirect(new URL(url, req.url));
+    } // Redirect logged-in OWNER from the homepage to their dashboard.
 
-    // Redirect OWNER to manager dashboard if on root
-    if (role === "OWNER" && req.nextUrl.pathname === "/") {
+    if (token?.role === "OWNER" && pathname === "/") {
       return NextResponse.redirect(new URL("/manager/dashboard", req.url));
-    }
+    } // Prevent a logged-in USER from accessing any /manager routes.
 
-    // Prevent USER accessing /manager
-    if (role === "USER" && req.nextUrl.pathname.startsWith("/manager")) {
+    if (token?.role === "USER" && pathname.startsWith("/manager")) {
+      // Redirect them to the homepage or an "access denied" page for better UX.
       return NextResponse.redirect(new URL("/", req.url));
-    }
+    } // If no special rules match, allow the request to proceed.
 
     return NextResponse.next();
   },
   {
-    callbacks: { authorized: ({ token }) => !!token },
-    pages: { signIn: "/login" },
+    callbacks: {
+      // This logic runs before the middleware function.
+      // If it returns false, the user is redirected to the `signIn` page.
+      authorized: ({ token }) => !!token,
+    },
+    pages: {
+      // Custom login page path.
+      signIn: "/",
+    },
   }
 );
 
-// Apply middleware only on /manager/ paths and homepage '/'
+// Apply this middleware to relevant paths.
 export const config = {
-  matcher: ["/manager/:path", "/"],
+  matcher: [
+    "/manager/:path*", // Protect all manager routes
+    "/", // Apply rules to the homepage
+  ],
 };

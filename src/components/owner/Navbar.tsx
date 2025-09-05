@@ -45,7 +45,7 @@ export default function Navbar() {
           Bookings
         </Link>
         <Link href="/manager/venues" className={linkClasses("/manager/venues")}>
-          Venues
+          Owned Venues
         </Link>
         <Link href="/manager/earnings" className={linkClasses("/manager/earnings")}>
           Earnings

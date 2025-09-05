@@ -36,17 +36,8 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 =======
-
-
-
-
-# sportshub
->>>>>>> 009a67c2b104f76390ec980d89a2a7db354dc53a
-
-```
-sportshub
+#sportshub
 ├─ eslint.config.mjs
-├─ middleware.ts
 ├─ next-env.d.ts
 ├─ next.config.ts
 ├─ package-lock.json
@@ -77,147 +68,21 @@ sportshub
 │  │  │  │  └─ page.tsx
 │  │  │  └─ register
 │  │  │     └─ page.tsx
-│  │  ├─ (public)
+│  │  ├─ (owner)
+│  │  │  └─ manager
+│  │  │     ├─ bookings
+│  │  │     │  └─ page.tsx
+│  │  │     ├─ dashboard
+│  │  │     │  └─ page.tsx
+│  │  │     ├─ layout.tsx
+│  │  │     ├─ onboarding
+│  │  │     │  └─ page.tsx
+│  │  │     ├─ page.tsx
+│  │  │     └─ venues
+│  │  │        └─ page.tsx
+│  │  ├─ (user)
 │  │  │  ├─ layout.tsx
-│  │  │  └─ page.tsx
-│  │  ├─ (owner)
-│  │  │  └─ manager
-│  │  │     ├─ bookings
-│  │  │     │  ├─ layout.tsx
-│  │  │     │  └─ page.tsx
-│  │  │     ├─ dashboard
-│  │  │     │  ├─ layout.tsx
-│  │  │     │  └─ page.tsx
-│  │  │     ├─ layout.tsx
-│  │  │     ├─ onboarding
-│  │  │     │  └─ page.tsx
-│  │  │     ├─ page.tsx
-│  │  │     └─ venues
-│  │  │        ├─ layout.tsx
-│  │  │        └─ page.tsx
-│  │  ├─ (user)
-│  │  │  ├─ dashboard
-│  │  │  │  ├─ layout.tsx
-│  │  │  │  └─ page.tsx
-│  │  │  └─ profile
-│  │  │     └─ page.tsx
-│  │  ├─ api
-│  │  │  ├─ auth
-│  │  │  │  ├─ register
-│  │  │  │  │  └─ route.ts
-│  │  │  │  ├─ verify-otp
-│  │  │  │  │  └─ route.ts
-│  │  │  │  └─ [...nextauth]
-│  │  │  │     └─ route.ts
-│  │  │  ├─ owner
-│  │  │  │  └─ route.ts
-│  │  │  └─ upload
-│  │  │     └─ route.ts
-│  │  ├─ context
-│  │  │  └─ AuthenticationProvider.tsx
-│  │  ├─ favicon.ico
-│  │  ├─ globals.css
-│  │  └─ layout.tsx
-│  ├─ components
-│  │  ├─ owner
-│  │  │  ├─ AddVenueForm.tsx
-│  │  │  ├─ BookingsTable.tsx
-│  │  │  ├─ Navbar.tsx
-│  │  │  └─ VenuesTable.tsx
-│  │  ├─ ui
-│  │  │  ├─ Button.tsx
-│  │  │  └─ card.tsx
-│  │  └─ user
-│  │     └─ Navbar.tsx
-│  ├─ generated
-│  │  └─ prisma
-│  │     ├─ client.d.ts
-│  │     ├─ client.js
-│  │     ├─ default.d.ts
-│  │     ├─ default.js
-│  │     ├─ edge.d.ts
-│  │     ├─ edge.js
-│  │     ├─ index-browser.js
-│  │     ├─ index.d.ts
-│  │     ├─ index.js
-│  │     ├─ package.json
-│  │     ├─ query_engine-windows.dll.node
-│  │     ├─ runtime
-│  │     │  ├─ edge-esm.js
-│  │     │  ├─ edge.js
-│  │     │  ├─ index-browser.d.ts
-│  │     │  ├─ index-browser.js
-│  │     │  ├─ library.d.ts
-│  │     │  ├─ library.js
-│  │     │  ├─ react-native.js
-│  │     │  ├─ wasm-compiler-edge.js
-│  │     │  └─ wasm-engine-edge.js
-│  │     ├─ schema.prisma
-│  │     ├─ wasm.d.ts
-│  │     └─ wasm.js
-│  ├─ lib
-│  │  ├─ authOptions.ts
-│  │  ├─ cloudinary.ts
-│  │  ├─ hash.ts
-│  │  ├─ mailer.ts
-│  │  ├─ prisma.ts
-│  │  ├─ utils.ts
-│  │  └─ validationFrontend.ts
-│  └─ types
-│     └─ next-auth.d.ts
-└─ tsconfig.json
-
-```
-```
-sportshub
-├─ eslint.config.mjs
-├─ middleware.ts
-├─ next-env.d.ts
-├─ next.config.ts
-├─ package-lock.json
-├─ package.json
-├─ postcss.config.mjs
-├─ prisma
-│  ├─ migrations
-│  │  ├─ 20250902080032_init
-│  │  │  └─ migration.sql
-│  │  └─ migration_lock.toml
-│  └─ schema.prisma
-├─ public
-│  ├─ file.svg
-│  ├─ globe.svg
-│  ├─ images
-│  │  └─ sports-tools.jpg
-│  ├─ next.svg
-│  ├─ vercel.svg
-│  └─ window.svg
-├─ README.md
-├─ src
-│  ├─ app
-│  │  ├─ (auth)
-│  │  │  ├─ (otp)
-│  │  │  │  └─ verifyOtp
-│  │  │  │     └─ page.tsx
-│  │  │  ├─ login
-│  │  │  │  └─ page.tsx
-│  │  │  └─ register
-│  │  │     └─ page.tsx
-│  │  ├─ (owner)
-│  │  │  └─ manager
-│  │  │     ├─ bookings
-│  │  │     │  ├─ layout.tsx
-│  │  │     │  └─ page.tsx
-│  │  │     ├─ dashboard
-│  │  │     │  ├─ layout.tsx
-│  │  │     │  └─ page.tsx
-│  │  │     ├─ layout.tsx
-│  │  │     ├─ onboarding
-│  │  │     │  └─ page.tsx
-│  │  │     ├─ page.tsx
-│  │  │     └─ venues
-│  │  │        ├─ layout.tsx
-│  │  │        └─ page.tsx
-│  │  ├─ (user)
+│  │  │  ├─ page.tsx
 │  │  │  └─ profile
 │  │  │     └─ page.tsx
 │  │  ├─ api
@@ -237,7 +102,9 @@ sportshub
 │  │  ├─ favicon.ico
 │  │  ├─ globals.css
 │  │  ├─ layout.tsx
-│  │  └─ page.tsx
+│  │  ├─ page.tsx
+│  │  └─ venues
+│  │     └─ page.tsx
 │  ├─ components
 │  │  ├─ owner
 │  │  │  ├─ AddVenueForm.tsx
@@ -247,8 +114,18 @@ sportshub
 │  │  ├─ ui
 │  │  │  ├─ Button.tsx
 │  │  │  └─ card.tsx
-│  │  └─ user_public
-│  │     └─ Navbar.tsx
+│  │  └─ user
+│  │     ├─ AllowedSports.tsx
+│  │     ├─ CourtCard.tsx
+│  │     ├─ CourtsSlider.tsx
+│  │     ├─ FilterSidebar.tsx
+│  │     ├─ Footer.tsx
+│  │     ├─ HeroSection.tsx
+│  │     ├─ Navbar.tsx
+│  │     ├─ SportCard.tsx
+│  │     ├─ sportsWeOffer.tsx
+│  │     ├─ VenueCard.tsx
+│  │     └─ VenueSlider.tsx
 │  ├─ generated
 │  │  └─ prisma
 │  │     ├─ client.d.ts
@@ -278,6 +155,7 @@ sportshub
 │  ├─ lib
 │  │  ├─ authOptions.ts
 │  │  ├─ cloudinary.ts
+│  │  ├─ dummyData.ts
 │  │  ├─ hash.ts
 │  │  ├─ mailer.ts
 │  │  ├─ prisma.ts
