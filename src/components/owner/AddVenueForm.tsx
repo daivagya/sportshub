@@ -6,33 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 // Reverted to the path alias for better module resolution in Next.js.
 import { createVenue } from "@/app/(owner)/manager/_actions/venue.actions";
-
-// --- Zod Validation Schema ---
-// --- Zod Validation Schema ---
-const addVenueSchema = z.object({
-  name: z.string().min(1, "Venue name is required."),
-  // ADD THIS: The slug is now a required part of the form data
-  slug: z.string().min(1, "Slug is required."),
-  description: z
-    .string()
-    .min(10, "Description must be at least 10 characters long."),
-  address: z.string().min(1, "Address is required."),
-  city: z.string().min(1, "City is required."),
-  state: z.string().optional(),
-  country: z.string(),
-  amenities: z.array(z.string()).optional(),
-  photos: z
-    .any()
-    .refine((files) => files?.length >= 1, "Please upload at least one photo.")
-    .refine(
-      (files) => files?.length <= 20,
-      "You can upload a maximum of 20 photos."
-    )
-    .refine(
-      (files) => Array.from(files).every((file) => file instanceof File),
-      "Invalid file format."
-    ),
-});
+import { uploadImagesToCloudinary } from "@/lib/cloudinary-client";
+import { addVenueSchema } from "@/lib/validationFrontend";
 
 // --- TYPE DEFINITION (THE KEY FIX) ---
 // This creates a TypeScript type that perfectly matches your form's shape.
@@ -125,7 +100,7 @@ const SparklesIcon = (props) => (
 // --- Form Component ---
 export default function AddVenueForm({ onClose }: { onClose?: () => void }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [imagePreviews, setImagePreviews] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const {
     register,
@@ -134,87 +109,96 @@ export default function AddVenueForm({ onClose }: { onClose?: () => void }) {
     watch,
     setValue,
   } = useForm<AddVenueFormValues>({
-    // Make sure to use the inferred type
     resolver: zodResolver(addVenueSchema),
     defaultValues: {
       name: "",
-      slug: "", // Add slug to default values
+      slug: "",
       description: "",
       address: "",
       city: "",
       state: "",
       country: "India",
       amenities: [],
+      photos: [], // Start with an empty array for File objects
     },
   });
 
+  // Slug generation useEffect (no changes)
   const venueName = watch("name");
-
   useEffect(() => {
     if (venueName) {
       const generatedSlug = venueName
         .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric with -
-        .replace(/^-+|-+$/g, ""); // Remove leading/trailing -
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
       setValue("slug", generatedSlug, { shouldValidate: true });
     }
   }, [venueName, setValue]);
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length === 0) return;
+    const addedFiles = Array.from(e.target.files || []);
+    if (addedFiles.length === 0) return;
+
+    // Get current files from the form state
     const currentFiles = watch("photos") || [];
-    const newFiles = [...currentFiles, ...files].slice(0, 20);
-    setValue("photos", newFiles, { shouldValidate: true });
-    const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
-    setImagePreviews(newPreviews);
+    const combinedFiles = [...currentFiles, ...addedFiles].slice(0, 20);
+
+    // Update the form state with the combined File objects
+    setValue("photos", combinedFiles, { shouldValidate: true });
+
+    // Create object URLs ONLY for the newly added files
+    const newPreviews = addedFiles.map((file) => URL.createObjectURL(file));
+
+    // Append new previews to the existing ones
+    setImagePreviews((prevPreviews) =>
+      [...prevPreviews, ...newPreviews].slice(0, 20)
+    );
   };
 
-  const removePhoto = (indexToRemove) => {
-    const currentFiles = watch("photos") || [];
-    const updatedFiles = currentFiles.filter(
+  const removePhoto = (indexToRemove: number) => {
+    // Revoke the object URL of the specific image being removed to prevent memory leaks
+    URL.revokeObjectURL(imagePreviews[indexToRemove]);
+
+    // Update the image previews state by filtering out the removed one
+    setImagePreviews((prevPreviews) =>
+      prevPreviews.filter((_, index) => index !== indexToRemove)
+    );
+
+    // Update the react-hook-form state by filtering out the removed File object
+    const updatedFiles = (watch("photos") || []).filter(
       (_, index) => index !== indexToRemove
     );
     setValue("photos", updatedFiles, { shouldValidate: true });
-    // Clean up the URL for the removed image
-    const urlToRemove = imagePreviews[indexToRemove];
-    URL.revokeObjectURL(urlToRemove);
-    const updatedPreviews = updatedFiles.map((file) =>
-      URL.createObjectURL(file)
-    );
-    setImagePreviews(updatedPreviews);
   };
 
-  // Effect to clean up object URLs on component unmount to prevent memory leaks
+  // Cleanup effect to revoke all URLs when the component unmounts
   useEffect(() => {
     return () => {
       imagePreviews.forEach((fileUrl) => URL.revokeObjectURL(fileUrl));
     };
   }, [imagePreviews]);
 
-  const onSubmit = async (data) => {
+  // ====================================================================
+  // --- MODIFIED: onSubmit Function ---
+  // ====================================================================
+  const onSubmit = async (data: AddVenueFormValues) => {
     setIsLoading(true);
-    const formData = new FormData();
-
-    // Append all form fields to FormData
-    // Append all form fields to FormData
-    Object.entries(data).forEach(([key, value]) => {
-      if (key === "photos" && Array.isArray(value)) {
-        value.forEach((file) => formData.append("photos", file));
-      } else if (key === "amenities" && Array.isArray(value)) {
-        // Stringify arrays of strings to send them
-        formData.append(key, JSON.stringify(value));
-      } else if (value !== undefined && value !== null && value !== "") {
-        // FIX: Explicitly convert any remaining value to a string to satisfy TypeScript.
-        formData.append(key, String(value));
-      }
-    });
 
     try {
-      const result = await createVenue(formData);
+      // 1. Upload images to Cloudinary and get URLs
+      const uploadedImageUrls = await uploadImagesToCloudinary(data.photos);
+
+      // 2. Prepare the payload for your server action
+      const venuePayload = {
+        ...data, // includes name, description, city, etc.
+        amenities: data.amenities || [],
+        photos: uploadedImageUrls, // Use the new URLs
+      };
+
+      // 3. Call the server action with the correct payload
+      const result = await createVenue(venuePayload);
 
       if (result?.error) {
-        // Recommend using a toast library like react-hot-toast for better UX
         alert(`Error: ${result.error}`);
       } else {
         alert(result.success || "Venue created successfully!");
@@ -222,7 +206,9 @@ export default function AddVenueForm({ onClose }: { onClose?: () => void }) {
       }
     } catch (error) {
       console.error("Failed to create venue:", error);
-      alert("An unexpected error occurred. Please try again.");
+      alert(
+        "An unexpected error occurred during image upload or venue creation. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -396,7 +382,7 @@ export default function AddVenueForm({ onClose }: { onClose?: () => void }) {
             </div>
             {errors.photos && (
               <p className="mt-2 text-xs text-red-600">
-                {errors.photos.message}
+                {errors?.photos.message}
               </p>
             )}
           </div>

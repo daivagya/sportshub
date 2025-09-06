@@ -4,11 +4,12 @@ import { db as prisma } from "@/lib/prisma";
 
 export async function getCurrentUser() {
   const session = await getServerSession(authOptions);
-
+  console.log("#######################################session:", session);
+  console.log("!!!!!!!!!!!Session-user:", session?.user);
   if (!session?.user?.id) {
     return null;
   }
-  
+
   // Optionally, you can fetch the complete user object from your database
   // if you need more details than what's stored in the session.
   const user = await prisma.user.findUnique({

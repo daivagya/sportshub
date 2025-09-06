@@ -39,7 +39,7 @@ export default function SignUpPage() {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      console.log("Uploading avatar...",formData);
+      console.log("Uploading avatar...", formData);
       const res = await fetch("/api/upload", {
         method: "POST",
         body: formData,
@@ -81,7 +81,7 @@ export default function SignUpPage() {
       const payload = {
         ...form,
         avatarUrl: avatarPreview,
-      }
+      };
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
