@@ -22,7 +22,8 @@ model User {
   ownerProfile   FacilityOwner?
   ownerProfileId Int?
   bookings       Booking[]
-  reviews        Review[]
+  venueReviews   VenueReview[] // relation to venue reviews
+  courtReviews   CourtReview[] // relation to court reviews
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   Session        Session[]
@@ -49,17 +50,16 @@ model Venue {
   slug        String        @unique
   description String?
   address     String
-  city        String
+  city        String?
   state       String?
   country     String?       @default("India")
   latitude    Float?
   longitude   Float?
-  amenities   String[]      @default([]) // e.g., ["parking", "lights"]
-  photos      String[]      @default([]) // Cloudinary URLs or public_ids
+  amenities   String[]      @default([])
+  photos      String[]      @default([])
   approved    Boolean       @default(false)
-  rating      Float? // optional aggregate
   courts      Court[]
-  reviews     Review[]
+  reviews     VenueReview[] // venue-specific reviews
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
@@ -68,20 +68,50 @@ model Venue {
 }
 
 model Court {
-  id           Int       @id @default(autoincrement())
-  venue        Venue     @relation(fields: [venueId], references: [id])
-  venueId      Int
-  name         String
-  sport        String // e.g., "Badminton", "Tennis", "Football"
-  pricePerHour Int // store in smallest currency unit (e.g., INR paisa OR cents)
-  currency     String    @default("INR")
-  openTime     Int // hour in 24h, e.g., 6
-  closeTime    Int // hour in 24h, e.g., 22
-  bookings     Booking[]
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id         Int           @id @default(autoincrement())
+  venue      Venue         @relation(fields: [venueId], references: [id])
+  venueId    Int
+  name       String
+  slug       String        @unique // globally unique slug for URLs
+  sport      String // e.g., Badminton, Tennis
+  type       String // Indoor or Outdoor
+  priceSlots PriceSlot[]
+  currency   String        @default("INR")
+  openTime   Int
+  closeTime  Int
+  bookings   Booking[]
+  reviews    CourtReview[] // court-specific reviews
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 
+  // ✅ Ensure names are unique within the same venue
+  @@unique([venueId, name])
   @@index([sport])
+  @@index([type])
+}
+
+model VenueReview {
+  id        Int      @id @default(autoincrement())
+  venue     Venue    @relation(fields: [venueId], references: [id])
+  venueId   Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  rating    Int // 1-5
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CourtReview {
+  id        Int      @id @default(autoincrement())
+  court     Court    @relation(fields: [courtId], references: [id])
+  courtId   Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  rating    Int // 1-5
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Booking {
@@ -98,12 +128,25 @@ model Booking {
   idempotencyKey String?       @unique
   notes          String?
   createdAt      DateTime      @default(now())
+  totalAmount    Int // The final price of the booking in the smallest currency unit (e.g., cents/paise)
+  currency       String        @default("INR")
 
-  // Prevent two exact same startTime bookings for same court
   @@unique([courtId, startTime])
   @@index([userId])
   @@index([courtId])
   @@index([status])
+}
+
+model PriceSlot {
+  id           Int      @id @default(autoincrement())
+  court        Court    @relation(fields: [courtId], references: [id], onDelete: Cascade)
+  courtId      Int
+  startTime    Int // The hour (e.g., 8) when this price tier begins
+  pricePerHour Int // The price for this specific slot
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([courtId])
 }
 
 model Payment {
@@ -122,20 +165,6 @@ model Payment {
 
   @@index([stripePaymentIntentId])
   @@index([status])
-}
-
-model Review {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  venue     Venue    @relation(fields: [venueId], references: [id])
-  venueId   Int
-  rating    Int
-  comment   String?
-  createdAt DateTime @default(now())
-
-  @@index([venueId])
-  @@index([userId])
 }
 
 model EmailOtp {

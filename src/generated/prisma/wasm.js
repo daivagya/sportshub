@@ -159,7 +159,6 @@ exports.Prisma.VenueScalarFieldEnum = {
   amenities: 'amenities',
   photos: 'photos',
   approved: 'approved',
-  rating: 'rating',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -168,11 +167,32 @@ exports.Prisma.CourtScalarFieldEnum = {
   id: 'id',
   venueId: 'venueId',
   name: 'name',
+  slug: 'slug',
   sport: 'sport',
-  pricePerHour: 'pricePerHour',
+  type: 'type',
   currency: 'currency',
   openTime: 'openTime',
   closeTime: 'closeTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VenueReviewScalarFieldEnum = {
+  id: 'id',
+  venueId: 'venueId',
+  userId: 'userId',
+  rating: 'rating',
+  comment: 'comment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CourtReviewScalarFieldEnum = {
+  id: 'id',
+  courtId: 'courtId',
+  userId: 'userId',
+  rating: 'rating',
+  comment: 'comment',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -187,7 +207,18 @@ exports.Prisma.BookingScalarFieldEnum = {
   paymentId: 'paymentId',
   idempotencyKey: 'idempotencyKey',
   notes: 'notes',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  totalAmount: 'totalAmount',
+  currency: 'currency'
+};
+
+exports.Prisma.PriceSlotScalarFieldEnum = {
+  id: 'id',
+  courtId: 'courtId',
+  startTime: 'startTime',
+  pricePerHour: 'pricePerHour',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.PaymentScalarFieldEnum = {
@@ -201,15 +232,6 @@ exports.Prisma.PaymentScalarFieldEnum = {
   status: 'status',
   receiptUrl: 'receiptUrl',
   paymentMethod: 'paymentMethod',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.ReviewScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  venueId: 'venueId',
-  rating: 'rating',
-  comment: 'comment',
   createdAt: 'createdAt'
 };
 
@@ -288,9 +310,11 @@ exports.Prisma.ModelName = {
   FacilityOwner: 'FacilityOwner',
   Venue: 'Venue',
   Court: 'Court',
+  VenueReview: 'VenueReview',
+  CourtReview: 'CourtReview',
   Booking: 'Booking',
+  PriceSlot: 'PriceSlot',
   Payment: 'Payment',
-  Review: 'Review',
   EmailOtp: 'EmailOtp',
   Session: 'Session',
   Account: 'Account',

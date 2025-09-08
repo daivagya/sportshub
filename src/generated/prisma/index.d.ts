@@ -34,20 +34,30 @@ export type Venue = $Result.DefaultSelection<Prisma.$VenuePayload>
  */
 export type Court = $Result.DefaultSelection<Prisma.$CourtPayload>
 /**
+ * Model VenueReview
+ * 
+ */
+export type VenueReview = $Result.DefaultSelection<Prisma.$VenueReviewPayload>
+/**
+ * Model CourtReview
+ * 
+ */
+export type CourtReview = $Result.DefaultSelection<Prisma.$CourtReviewPayload>
+/**
  * Model Booking
  * 
  */
 export type Booking = $Result.DefaultSelection<Prisma.$BookingPayload>
 /**
+ * Model PriceSlot
+ * 
+ */
+export type PriceSlot = $Result.DefaultSelection<Prisma.$PriceSlotPayload>
+/**
  * Model Payment
  * 
  */
 export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
-/**
- * Model Review
- * 
- */
-export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
 /**
  * Model EmailOtp
  * 
@@ -274,6 +284,26 @@ export class PrismaClient<
   get court(): Prisma.CourtDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.venueReview`: Exposes CRUD operations for the **VenueReview** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VenueReviews
+    * const venueReviews = await prisma.venueReview.findMany()
+    * ```
+    */
+  get venueReview(): Prisma.VenueReviewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.courtReview`: Exposes CRUD operations for the **CourtReview** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CourtReviews
+    * const courtReviews = await prisma.courtReview.findMany()
+    * ```
+    */
+  get courtReview(): Prisma.CourtReviewDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.booking`: Exposes CRUD operations for the **Booking** model.
     * Example usage:
     * ```ts
@@ -284,6 +314,16 @@ export class PrismaClient<
   get booking(): Prisma.BookingDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.priceSlot`: Exposes CRUD operations for the **PriceSlot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PriceSlots
+    * const priceSlots = await prisma.priceSlot.findMany()
+    * ```
+    */
+  get priceSlot(): Prisma.PriceSlotDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.payment`: Exposes CRUD operations for the **Payment** model.
     * Example usage:
     * ```ts
@@ -292,16 +332,6 @@ export class PrismaClient<
     * ```
     */
   get payment(): Prisma.PaymentDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.review`: Exposes CRUD operations for the **Review** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Reviews
-    * const reviews = await prisma.review.findMany()
-    * ```
-    */
-  get review(): Prisma.ReviewDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.emailOtp`: Exposes CRUD operations for the **EmailOtp** model.
@@ -786,9 +816,11 @@ export namespace Prisma {
     FacilityOwner: 'FacilityOwner',
     Venue: 'Venue',
     Court: 'Court',
+    VenueReview: 'VenueReview',
+    CourtReview: 'CourtReview',
     Booking: 'Booking',
+    PriceSlot: 'PriceSlot',
     Payment: 'Payment',
-    Review: 'Review',
     EmailOtp: 'EmailOtp',
     Session: 'Session',
     Account: 'Account',
@@ -811,7 +843,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "facilityOwner" | "venue" | "court" | "booking" | "payment" | "review" | "emailOtp" | "session" | "account" | "verificationToken"
+      modelProps: "user" | "facilityOwner" | "venue" | "court" | "venueReview" | "courtReview" | "booking" | "priceSlot" | "payment" | "emailOtp" | "session" | "account" | "verificationToken"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1111,6 +1143,154 @@ export namespace Prisma {
           }
         }
       }
+      VenueReview: {
+        payload: Prisma.$VenueReviewPayload<ExtArgs>
+        fields: Prisma.VenueReviewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VenueReviewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VenueReviewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload>
+          }
+          findFirst: {
+            args: Prisma.VenueReviewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VenueReviewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload>
+          }
+          findMany: {
+            args: Prisma.VenueReviewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload>[]
+          }
+          create: {
+            args: Prisma.VenueReviewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload>
+          }
+          createMany: {
+            args: Prisma.VenueReviewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VenueReviewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload>[]
+          }
+          delete: {
+            args: Prisma.VenueReviewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload>
+          }
+          update: {
+            args: Prisma.VenueReviewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload>
+          }
+          deleteMany: {
+            args: Prisma.VenueReviewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VenueReviewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VenueReviewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload>[]
+          }
+          upsert: {
+            args: Prisma.VenueReviewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenueReviewPayload>
+          }
+          aggregate: {
+            args: Prisma.VenueReviewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVenueReview>
+          }
+          groupBy: {
+            args: Prisma.VenueReviewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VenueReviewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VenueReviewCountArgs<ExtArgs>
+            result: $Utils.Optional<VenueReviewCountAggregateOutputType> | number
+          }
+        }
+      }
+      CourtReview: {
+        payload: Prisma.$CourtReviewPayload<ExtArgs>
+        fields: Prisma.CourtReviewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CourtReviewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CourtReviewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload>
+          }
+          findFirst: {
+            args: Prisma.CourtReviewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CourtReviewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload>
+          }
+          findMany: {
+            args: Prisma.CourtReviewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload>[]
+          }
+          create: {
+            args: Prisma.CourtReviewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload>
+          }
+          createMany: {
+            args: Prisma.CourtReviewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CourtReviewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload>[]
+          }
+          delete: {
+            args: Prisma.CourtReviewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload>
+          }
+          update: {
+            args: Prisma.CourtReviewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload>
+          }
+          deleteMany: {
+            args: Prisma.CourtReviewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CourtReviewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CourtReviewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload>[]
+          }
+          upsert: {
+            args: Prisma.CourtReviewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CourtReviewPayload>
+          }
+          aggregate: {
+            args: Prisma.CourtReviewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCourtReview>
+          }
+          groupBy: {
+            args: Prisma.CourtReviewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CourtReviewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CourtReviewCountArgs<ExtArgs>
+            result: $Utils.Optional<CourtReviewCountAggregateOutputType> | number
+          }
+        }
+      }
       Booking: {
         payload: Prisma.$BookingPayload<ExtArgs>
         fields: Prisma.BookingFieldRefs
@@ -1185,6 +1365,80 @@ export namespace Prisma {
           }
         }
       }
+      PriceSlot: {
+        payload: Prisma.$PriceSlotPayload<ExtArgs>
+        fields: Prisma.PriceSlotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PriceSlotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PriceSlotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload>
+          }
+          findFirst: {
+            args: Prisma.PriceSlotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PriceSlotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload>
+          }
+          findMany: {
+            args: Prisma.PriceSlotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload>[]
+          }
+          create: {
+            args: Prisma.PriceSlotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload>
+          }
+          createMany: {
+            args: Prisma.PriceSlotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PriceSlotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload>[]
+          }
+          delete: {
+            args: Prisma.PriceSlotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload>
+          }
+          update: {
+            args: Prisma.PriceSlotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload>
+          }
+          deleteMany: {
+            args: Prisma.PriceSlotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PriceSlotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PriceSlotUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload>[]
+          }
+          upsert: {
+            args: Prisma.PriceSlotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriceSlotPayload>
+          }
+          aggregate: {
+            args: Prisma.PriceSlotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePriceSlot>
+          }
+          groupBy: {
+            args: Prisma.PriceSlotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PriceSlotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PriceSlotCountArgs<ExtArgs>
+            result: $Utils.Optional<PriceSlotCountAggregateOutputType> | number
+          }
+        }
+      }
       Payment: {
         payload: Prisma.$PaymentPayload<ExtArgs>
         fields: Prisma.PaymentFieldRefs
@@ -1256,80 +1510,6 @@ export namespace Prisma {
           count: {
             args: Prisma.PaymentCountArgs<ExtArgs>
             result: $Utils.Optional<PaymentCountAggregateOutputType> | number
-          }
-        }
-      }
-      Review: {
-        payload: Prisma.$ReviewPayload<ExtArgs>
-        fields: Prisma.ReviewFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.ReviewFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.ReviewFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
-          }
-          findFirst: {
-            args: Prisma.ReviewFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.ReviewFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
-          }
-          findMany: {
-            args: Prisma.ReviewFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>[]
-          }
-          create: {
-            args: Prisma.ReviewCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
-          }
-          createMany: {
-            args: Prisma.ReviewCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.ReviewCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>[]
-          }
-          delete: {
-            args: Prisma.ReviewDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
-          }
-          update: {
-            args: Prisma.ReviewUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
-          }
-          deleteMany: {
-            args: Prisma.ReviewDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.ReviewUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.ReviewUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>[]
-          }
-          upsert: {
-            args: Prisma.ReviewUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$ReviewPayload>
-          }
-          aggregate: {
-            args: Prisma.ReviewAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateReview>
-          }
-          groupBy: {
-            args: Prisma.ReviewGroupByArgs<ExtArgs>
-            result: $Utils.Optional<ReviewGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.ReviewCountArgs<ExtArgs>
-            result: $Utils.Optional<ReviewCountAggregateOutputType> | number
           }
         }
       }
@@ -1725,9 +1905,11 @@ export namespace Prisma {
     facilityOwner?: FacilityOwnerOmit
     venue?: VenueOmit
     court?: CourtOmit
+    venueReview?: VenueReviewOmit
+    courtReview?: CourtReviewOmit
     booking?: BookingOmit
+    priceSlot?: PriceSlotOmit
     payment?: PaymentOmit
-    review?: ReviewOmit
     emailOtp?: EmailOtpOmit
     session?: SessionOmit
     account?: AccountOmit
@@ -1813,14 +1995,16 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     bookings: number
-    reviews: number
+    venueReviews: number
+    courtReviews: number
     Session: number
     Account: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bookings?: boolean | UserCountOutputTypeCountBookingsArgs
-    reviews?: boolean | UserCountOutputTypeCountReviewsArgs
+    venueReviews?: boolean | UserCountOutputTypeCountVenueReviewsArgs
+    courtReviews?: boolean | UserCountOutputTypeCountCourtReviewsArgs
     Session?: boolean | UserCountOutputTypeCountSessionArgs
     Account?: boolean | UserCountOutputTypeCountAccountArgs
   }
@@ -1846,8 +2030,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ReviewWhereInput
+  export type UserCountOutputTypeCountVenueReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VenueReviewWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCourtReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CourtReviewWhereInput
   }
 
   /**
@@ -1932,7 +2123,7 @@ export namespace Prisma {
    * VenueCountOutputType without action
    */
   export type VenueCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ReviewWhereInput
+    where?: VenueReviewWhereInput
   }
 
 
@@ -1941,11 +2132,15 @@ export namespace Prisma {
    */
 
   export type CourtCountOutputType = {
+    priceSlots: number
     bookings: number
+    reviews: number
   }
 
   export type CourtCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    priceSlots?: boolean | CourtCountOutputTypeCountPriceSlotsArgs
     bookings?: boolean | CourtCountOutputTypeCountBookingsArgs
+    reviews?: boolean | CourtCountOutputTypeCountReviewsArgs
   }
 
   // Custom InputTypes
@@ -1962,8 +2157,22 @@ export namespace Prisma {
   /**
    * CourtCountOutputType without action
    */
+  export type CourtCountOutputTypeCountPriceSlotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PriceSlotWhereInput
+  }
+
+  /**
+   * CourtCountOutputType without action
+   */
   export type CourtCountOutputTypeCountBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BookingWhereInput
+  }
+
+  /**
+   * CourtCountOutputType without action
+   */
+  export type CourtCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CourtReviewWhereInput
   }
 
 
@@ -2223,7 +2432,8 @@ export namespace Prisma {
     updatedAt?: boolean
     ownerProfile?: boolean | User$ownerProfileArgs<ExtArgs>
     bookings?: boolean | User$bookingsArgs<ExtArgs>
-    reviews?: boolean | User$reviewsArgs<ExtArgs>
+    venueReviews?: boolean | User$venueReviewsArgs<ExtArgs>
+    courtReviews?: boolean | User$courtReviewsArgs<ExtArgs>
     Session?: boolean | User$SessionArgs<ExtArgs>
     Account?: boolean | User$AccountArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2275,7 +2485,8 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ownerProfile?: boolean | User$ownerProfileArgs<ExtArgs>
     bookings?: boolean | User$bookingsArgs<ExtArgs>
-    reviews?: boolean | User$reviewsArgs<ExtArgs>
+    venueReviews?: boolean | User$venueReviewsArgs<ExtArgs>
+    courtReviews?: boolean | User$courtReviewsArgs<ExtArgs>
     Session?: boolean | User$SessionArgs<ExtArgs>
     Account?: boolean | User$AccountArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2288,7 +2499,8 @@ export namespace Prisma {
     objects: {
       ownerProfile: Prisma.$FacilityOwnerPayload<ExtArgs> | null
       bookings: Prisma.$BookingPayload<ExtArgs>[]
-      reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      venueReviews: Prisma.$VenueReviewPayload<ExtArgs>[]
+      courtReviews: Prisma.$CourtReviewPayload<ExtArgs>[]
       Session: Prisma.$SessionPayload<ExtArgs>[]
       Account: Prisma.$AccountPayload<ExtArgs>[]
     }
@@ -2700,7 +2912,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     ownerProfile<T extends User$ownerProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$ownerProfileArgs<ExtArgs>>): Prisma__FacilityOwnerClient<$Result.GetResult<Prisma.$FacilityOwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     bookings<T extends User$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, User$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    venueReviews<T extends User$venueReviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$venueReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    courtReviews<T extends User$courtReviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$courtReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Session<T extends User$SessionArgs<ExtArgs> = {}>(args?: Subset<T, User$SessionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Account<T extends User$AccountArgs<ExtArgs> = {}>(args?: Subset<T, User$AccountArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -3174,27 +3387,51 @@ export namespace Prisma {
   }
 
   /**
-   * User.reviews
+   * User.venueReviews
    */
-  export type User$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$venueReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Review
+     * Select specific fields to fetch from the VenueReview
      */
-    select?: ReviewSelect<ExtArgs> | null
+    select?: VenueReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Review
+     * Omit specific fields from the VenueReview
      */
-    omit?: ReviewOmit<ExtArgs> | null
+    omit?: VenueReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ReviewInclude<ExtArgs> | null
-    where?: ReviewWhereInput
-    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
-    cursor?: ReviewWhereUniqueInput
+    include?: VenueReviewInclude<ExtArgs> | null
+    where?: VenueReviewWhereInput
+    orderBy?: VenueReviewOrderByWithRelationInput | VenueReviewOrderByWithRelationInput[]
+    cursor?: VenueReviewWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+    distinct?: VenueReviewScalarFieldEnum | VenueReviewScalarFieldEnum[]
+  }
+
+  /**
+   * User.courtReviews
+   */
+  export type User$courtReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    where?: CourtReviewWhereInput
+    orderBy?: CourtReviewOrderByWithRelationInput | CourtReviewOrderByWithRelationInput[]
+    cursor?: CourtReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CourtReviewScalarFieldEnum | CourtReviewScalarFieldEnum[]
   }
 
   /**
@@ -4433,7 +4670,6 @@ export namespace Prisma {
     ownerId: number | null
     latitude: number | null
     longitude: number | null
-    rating: number | null
   }
 
   export type VenueSumAggregateOutputType = {
@@ -4441,7 +4677,6 @@ export namespace Prisma {
     ownerId: number | null
     latitude: number | null
     longitude: number | null
-    rating: number | null
   }
 
   export type VenueMinAggregateOutputType = {
@@ -4457,7 +4692,6 @@ export namespace Prisma {
     latitude: number | null
     longitude: number | null
     approved: boolean | null
-    rating: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4475,7 +4709,6 @@ export namespace Prisma {
     latitude: number | null
     longitude: number | null
     approved: boolean | null
-    rating: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4495,7 +4728,6 @@ export namespace Prisma {
     amenities: number
     photos: number
     approved: number
-    rating: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4507,7 +4739,6 @@ export namespace Prisma {
     ownerId?: true
     latitude?: true
     longitude?: true
-    rating?: true
   }
 
   export type VenueSumAggregateInputType = {
@@ -4515,7 +4746,6 @@ export namespace Prisma {
     ownerId?: true
     latitude?: true
     longitude?: true
-    rating?: true
   }
 
   export type VenueMinAggregateInputType = {
@@ -4531,7 +4761,6 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     approved?: true
-    rating?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4549,7 +4778,6 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     approved?: true
-    rating?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4569,7 +4797,6 @@ export namespace Prisma {
     amenities?: true
     photos?: true
     approved?: true
-    rating?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4668,7 +4895,7 @@ export namespace Prisma {
     slug: string
     description: string | null
     address: string
-    city: string
+    city: string | null
     state: string | null
     country: string | null
     latitude: number | null
@@ -4676,7 +4903,6 @@ export namespace Prisma {
     amenities: string[]
     photos: string[]
     approved: boolean
-    rating: number | null
     createdAt: Date
     updatedAt: Date
     _count: VenueCountAggregateOutputType | null
@@ -4715,7 +4941,6 @@ export namespace Prisma {
     amenities?: boolean
     photos?: boolean
     approved?: boolean
-    rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     owner?: boolean | FacilityOwnerDefaultArgs<ExtArgs>
@@ -4739,7 +4964,6 @@ export namespace Prisma {
     amenities?: boolean
     photos?: boolean
     approved?: boolean
-    rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     owner?: boolean | FacilityOwnerDefaultArgs<ExtArgs>
@@ -4760,7 +4984,6 @@ export namespace Prisma {
     amenities?: boolean
     photos?: boolean
     approved?: boolean
-    rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     owner?: boolean | FacilityOwnerDefaultArgs<ExtArgs>
@@ -4781,12 +5004,11 @@ export namespace Prisma {
     amenities?: boolean
     photos?: boolean
     approved?: boolean
-    rating?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type VenueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerId" | "name" | "slug" | "description" | "address" | "city" | "state" | "country" | "latitude" | "longitude" | "amenities" | "photos" | "approved" | "rating" | "createdAt" | "updatedAt", ExtArgs["result"]["venue"]>
+  export type VenueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerId" | "name" | "slug" | "description" | "address" | "city" | "state" | "country" | "latitude" | "longitude" | "amenities" | "photos" | "approved" | "createdAt" | "updatedAt", ExtArgs["result"]["venue"]>
   export type VenueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | FacilityOwnerDefaultArgs<ExtArgs>
     courts?: boolean | Venue$courtsArgs<ExtArgs>
@@ -4805,7 +5027,7 @@ export namespace Prisma {
     objects: {
       owner: Prisma.$FacilityOwnerPayload<ExtArgs>
       courts: Prisma.$CourtPayload<ExtArgs>[]
-      reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      reviews: Prisma.$VenueReviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4814,7 +5036,7 @@ export namespace Prisma {
       slug: string
       description: string | null
       address: string
-      city: string
+      city: string | null
       state: string | null
       country: string | null
       latitude: number | null
@@ -4822,7 +5044,6 @@ export namespace Prisma {
       amenities: string[]
       photos: string[]
       approved: boolean
-      rating: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["venue"]>
@@ -5221,7 +5442,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     owner<T extends FacilityOwnerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FacilityOwnerDefaultArgs<ExtArgs>>): Prisma__FacilityOwnerClient<$Result.GetResult<Prisma.$FacilityOwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     courts<T extends Venue$courtsArgs<ExtArgs> = {}>(args?: Subset<T, Venue$courtsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourtPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    reviews<T extends Venue$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Venue$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviews<T extends Venue$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Venue$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5265,7 +5486,6 @@ export namespace Prisma {
     readonly amenities: FieldRef<"Venue", 'String[]'>
     readonly photos: FieldRef<"Venue", 'String[]'>
     readonly approved: FieldRef<"Venue", 'Boolean'>
-    readonly rating: FieldRef<"Venue", 'Float'>
     readonly createdAt: FieldRef<"Venue", 'DateTime'>
     readonly updatedAt: FieldRef<"Venue", 'DateTime'>
   }
@@ -5692,23 +5912,23 @@ export namespace Prisma {
    */
   export type Venue$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Review
+     * Select specific fields to fetch from the VenueReview
      */
-    select?: ReviewSelect<ExtArgs> | null
+    select?: VenueReviewSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Review
+     * Omit specific fields from the VenueReview
      */
-    omit?: ReviewOmit<ExtArgs> | null
+    omit?: VenueReviewOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ReviewInclude<ExtArgs> | null
-    where?: ReviewWhereInput
-    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
-    cursor?: ReviewWhereUniqueInput
+    include?: VenueReviewInclude<ExtArgs> | null
+    where?: VenueReviewWhereInput
+    orderBy?: VenueReviewOrderByWithRelationInput | VenueReviewOrderByWithRelationInput[]
+    cursor?: VenueReviewWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+    distinct?: VenueReviewScalarFieldEnum | VenueReviewScalarFieldEnum[]
   }
 
   /**
@@ -5745,7 +5965,6 @@ export namespace Prisma {
   export type CourtAvgAggregateOutputType = {
     id: number | null
     venueId: number | null
-    pricePerHour: number | null
     openTime: number | null
     closeTime: number | null
   }
@@ -5753,7 +5972,6 @@ export namespace Prisma {
   export type CourtSumAggregateOutputType = {
     id: number | null
     venueId: number | null
-    pricePerHour: number | null
     openTime: number | null
     closeTime: number | null
   }
@@ -5762,8 +5980,9 @@ export namespace Prisma {
     id: number | null
     venueId: number | null
     name: string | null
+    slug: string | null
     sport: string | null
-    pricePerHour: number | null
+    type: string | null
     currency: string | null
     openTime: number | null
     closeTime: number | null
@@ -5775,8 +5994,9 @@ export namespace Prisma {
     id: number | null
     venueId: number | null
     name: string | null
+    slug: string | null
     sport: string | null
-    pricePerHour: number | null
+    type: string | null
     currency: string | null
     openTime: number | null
     closeTime: number | null
@@ -5788,8 +6008,9 @@ export namespace Prisma {
     id: number
     venueId: number
     name: number
+    slug: number
     sport: number
-    pricePerHour: number
+    type: number
     currency: number
     openTime: number
     closeTime: number
@@ -5802,7 +6023,6 @@ export namespace Prisma {
   export type CourtAvgAggregateInputType = {
     id?: true
     venueId?: true
-    pricePerHour?: true
     openTime?: true
     closeTime?: true
   }
@@ -5810,7 +6030,6 @@ export namespace Prisma {
   export type CourtSumAggregateInputType = {
     id?: true
     venueId?: true
-    pricePerHour?: true
     openTime?: true
     closeTime?: true
   }
@@ -5819,8 +6038,9 @@ export namespace Prisma {
     id?: true
     venueId?: true
     name?: true
+    slug?: true
     sport?: true
-    pricePerHour?: true
+    type?: true
     currency?: true
     openTime?: true
     closeTime?: true
@@ -5832,8 +6052,9 @@ export namespace Prisma {
     id?: true
     venueId?: true
     name?: true
+    slug?: true
     sport?: true
-    pricePerHour?: true
+    type?: true
     currency?: true
     openTime?: true
     closeTime?: true
@@ -5845,8 +6066,9 @@ export namespace Prisma {
     id?: true
     venueId?: true
     name?: true
+    slug?: true
     sport?: true
-    pricePerHour?: true
+    type?: true
     currency?: true
     openTime?: true
     closeTime?: true
@@ -5945,8 +6167,9 @@ export namespace Prisma {
     id: number
     venueId: number
     name: string
+    slug: string
     sport: string
-    pricePerHour: number
+    type: string
     currency: string
     openTime: number
     closeTime: number
@@ -5977,15 +6200,18 @@ export namespace Prisma {
     id?: boolean
     venueId?: boolean
     name?: boolean
+    slug?: boolean
     sport?: boolean
-    pricePerHour?: boolean
+    type?: boolean
     currency?: boolean
     openTime?: boolean
     closeTime?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     venue?: boolean | VenueDefaultArgs<ExtArgs>
+    priceSlots?: boolean | Court$priceSlotsArgs<ExtArgs>
     bookings?: boolean | Court$bookingsArgs<ExtArgs>
+    reviews?: boolean | Court$reviewsArgs<ExtArgs>
     _count?: boolean | CourtCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["court"]>
 
@@ -5993,8 +6219,9 @@ export namespace Prisma {
     id?: boolean
     venueId?: boolean
     name?: boolean
+    slug?: boolean
     sport?: boolean
-    pricePerHour?: boolean
+    type?: boolean
     currency?: boolean
     openTime?: boolean
     closeTime?: boolean
@@ -6007,8 +6234,9 @@ export namespace Prisma {
     id?: boolean
     venueId?: boolean
     name?: boolean
+    slug?: boolean
     sport?: boolean
-    pricePerHour?: boolean
+    type?: boolean
     currency?: boolean
     openTime?: boolean
     closeTime?: boolean
@@ -6021,8 +6249,9 @@ export namespace Prisma {
     id?: boolean
     venueId?: boolean
     name?: boolean
+    slug?: boolean
     sport?: boolean
-    pricePerHour?: boolean
+    type?: boolean
     currency?: boolean
     openTime?: boolean
     closeTime?: boolean
@@ -6030,10 +6259,12 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CourtOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "venueId" | "name" | "sport" | "pricePerHour" | "currency" | "openTime" | "closeTime" | "createdAt" | "updatedAt", ExtArgs["result"]["court"]>
+  export type CourtOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "venueId" | "name" | "slug" | "sport" | "type" | "currency" | "openTime" | "closeTime" | "createdAt" | "updatedAt", ExtArgs["result"]["court"]>
   export type CourtInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     venue?: boolean | VenueDefaultArgs<ExtArgs>
+    priceSlots?: boolean | Court$priceSlotsArgs<ExtArgs>
     bookings?: boolean | Court$bookingsArgs<ExtArgs>
+    reviews?: boolean | Court$reviewsArgs<ExtArgs>
     _count?: boolean | CourtCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CourtIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6047,14 +6278,17 @@ export namespace Prisma {
     name: "Court"
     objects: {
       venue: Prisma.$VenuePayload<ExtArgs>
+      priceSlots: Prisma.$PriceSlotPayload<ExtArgs>[]
       bookings: Prisma.$BookingPayload<ExtArgs>[]
+      reviews: Prisma.$CourtReviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       venueId: number
       name: string
+      slug: string
       sport: string
-      pricePerHour: number
+      type: string
       currency: string
       openTime: number
       closeTime: number
@@ -6455,7 +6689,9 @@ export namespace Prisma {
   export interface Prisma__CourtClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     venue<T extends VenueDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VenueDefaultArgs<ExtArgs>>): Prisma__VenueClient<$Result.GetResult<Prisma.$VenuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    priceSlots<T extends Court$priceSlotsArgs<ExtArgs> = {}>(args?: Subset<T, Court$priceSlotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     bookings<T extends Court$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, Court$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviews<T extends Court$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, Court$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6488,8 +6724,9 @@ export namespace Prisma {
     readonly id: FieldRef<"Court", 'Int'>
     readonly venueId: FieldRef<"Court", 'Int'>
     readonly name: FieldRef<"Court", 'String'>
+    readonly slug: FieldRef<"Court", 'String'>
     readonly sport: FieldRef<"Court", 'String'>
-    readonly pricePerHour: FieldRef<"Court", 'Int'>
+    readonly type: FieldRef<"Court", 'String'>
     readonly currency: FieldRef<"Court", 'String'>
     readonly openTime: FieldRef<"Court", 'Int'>
     readonly closeTime: FieldRef<"Court", 'Int'>
@@ -6891,6 +7128,30 @@ export namespace Prisma {
   }
 
   /**
+   * Court.priceSlots
+   */
+  export type Court$priceSlotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
+    where?: PriceSlotWhereInput
+    orderBy?: PriceSlotOrderByWithRelationInput | PriceSlotOrderByWithRelationInput[]
+    cursor?: PriceSlotWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PriceSlotScalarFieldEnum | PriceSlotScalarFieldEnum[]
+  }
+
+  /**
    * Court.bookings
    */
   export type Court$bookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6915,6 +7176,30 @@ export namespace Prisma {
   }
 
   /**
+   * Court.reviews
+   */
+  export type Court$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    where?: CourtReviewWhereInput
+    orderBy?: CourtReviewOrderByWithRelationInput | CourtReviewOrderByWithRelationInput[]
+    cursor?: CourtReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CourtReviewScalarFieldEnum | CourtReviewScalarFieldEnum[]
+  }
+
+  /**
    * Court without action
    */
   export type CourtDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6930,6 +7215,2282 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CourtInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VenueReview
+   */
+
+  export type AggregateVenueReview = {
+    _count: VenueReviewCountAggregateOutputType | null
+    _avg: VenueReviewAvgAggregateOutputType | null
+    _sum: VenueReviewSumAggregateOutputType | null
+    _min: VenueReviewMinAggregateOutputType | null
+    _max: VenueReviewMaxAggregateOutputType | null
+  }
+
+  export type VenueReviewAvgAggregateOutputType = {
+    id: number | null
+    venueId: number | null
+    userId: number | null
+    rating: number | null
+  }
+
+  export type VenueReviewSumAggregateOutputType = {
+    id: number | null
+    venueId: number | null
+    userId: number | null
+    rating: number | null
+  }
+
+  export type VenueReviewMinAggregateOutputType = {
+    id: number | null
+    venueId: number | null
+    userId: number | null
+    rating: number | null
+    comment: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VenueReviewMaxAggregateOutputType = {
+    id: number | null
+    venueId: number | null
+    userId: number | null
+    rating: number | null
+    comment: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VenueReviewCountAggregateOutputType = {
+    id: number
+    venueId: number
+    userId: number
+    rating: number
+    comment: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VenueReviewAvgAggregateInputType = {
+    id?: true
+    venueId?: true
+    userId?: true
+    rating?: true
+  }
+
+  export type VenueReviewSumAggregateInputType = {
+    id?: true
+    venueId?: true
+    userId?: true
+    rating?: true
+  }
+
+  export type VenueReviewMinAggregateInputType = {
+    id?: true
+    venueId?: true
+    userId?: true
+    rating?: true
+    comment?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VenueReviewMaxAggregateInputType = {
+    id?: true
+    venueId?: true
+    userId?: true
+    rating?: true
+    comment?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VenueReviewCountAggregateInputType = {
+    id?: true
+    venueId?: true
+    userId?: true
+    rating?: true
+    comment?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VenueReviewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VenueReview to aggregate.
+     */
+    where?: VenueReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VenueReviews to fetch.
+     */
+    orderBy?: VenueReviewOrderByWithRelationInput | VenueReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VenueReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VenueReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VenueReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VenueReviews
+    **/
+    _count?: true | VenueReviewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VenueReviewAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VenueReviewSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VenueReviewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VenueReviewMaxAggregateInputType
+  }
+
+  export type GetVenueReviewAggregateType<T extends VenueReviewAggregateArgs> = {
+        [P in keyof T & keyof AggregateVenueReview]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVenueReview[P]>
+      : GetScalarType<T[P], AggregateVenueReview[P]>
+  }
+
+
+
+
+  export type VenueReviewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VenueReviewWhereInput
+    orderBy?: VenueReviewOrderByWithAggregationInput | VenueReviewOrderByWithAggregationInput[]
+    by: VenueReviewScalarFieldEnum[] | VenueReviewScalarFieldEnum
+    having?: VenueReviewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VenueReviewCountAggregateInputType | true
+    _avg?: VenueReviewAvgAggregateInputType
+    _sum?: VenueReviewSumAggregateInputType
+    _min?: VenueReviewMinAggregateInputType
+    _max?: VenueReviewMaxAggregateInputType
+  }
+
+  export type VenueReviewGroupByOutputType = {
+    id: number
+    venueId: number
+    userId: number
+    rating: number
+    comment: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: VenueReviewCountAggregateOutputType | null
+    _avg: VenueReviewAvgAggregateOutputType | null
+    _sum: VenueReviewSumAggregateOutputType | null
+    _min: VenueReviewMinAggregateOutputType | null
+    _max: VenueReviewMaxAggregateOutputType | null
+  }
+
+  type GetVenueReviewGroupByPayload<T extends VenueReviewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VenueReviewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VenueReviewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VenueReviewGroupByOutputType[P]>
+            : GetScalarType<T[P], VenueReviewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VenueReviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    venueId?: boolean
+    userId?: boolean
+    rating?: boolean
+    comment?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["venueReview"]>
+
+  export type VenueReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    venueId?: boolean
+    userId?: boolean
+    rating?: boolean
+    comment?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["venueReview"]>
+
+  export type VenueReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    venueId?: boolean
+    userId?: boolean
+    rating?: boolean
+    comment?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["venueReview"]>
+
+  export type VenueReviewSelectScalar = {
+    id?: boolean
+    venueId?: boolean
+    userId?: boolean
+    rating?: boolean
+    comment?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type VenueReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "venueId" | "userId" | "rating" | "comment" | "createdAt" | "updatedAt", ExtArgs["result"]["venueReview"]>
+  export type VenueReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type VenueReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type VenueReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $VenueReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VenueReview"
+    objects: {
+      venue: Prisma.$VenuePayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      venueId: number
+      userId: number
+      rating: number
+      comment: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["venueReview"]>
+    composites: {}
+  }
+
+  type VenueReviewGetPayload<S extends boolean | null | undefined | VenueReviewDefaultArgs> = $Result.GetResult<Prisma.$VenueReviewPayload, S>
+
+  type VenueReviewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VenueReviewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VenueReviewCountAggregateInputType | true
+    }
+
+  export interface VenueReviewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VenueReview'], meta: { name: 'VenueReview' } }
+    /**
+     * Find zero or one VenueReview that matches the filter.
+     * @param {VenueReviewFindUniqueArgs} args - Arguments to find a VenueReview
+     * @example
+     * // Get one VenueReview
+     * const venueReview = await prisma.venueReview.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VenueReviewFindUniqueArgs>(args: SelectSubset<T, VenueReviewFindUniqueArgs<ExtArgs>>): Prisma__VenueReviewClient<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VenueReview that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VenueReviewFindUniqueOrThrowArgs} args - Arguments to find a VenueReview
+     * @example
+     * // Get one VenueReview
+     * const venueReview = await prisma.venueReview.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VenueReviewFindUniqueOrThrowArgs>(args: SelectSubset<T, VenueReviewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VenueReviewClient<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VenueReview that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenueReviewFindFirstArgs} args - Arguments to find a VenueReview
+     * @example
+     * // Get one VenueReview
+     * const venueReview = await prisma.venueReview.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VenueReviewFindFirstArgs>(args?: SelectSubset<T, VenueReviewFindFirstArgs<ExtArgs>>): Prisma__VenueReviewClient<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VenueReview that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenueReviewFindFirstOrThrowArgs} args - Arguments to find a VenueReview
+     * @example
+     * // Get one VenueReview
+     * const venueReview = await prisma.venueReview.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VenueReviewFindFirstOrThrowArgs>(args?: SelectSubset<T, VenueReviewFindFirstOrThrowArgs<ExtArgs>>): Prisma__VenueReviewClient<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VenueReviews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenueReviewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VenueReviews
+     * const venueReviews = await prisma.venueReview.findMany()
+     * 
+     * // Get first 10 VenueReviews
+     * const venueReviews = await prisma.venueReview.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const venueReviewWithIdOnly = await prisma.venueReview.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VenueReviewFindManyArgs>(args?: SelectSubset<T, VenueReviewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VenueReview.
+     * @param {VenueReviewCreateArgs} args - Arguments to create a VenueReview.
+     * @example
+     * // Create one VenueReview
+     * const VenueReview = await prisma.venueReview.create({
+     *   data: {
+     *     // ... data to create a VenueReview
+     *   }
+     * })
+     * 
+     */
+    create<T extends VenueReviewCreateArgs>(args: SelectSubset<T, VenueReviewCreateArgs<ExtArgs>>): Prisma__VenueReviewClient<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VenueReviews.
+     * @param {VenueReviewCreateManyArgs} args - Arguments to create many VenueReviews.
+     * @example
+     * // Create many VenueReviews
+     * const venueReview = await prisma.venueReview.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VenueReviewCreateManyArgs>(args?: SelectSubset<T, VenueReviewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VenueReviews and returns the data saved in the database.
+     * @param {VenueReviewCreateManyAndReturnArgs} args - Arguments to create many VenueReviews.
+     * @example
+     * // Create many VenueReviews
+     * const venueReview = await prisma.venueReview.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VenueReviews and only return the `id`
+     * const venueReviewWithIdOnly = await prisma.venueReview.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VenueReviewCreateManyAndReturnArgs>(args?: SelectSubset<T, VenueReviewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a VenueReview.
+     * @param {VenueReviewDeleteArgs} args - Arguments to delete one VenueReview.
+     * @example
+     * // Delete one VenueReview
+     * const VenueReview = await prisma.venueReview.delete({
+     *   where: {
+     *     // ... filter to delete one VenueReview
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VenueReviewDeleteArgs>(args: SelectSubset<T, VenueReviewDeleteArgs<ExtArgs>>): Prisma__VenueReviewClient<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VenueReview.
+     * @param {VenueReviewUpdateArgs} args - Arguments to update one VenueReview.
+     * @example
+     * // Update one VenueReview
+     * const venueReview = await prisma.venueReview.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VenueReviewUpdateArgs>(args: SelectSubset<T, VenueReviewUpdateArgs<ExtArgs>>): Prisma__VenueReviewClient<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VenueReviews.
+     * @param {VenueReviewDeleteManyArgs} args - Arguments to filter VenueReviews to delete.
+     * @example
+     * // Delete a few VenueReviews
+     * const { count } = await prisma.venueReview.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VenueReviewDeleteManyArgs>(args?: SelectSubset<T, VenueReviewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VenueReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenueReviewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VenueReviews
+     * const venueReview = await prisma.venueReview.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VenueReviewUpdateManyArgs>(args: SelectSubset<T, VenueReviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VenueReviews and returns the data updated in the database.
+     * @param {VenueReviewUpdateManyAndReturnArgs} args - Arguments to update many VenueReviews.
+     * @example
+     * // Update many VenueReviews
+     * const venueReview = await prisma.venueReview.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more VenueReviews and only return the `id`
+     * const venueReviewWithIdOnly = await prisma.venueReview.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VenueReviewUpdateManyAndReturnArgs>(args: SelectSubset<T, VenueReviewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one VenueReview.
+     * @param {VenueReviewUpsertArgs} args - Arguments to update or create a VenueReview.
+     * @example
+     * // Update or create a VenueReview
+     * const venueReview = await prisma.venueReview.upsert({
+     *   create: {
+     *     // ... data to create a VenueReview
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VenueReview we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VenueReviewUpsertArgs>(args: SelectSubset<T, VenueReviewUpsertArgs<ExtArgs>>): Prisma__VenueReviewClient<$Result.GetResult<Prisma.$VenueReviewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VenueReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenueReviewCountArgs} args - Arguments to filter VenueReviews to count.
+     * @example
+     * // Count the number of VenueReviews
+     * const count = await prisma.venueReview.count({
+     *   where: {
+     *     // ... the filter for the VenueReviews we want to count
+     *   }
+     * })
+    **/
+    count<T extends VenueReviewCountArgs>(
+      args?: Subset<T, VenueReviewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VenueReviewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VenueReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenueReviewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VenueReviewAggregateArgs>(args: Subset<T, VenueReviewAggregateArgs>): Prisma.PrismaPromise<GetVenueReviewAggregateType<T>>
+
+    /**
+     * Group by VenueReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenueReviewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VenueReviewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VenueReviewGroupByArgs['orderBy'] }
+        : { orderBy?: VenueReviewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VenueReviewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVenueReviewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VenueReview model
+   */
+  readonly fields: VenueReviewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VenueReview.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VenueReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    venue<T extends VenueDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VenueDefaultArgs<ExtArgs>>): Prisma__VenueClient<$Result.GetResult<Prisma.$VenuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VenueReview model
+   */
+  interface VenueReviewFieldRefs {
+    readonly id: FieldRef<"VenueReview", 'Int'>
+    readonly venueId: FieldRef<"VenueReview", 'Int'>
+    readonly userId: FieldRef<"VenueReview", 'Int'>
+    readonly rating: FieldRef<"VenueReview", 'Int'>
+    readonly comment: FieldRef<"VenueReview", 'String'>
+    readonly createdAt: FieldRef<"VenueReview", 'DateTime'>
+    readonly updatedAt: FieldRef<"VenueReview", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VenueReview findUnique
+   */
+  export type VenueReviewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which VenueReview to fetch.
+     */
+    where: VenueReviewWhereUniqueInput
+  }
+
+  /**
+   * VenueReview findUniqueOrThrow
+   */
+  export type VenueReviewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which VenueReview to fetch.
+     */
+    where: VenueReviewWhereUniqueInput
+  }
+
+  /**
+   * VenueReview findFirst
+   */
+  export type VenueReviewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which VenueReview to fetch.
+     */
+    where?: VenueReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VenueReviews to fetch.
+     */
+    orderBy?: VenueReviewOrderByWithRelationInput | VenueReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VenueReviews.
+     */
+    cursor?: VenueReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VenueReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VenueReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VenueReviews.
+     */
+    distinct?: VenueReviewScalarFieldEnum | VenueReviewScalarFieldEnum[]
+  }
+
+  /**
+   * VenueReview findFirstOrThrow
+   */
+  export type VenueReviewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which VenueReview to fetch.
+     */
+    where?: VenueReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VenueReviews to fetch.
+     */
+    orderBy?: VenueReviewOrderByWithRelationInput | VenueReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VenueReviews.
+     */
+    cursor?: VenueReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VenueReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VenueReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VenueReviews.
+     */
+    distinct?: VenueReviewScalarFieldEnum | VenueReviewScalarFieldEnum[]
+  }
+
+  /**
+   * VenueReview findMany
+   */
+  export type VenueReviewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which VenueReviews to fetch.
+     */
+    where?: VenueReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VenueReviews to fetch.
+     */
+    orderBy?: VenueReviewOrderByWithRelationInput | VenueReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VenueReviews.
+     */
+    cursor?: VenueReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VenueReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VenueReviews.
+     */
+    skip?: number
+    distinct?: VenueReviewScalarFieldEnum | VenueReviewScalarFieldEnum[]
+  }
+
+  /**
+   * VenueReview create
+   */
+  export type VenueReviewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VenueReview.
+     */
+    data: XOR<VenueReviewCreateInput, VenueReviewUncheckedCreateInput>
+  }
+
+  /**
+   * VenueReview createMany
+   */
+  export type VenueReviewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VenueReviews.
+     */
+    data: VenueReviewCreateManyInput | VenueReviewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VenueReview createManyAndReturn
+   */
+  export type VenueReviewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * The data used to create many VenueReviews.
+     */
+    data: VenueReviewCreateManyInput | VenueReviewCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VenueReview update
+   */
+  export type VenueReviewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VenueReview.
+     */
+    data: XOR<VenueReviewUpdateInput, VenueReviewUncheckedUpdateInput>
+    /**
+     * Choose, which VenueReview to update.
+     */
+    where: VenueReviewWhereUniqueInput
+  }
+
+  /**
+   * VenueReview updateMany
+   */
+  export type VenueReviewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VenueReviews.
+     */
+    data: XOR<VenueReviewUpdateManyMutationInput, VenueReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which VenueReviews to update
+     */
+    where?: VenueReviewWhereInput
+    /**
+     * Limit how many VenueReviews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VenueReview updateManyAndReturn
+   */
+  export type VenueReviewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * The data used to update VenueReviews.
+     */
+    data: XOR<VenueReviewUpdateManyMutationInput, VenueReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which VenueReviews to update
+     */
+    where?: VenueReviewWhereInput
+    /**
+     * Limit how many VenueReviews to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VenueReview upsert
+   */
+  export type VenueReviewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VenueReview to update in case it exists.
+     */
+    where: VenueReviewWhereUniqueInput
+    /**
+     * In case the VenueReview found by the `where` argument doesn't exist, create a new VenueReview with this data.
+     */
+    create: XOR<VenueReviewCreateInput, VenueReviewUncheckedCreateInput>
+    /**
+     * In case the VenueReview was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VenueReviewUpdateInput, VenueReviewUncheckedUpdateInput>
+  }
+
+  /**
+   * VenueReview delete
+   */
+  export type VenueReviewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewInclude<ExtArgs> | null
+    /**
+     * Filter which VenueReview to delete.
+     */
+    where: VenueReviewWhereUniqueInput
+  }
+
+  /**
+   * VenueReview deleteMany
+   */
+  export type VenueReviewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VenueReviews to delete
+     */
+    where?: VenueReviewWhereInput
+    /**
+     * Limit how many VenueReviews to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VenueReview without action
+   */
+  export type VenueReviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenueReview
+     */
+    select?: VenueReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenueReview
+     */
+    omit?: VenueReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueReviewInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CourtReview
+   */
+
+  export type AggregateCourtReview = {
+    _count: CourtReviewCountAggregateOutputType | null
+    _avg: CourtReviewAvgAggregateOutputType | null
+    _sum: CourtReviewSumAggregateOutputType | null
+    _min: CourtReviewMinAggregateOutputType | null
+    _max: CourtReviewMaxAggregateOutputType | null
+  }
+
+  export type CourtReviewAvgAggregateOutputType = {
+    id: number | null
+    courtId: number | null
+    userId: number | null
+    rating: number | null
+  }
+
+  export type CourtReviewSumAggregateOutputType = {
+    id: number | null
+    courtId: number | null
+    userId: number | null
+    rating: number | null
+  }
+
+  export type CourtReviewMinAggregateOutputType = {
+    id: number | null
+    courtId: number | null
+    userId: number | null
+    rating: number | null
+    comment: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CourtReviewMaxAggregateOutputType = {
+    id: number | null
+    courtId: number | null
+    userId: number | null
+    rating: number | null
+    comment: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CourtReviewCountAggregateOutputType = {
+    id: number
+    courtId: number
+    userId: number
+    rating: number
+    comment: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CourtReviewAvgAggregateInputType = {
+    id?: true
+    courtId?: true
+    userId?: true
+    rating?: true
+  }
+
+  export type CourtReviewSumAggregateInputType = {
+    id?: true
+    courtId?: true
+    userId?: true
+    rating?: true
+  }
+
+  export type CourtReviewMinAggregateInputType = {
+    id?: true
+    courtId?: true
+    userId?: true
+    rating?: true
+    comment?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CourtReviewMaxAggregateInputType = {
+    id?: true
+    courtId?: true
+    userId?: true
+    rating?: true
+    comment?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CourtReviewCountAggregateInputType = {
+    id?: true
+    courtId?: true
+    userId?: true
+    rating?: true
+    comment?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CourtReviewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CourtReview to aggregate.
+     */
+    where?: CourtReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CourtReviews to fetch.
+     */
+    orderBy?: CourtReviewOrderByWithRelationInput | CourtReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CourtReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CourtReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CourtReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CourtReviews
+    **/
+    _count?: true | CourtReviewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CourtReviewAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CourtReviewSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CourtReviewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CourtReviewMaxAggregateInputType
+  }
+
+  export type GetCourtReviewAggregateType<T extends CourtReviewAggregateArgs> = {
+        [P in keyof T & keyof AggregateCourtReview]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCourtReview[P]>
+      : GetScalarType<T[P], AggregateCourtReview[P]>
+  }
+
+
+
+
+  export type CourtReviewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CourtReviewWhereInput
+    orderBy?: CourtReviewOrderByWithAggregationInput | CourtReviewOrderByWithAggregationInput[]
+    by: CourtReviewScalarFieldEnum[] | CourtReviewScalarFieldEnum
+    having?: CourtReviewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CourtReviewCountAggregateInputType | true
+    _avg?: CourtReviewAvgAggregateInputType
+    _sum?: CourtReviewSumAggregateInputType
+    _min?: CourtReviewMinAggregateInputType
+    _max?: CourtReviewMaxAggregateInputType
+  }
+
+  export type CourtReviewGroupByOutputType = {
+    id: number
+    courtId: number
+    userId: number
+    rating: number
+    comment: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CourtReviewCountAggregateOutputType | null
+    _avg: CourtReviewAvgAggregateOutputType | null
+    _sum: CourtReviewSumAggregateOutputType | null
+    _min: CourtReviewMinAggregateOutputType | null
+    _max: CourtReviewMaxAggregateOutputType | null
+  }
+
+  type GetCourtReviewGroupByPayload<T extends CourtReviewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CourtReviewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CourtReviewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CourtReviewGroupByOutputType[P]>
+            : GetScalarType<T[P], CourtReviewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CourtReviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    courtId?: boolean
+    userId?: boolean
+    rating?: boolean
+    comment?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["courtReview"]>
+
+  export type CourtReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    courtId?: boolean
+    userId?: boolean
+    rating?: boolean
+    comment?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["courtReview"]>
+
+  export type CourtReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    courtId?: boolean
+    userId?: boolean
+    rating?: boolean
+    comment?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["courtReview"]>
+
+  export type CourtReviewSelectScalar = {
+    id?: boolean
+    courtId?: boolean
+    userId?: boolean
+    rating?: boolean
+    comment?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CourtReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "courtId" | "userId" | "rating" | "comment" | "createdAt" | "updatedAt", ExtArgs["result"]["courtReview"]>
+  export type CourtReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CourtReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CourtReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CourtReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CourtReview"
+    objects: {
+      court: Prisma.$CourtPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      courtId: number
+      userId: number
+      rating: number
+      comment: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["courtReview"]>
+    composites: {}
+  }
+
+  type CourtReviewGetPayload<S extends boolean | null | undefined | CourtReviewDefaultArgs> = $Result.GetResult<Prisma.$CourtReviewPayload, S>
+
+  type CourtReviewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CourtReviewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CourtReviewCountAggregateInputType | true
+    }
+
+  export interface CourtReviewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CourtReview'], meta: { name: 'CourtReview' } }
+    /**
+     * Find zero or one CourtReview that matches the filter.
+     * @param {CourtReviewFindUniqueArgs} args - Arguments to find a CourtReview
+     * @example
+     * // Get one CourtReview
+     * const courtReview = await prisma.courtReview.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CourtReviewFindUniqueArgs>(args: SelectSubset<T, CourtReviewFindUniqueArgs<ExtArgs>>): Prisma__CourtReviewClient<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CourtReview that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CourtReviewFindUniqueOrThrowArgs} args - Arguments to find a CourtReview
+     * @example
+     * // Get one CourtReview
+     * const courtReview = await prisma.courtReview.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CourtReviewFindUniqueOrThrowArgs>(args: SelectSubset<T, CourtReviewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CourtReviewClient<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CourtReview that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CourtReviewFindFirstArgs} args - Arguments to find a CourtReview
+     * @example
+     * // Get one CourtReview
+     * const courtReview = await prisma.courtReview.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CourtReviewFindFirstArgs>(args?: SelectSubset<T, CourtReviewFindFirstArgs<ExtArgs>>): Prisma__CourtReviewClient<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CourtReview that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CourtReviewFindFirstOrThrowArgs} args - Arguments to find a CourtReview
+     * @example
+     * // Get one CourtReview
+     * const courtReview = await prisma.courtReview.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CourtReviewFindFirstOrThrowArgs>(args?: SelectSubset<T, CourtReviewFindFirstOrThrowArgs<ExtArgs>>): Prisma__CourtReviewClient<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CourtReviews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CourtReviewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CourtReviews
+     * const courtReviews = await prisma.courtReview.findMany()
+     * 
+     * // Get first 10 CourtReviews
+     * const courtReviews = await prisma.courtReview.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const courtReviewWithIdOnly = await prisma.courtReview.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CourtReviewFindManyArgs>(args?: SelectSubset<T, CourtReviewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CourtReview.
+     * @param {CourtReviewCreateArgs} args - Arguments to create a CourtReview.
+     * @example
+     * // Create one CourtReview
+     * const CourtReview = await prisma.courtReview.create({
+     *   data: {
+     *     // ... data to create a CourtReview
+     *   }
+     * })
+     * 
+     */
+    create<T extends CourtReviewCreateArgs>(args: SelectSubset<T, CourtReviewCreateArgs<ExtArgs>>): Prisma__CourtReviewClient<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CourtReviews.
+     * @param {CourtReviewCreateManyArgs} args - Arguments to create many CourtReviews.
+     * @example
+     * // Create many CourtReviews
+     * const courtReview = await prisma.courtReview.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CourtReviewCreateManyArgs>(args?: SelectSubset<T, CourtReviewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CourtReviews and returns the data saved in the database.
+     * @param {CourtReviewCreateManyAndReturnArgs} args - Arguments to create many CourtReviews.
+     * @example
+     * // Create many CourtReviews
+     * const courtReview = await prisma.courtReview.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CourtReviews and only return the `id`
+     * const courtReviewWithIdOnly = await prisma.courtReview.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CourtReviewCreateManyAndReturnArgs>(args?: SelectSubset<T, CourtReviewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CourtReview.
+     * @param {CourtReviewDeleteArgs} args - Arguments to delete one CourtReview.
+     * @example
+     * // Delete one CourtReview
+     * const CourtReview = await prisma.courtReview.delete({
+     *   where: {
+     *     // ... filter to delete one CourtReview
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CourtReviewDeleteArgs>(args: SelectSubset<T, CourtReviewDeleteArgs<ExtArgs>>): Prisma__CourtReviewClient<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CourtReview.
+     * @param {CourtReviewUpdateArgs} args - Arguments to update one CourtReview.
+     * @example
+     * // Update one CourtReview
+     * const courtReview = await prisma.courtReview.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CourtReviewUpdateArgs>(args: SelectSubset<T, CourtReviewUpdateArgs<ExtArgs>>): Prisma__CourtReviewClient<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CourtReviews.
+     * @param {CourtReviewDeleteManyArgs} args - Arguments to filter CourtReviews to delete.
+     * @example
+     * // Delete a few CourtReviews
+     * const { count } = await prisma.courtReview.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CourtReviewDeleteManyArgs>(args?: SelectSubset<T, CourtReviewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CourtReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CourtReviewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CourtReviews
+     * const courtReview = await prisma.courtReview.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CourtReviewUpdateManyArgs>(args: SelectSubset<T, CourtReviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CourtReviews and returns the data updated in the database.
+     * @param {CourtReviewUpdateManyAndReturnArgs} args - Arguments to update many CourtReviews.
+     * @example
+     * // Update many CourtReviews
+     * const courtReview = await prisma.courtReview.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CourtReviews and only return the `id`
+     * const courtReviewWithIdOnly = await prisma.courtReview.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CourtReviewUpdateManyAndReturnArgs>(args: SelectSubset<T, CourtReviewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CourtReview.
+     * @param {CourtReviewUpsertArgs} args - Arguments to update or create a CourtReview.
+     * @example
+     * // Update or create a CourtReview
+     * const courtReview = await prisma.courtReview.upsert({
+     *   create: {
+     *     // ... data to create a CourtReview
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CourtReview we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CourtReviewUpsertArgs>(args: SelectSubset<T, CourtReviewUpsertArgs<ExtArgs>>): Prisma__CourtReviewClient<$Result.GetResult<Prisma.$CourtReviewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CourtReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CourtReviewCountArgs} args - Arguments to filter CourtReviews to count.
+     * @example
+     * // Count the number of CourtReviews
+     * const count = await prisma.courtReview.count({
+     *   where: {
+     *     // ... the filter for the CourtReviews we want to count
+     *   }
+     * })
+    **/
+    count<T extends CourtReviewCountArgs>(
+      args?: Subset<T, CourtReviewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CourtReviewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CourtReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CourtReviewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CourtReviewAggregateArgs>(args: Subset<T, CourtReviewAggregateArgs>): Prisma.PrismaPromise<GetCourtReviewAggregateType<T>>
+
+    /**
+     * Group by CourtReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CourtReviewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CourtReviewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CourtReviewGroupByArgs['orderBy'] }
+        : { orderBy?: CourtReviewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CourtReviewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCourtReviewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CourtReview model
+   */
+  readonly fields: CourtReviewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CourtReview.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CourtReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    court<T extends CourtDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CourtDefaultArgs<ExtArgs>>): Prisma__CourtClient<$Result.GetResult<Prisma.$CourtPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CourtReview model
+   */
+  interface CourtReviewFieldRefs {
+    readonly id: FieldRef<"CourtReview", 'Int'>
+    readonly courtId: FieldRef<"CourtReview", 'Int'>
+    readonly userId: FieldRef<"CourtReview", 'Int'>
+    readonly rating: FieldRef<"CourtReview", 'Int'>
+    readonly comment: FieldRef<"CourtReview", 'String'>
+    readonly createdAt: FieldRef<"CourtReview", 'DateTime'>
+    readonly updatedAt: FieldRef<"CourtReview", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CourtReview findUnique
+   */
+  export type CourtReviewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which CourtReview to fetch.
+     */
+    where: CourtReviewWhereUniqueInput
+  }
+
+  /**
+   * CourtReview findUniqueOrThrow
+   */
+  export type CourtReviewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which CourtReview to fetch.
+     */
+    where: CourtReviewWhereUniqueInput
+  }
+
+  /**
+   * CourtReview findFirst
+   */
+  export type CourtReviewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which CourtReview to fetch.
+     */
+    where?: CourtReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CourtReviews to fetch.
+     */
+    orderBy?: CourtReviewOrderByWithRelationInput | CourtReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CourtReviews.
+     */
+    cursor?: CourtReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CourtReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CourtReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CourtReviews.
+     */
+    distinct?: CourtReviewScalarFieldEnum | CourtReviewScalarFieldEnum[]
+  }
+
+  /**
+   * CourtReview findFirstOrThrow
+   */
+  export type CourtReviewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which CourtReview to fetch.
+     */
+    where?: CourtReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CourtReviews to fetch.
+     */
+    orderBy?: CourtReviewOrderByWithRelationInput | CourtReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CourtReviews.
+     */
+    cursor?: CourtReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CourtReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CourtReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CourtReviews.
+     */
+    distinct?: CourtReviewScalarFieldEnum | CourtReviewScalarFieldEnum[]
+  }
+
+  /**
+   * CourtReview findMany
+   */
+  export type CourtReviewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which CourtReviews to fetch.
+     */
+    where?: CourtReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CourtReviews to fetch.
+     */
+    orderBy?: CourtReviewOrderByWithRelationInput | CourtReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CourtReviews.
+     */
+    cursor?: CourtReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CourtReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CourtReviews.
+     */
+    skip?: number
+    distinct?: CourtReviewScalarFieldEnum | CourtReviewScalarFieldEnum[]
+  }
+
+  /**
+   * CourtReview create
+   */
+  export type CourtReviewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CourtReview.
+     */
+    data: XOR<CourtReviewCreateInput, CourtReviewUncheckedCreateInput>
+  }
+
+  /**
+   * CourtReview createMany
+   */
+  export type CourtReviewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CourtReviews.
+     */
+    data: CourtReviewCreateManyInput | CourtReviewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CourtReview createManyAndReturn
+   */
+  export type CourtReviewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * The data used to create many CourtReviews.
+     */
+    data: CourtReviewCreateManyInput | CourtReviewCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CourtReview update
+   */
+  export type CourtReviewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CourtReview.
+     */
+    data: XOR<CourtReviewUpdateInput, CourtReviewUncheckedUpdateInput>
+    /**
+     * Choose, which CourtReview to update.
+     */
+    where: CourtReviewWhereUniqueInput
+  }
+
+  /**
+   * CourtReview updateMany
+   */
+  export type CourtReviewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CourtReviews.
+     */
+    data: XOR<CourtReviewUpdateManyMutationInput, CourtReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which CourtReviews to update
+     */
+    where?: CourtReviewWhereInput
+    /**
+     * Limit how many CourtReviews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CourtReview updateManyAndReturn
+   */
+  export type CourtReviewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * The data used to update CourtReviews.
+     */
+    data: XOR<CourtReviewUpdateManyMutationInput, CourtReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which CourtReviews to update
+     */
+    where?: CourtReviewWhereInput
+    /**
+     * Limit how many CourtReviews to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CourtReview upsert
+   */
+  export type CourtReviewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CourtReview to update in case it exists.
+     */
+    where: CourtReviewWhereUniqueInput
+    /**
+     * In case the CourtReview found by the `where` argument doesn't exist, create a new CourtReview with this data.
+     */
+    create: XOR<CourtReviewCreateInput, CourtReviewUncheckedCreateInput>
+    /**
+     * In case the CourtReview was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CourtReviewUpdateInput, CourtReviewUncheckedUpdateInput>
+  }
+
+  /**
+   * CourtReview delete
+   */
+  export type CourtReviewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
+    /**
+     * Filter which CourtReview to delete.
+     */
+    where: CourtReviewWhereUniqueInput
+  }
+
+  /**
+   * CourtReview deleteMany
+   */
+  export type CourtReviewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CourtReviews to delete
+     */
+    where?: CourtReviewWhereInput
+    /**
+     * Limit how many CourtReviews to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CourtReview without action
+   */
+  export type CourtReviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourtReview
+     */
+    select?: CourtReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CourtReview
+     */
+    omit?: CourtReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourtReviewInclude<ExtArgs> | null
   }
 
 
@@ -6950,6 +9511,7 @@ export namespace Prisma {
     userId: number | null
     courtId: number | null
     paymentId: number | null
+    totalAmount: number | null
   }
 
   export type BookingSumAggregateOutputType = {
@@ -6957,6 +9519,7 @@ export namespace Prisma {
     userId: number | null
     courtId: number | null
     paymentId: number | null
+    totalAmount: number | null
   }
 
   export type BookingMinAggregateOutputType = {
@@ -6970,6 +9533,8 @@ export namespace Prisma {
     idempotencyKey: string | null
     notes: string | null
     createdAt: Date | null
+    totalAmount: number | null
+    currency: string | null
   }
 
   export type BookingMaxAggregateOutputType = {
@@ -6983,6 +9548,8 @@ export namespace Prisma {
     idempotencyKey: string | null
     notes: string | null
     createdAt: Date | null
+    totalAmount: number | null
+    currency: string | null
   }
 
   export type BookingCountAggregateOutputType = {
@@ -6996,6 +9563,8 @@ export namespace Prisma {
     idempotencyKey: number
     notes: number
     createdAt: number
+    totalAmount: number
+    currency: number
     _all: number
   }
 
@@ -7005,6 +9574,7 @@ export namespace Prisma {
     userId?: true
     courtId?: true
     paymentId?: true
+    totalAmount?: true
   }
 
   export type BookingSumAggregateInputType = {
@@ -7012,6 +9582,7 @@ export namespace Prisma {
     userId?: true
     courtId?: true
     paymentId?: true
+    totalAmount?: true
   }
 
   export type BookingMinAggregateInputType = {
@@ -7025,6 +9596,8 @@ export namespace Prisma {
     idempotencyKey?: true
     notes?: true
     createdAt?: true
+    totalAmount?: true
+    currency?: true
   }
 
   export type BookingMaxAggregateInputType = {
@@ -7038,6 +9611,8 @@ export namespace Prisma {
     idempotencyKey?: true
     notes?: true
     createdAt?: true
+    totalAmount?: true
+    currency?: true
   }
 
   export type BookingCountAggregateInputType = {
@@ -7051,6 +9626,8 @@ export namespace Prisma {
     idempotencyKey?: true
     notes?: true
     createdAt?: true
+    totalAmount?: true
+    currency?: true
     _all?: true
   }
 
@@ -7151,6 +9728,8 @@ export namespace Prisma {
     idempotencyKey: string | null
     notes: string | null
     createdAt: Date
+    totalAmount: number
+    currency: string
     _count: BookingCountAggregateOutputType | null
     _avg: BookingAvgAggregateOutputType | null
     _sum: BookingSumAggregateOutputType | null
@@ -7183,6 +9762,8 @@ export namespace Prisma {
     idempotencyKey?: boolean
     notes?: boolean
     createdAt?: boolean
+    totalAmount?: boolean
+    currency?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     court?: boolean | CourtDefaultArgs<ExtArgs>
     payment?: boolean | Booking$paymentArgs<ExtArgs>
@@ -7199,6 +9780,8 @@ export namespace Prisma {
     idempotencyKey?: boolean
     notes?: boolean
     createdAt?: boolean
+    totalAmount?: boolean
+    currency?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     court?: boolean | CourtDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
@@ -7214,6 +9797,8 @@ export namespace Prisma {
     idempotencyKey?: boolean
     notes?: boolean
     createdAt?: boolean
+    totalAmount?: boolean
+    currency?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     court?: boolean | CourtDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
@@ -7229,9 +9814,11 @@ export namespace Prisma {
     idempotencyKey?: boolean
     notes?: boolean
     createdAt?: boolean
+    totalAmount?: boolean
+    currency?: boolean
   }
 
-  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "courtId" | "startTime" | "endTime" | "status" | "paymentId" | "idempotencyKey" | "notes" | "createdAt", ExtArgs["result"]["booking"]>
+  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "courtId" | "startTime" | "endTime" | "status" | "paymentId" | "idempotencyKey" | "notes" | "createdAt" | "totalAmount" | "currency", ExtArgs["result"]["booking"]>
   export type BookingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     court?: boolean | CourtDefaultArgs<ExtArgs>
@@ -7264,6 +9851,8 @@ export namespace Prisma {
       idempotencyKey: string | null
       notes: string | null
       createdAt: Date
+      totalAmount: number
+      currency: string
     }, ExtArgs["result"]["booking"]>
     composites: {}
   }
@@ -7700,6 +10289,8 @@ export namespace Prisma {
     readonly idempotencyKey: FieldRef<"Booking", 'String'>
     readonly notes: FieldRef<"Booking", 'String'>
     readonly createdAt: FieldRef<"Booking", 'DateTime'>
+    readonly totalAmount: FieldRef<"Booking", 'Int'>
+    readonly currency: FieldRef<"Booking", 'String'>
   }
     
 
@@ -8130,6 +10721,1123 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: BookingInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PriceSlot
+   */
+
+  export type AggregatePriceSlot = {
+    _count: PriceSlotCountAggregateOutputType | null
+    _avg: PriceSlotAvgAggregateOutputType | null
+    _sum: PriceSlotSumAggregateOutputType | null
+    _min: PriceSlotMinAggregateOutputType | null
+    _max: PriceSlotMaxAggregateOutputType | null
+  }
+
+  export type PriceSlotAvgAggregateOutputType = {
+    id: number | null
+    courtId: number | null
+    startTime: number | null
+    pricePerHour: number | null
+  }
+
+  export type PriceSlotSumAggregateOutputType = {
+    id: number | null
+    courtId: number | null
+    startTime: number | null
+    pricePerHour: number | null
+  }
+
+  export type PriceSlotMinAggregateOutputType = {
+    id: number | null
+    courtId: number | null
+    startTime: number | null
+    pricePerHour: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PriceSlotMaxAggregateOutputType = {
+    id: number | null
+    courtId: number | null
+    startTime: number | null
+    pricePerHour: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PriceSlotCountAggregateOutputType = {
+    id: number
+    courtId: number
+    startTime: number
+    pricePerHour: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PriceSlotAvgAggregateInputType = {
+    id?: true
+    courtId?: true
+    startTime?: true
+    pricePerHour?: true
+  }
+
+  export type PriceSlotSumAggregateInputType = {
+    id?: true
+    courtId?: true
+    startTime?: true
+    pricePerHour?: true
+  }
+
+  export type PriceSlotMinAggregateInputType = {
+    id?: true
+    courtId?: true
+    startTime?: true
+    pricePerHour?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PriceSlotMaxAggregateInputType = {
+    id?: true
+    courtId?: true
+    startTime?: true
+    pricePerHour?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PriceSlotCountAggregateInputType = {
+    id?: true
+    courtId?: true
+    startTime?: true
+    pricePerHour?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PriceSlotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PriceSlot to aggregate.
+     */
+    where?: PriceSlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PriceSlots to fetch.
+     */
+    orderBy?: PriceSlotOrderByWithRelationInput | PriceSlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PriceSlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PriceSlots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PriceSlots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PriceSlots
+    **/
+    _count?: true | PriceSlotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PriceSlotAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PriceSlotSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PriceSlotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PriceSlotMaxAggregateInputType
+  }
+
+  export type GetPriceSlotAggregateType<T extends PriceSlotAggregateArgs> = {
+        [P in keyof T & keyof AggregatePriceSlot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePriceSlot[P]>
+      : GetScalarType<T[P], AggregatePriceSlot[P]>
+  }
+
+
+
+
+  export type PriceSlotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PriceSlotWhereInput
+    orderBy?: PriceSlotOrderByWithAggregationInput | PriceSlotOrderByWithAggregationInput[]
+    by: PriceSlotScalarFieldEnum[] | PriceSlotScalarFieldEnum
+    having?: PriceSlotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PriceSlotCountAggregateInputType | true
+    _avg?: PriceSlotAvgAggregateInputType
+    _sum?: PriceSlotSumAggregateInputType
+    _min?: PriceSlotMinAggregateInputType
+    _max?: PriceSlotMaxAggregateInputType
+  }
+
+  export type PriceSlotGroupByOutputType = {
+    id: number
+    courtId: number
+    startTime: number
+    pricePerHour: number
+    createdAt: Date
+    updatedAt: Date
+    _count: PriceSlotCountAggregateOutputType | null
+    _avg: PriceSlotAvgAggregateOutputType | null
+    _sum: PriceSlotSumAggregateOutputType | null
+    _min: PriceSlotMinAggregateOutputType | null
+    _max: PriceSlotMaxAggregateOutputType | null
+  }
+
+  type GetPriceSlotGroupByPayload<T extends PriceSlotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PriceSlotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PriceSlotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PriceSlotGroupByOutputType[P]>
+            : GetScalarType<T[P], PriceSlotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PriceSlotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    courtId?: boolean
+    startTime?: boolean
+    pricePerHour?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["priceSlot"]>
+
+  export type PriceSlotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    courtId?: boolean
+    startTime?: boolean
+    pricePerHour?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["priceSlot"]>
+
+  export type PriceSlotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    courtId?: boolean
+    startTime?: boolean
+    pricePerHour?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["priceSlot"]>
+
+  export type PriceSlotSelectScalar = {
+    id?: boolean
+    courtId?: boolean
+    startTime?: boolean
+    pricePerHour?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PriceSlotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "courtId" | "startTime" | "pricePerHour" | "createdAt" | "updatedAt", ExtArgs["result"]["priceSlot"]>
+  export type PriceSlotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+  }
+  export type PriceSlotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+  }
+  export type PriceSlotIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    court?: boolean | CourtDefaultArgs<ExtArgs>
+  }
+
+  export type $PriceSlotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PriceSlot"
+    objects: {
+      court: Prisma.$CourtPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      courtId: number
+      startTime: number
+      pricePerHour: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["priceSlot"]>
+    composites: {}
+  }
+
+  type PriceSlotGetPayload<S extends boolean | null | undefined | PriceSlotDefaultArgs> = $Result.GetResult<Prisma.$PriceSlotPayload, S>
+
+  type PriceSlotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PriceSlotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PriceSlotCountAggregateInputType | true
+    }
+
+  export interface PriceSlotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PriceSlot'], meta: { name: 'PriceSlot' } }
+    /**
+     * Find zero or one PriceSlot that matches the filter.
+     * @param {PriceSlotFindUniqueArgs} args - Arguments to find a PriceSlot
+     * @example
+     * // Get one PriceSlot
+     * const priceSlot = await prisma.priceSlot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PriceSlotFindUniqueArgs>(args: SelectSubset<T, PriceSlotFindUniqueArgs<ExtArgs>>): Prisma__PriceSlotClient<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PriceSlot that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PriceSlotFindUniqueOrThrowArgs} args - Arguments to find a PriceSlot
+     * @example
+     * // Get one PriceSlot
+     * const priceSlot = await prisma.priceSlot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PriceSlotFindUniqueOrThrowArgs>(args: SelectSubset<T, PriceSlotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PriceSlotClient<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PriceSlot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriceSlotFindFirstArgs} args - Arguments to find a PriceSlot
+     * @example
+     * // Get one PriceSlot
+     * const priceSlot = await prisma.priceSlot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PriceSlotFindFirstArgs>(args?: SelectSubset<T, PriceSlotFindFirstArgs<ExtArgs>>): Prisma__PriceSlotClient<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PriceSlot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriceSlotFindFirstOrThrowArgs} args - Arguments to find a PriceSlot
+     * @example
+     * // Get one PriceSlot
+     * const priceSlot = await prisma.priceSlot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PriceSlotFindFirstOrThrowArgs>(args?: SelectSubset<T, PriceSlotFindFirstOrThrowArgs<ExtArgs>>): Prisma__PriceSlotClient<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PriceSlots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriceSlotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PriceSlots
+     * const priceSlots = await prisma.priceSlot.findMany()
+     * 
+     * // Get first 10 PriceSlots
+     * const priceSlots = await prisma.priceSlot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const priceSlotWithIdOnly = await prisma.priceSlot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PriceSlotFindManyArgs>(args?: SelectSubset<T, PriceSlotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PriceSlot.
+     * @param {PriceSlotCreateArgs} args - Arguments to create a PriceSlot.
+     * @example
+     * // Create one PriceSlot
+     * const PriceSlot = await prisma.priceSlot.create({
+     *   data: {
+     *     // ... data to create a PriceSlot
+     *   }
+     * })
+     * 
+     */
+    create<T extends PriceSlotCreateArgs>(args: SelectSubset<T, PriceSlotCreateArgs<ExtArgs>>): Prisma__PriceSlotClient<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PriceSlots.
+     * @param {PriceSlotCreateManyArgs} args - Arguments to create many PriceSlots.
+     * @example
+     * // Create many PriceSlots
+     * const priceSlot = await prisma.priceSlot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PriceSlotCreateManyArgs>(args?: SelectSubset<T, PriceSlotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PriceSlots and returns the data saved in the database.
+     * @param {PriceSlotCreateManyAndReturnArgs} args - Arguments to create many PriceSlots.
+     * @example
+     * // Create many PriceSlots
+     * const priceSlot = await prisma.priceSlot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PriceSlots and only return the `id`
+     * const priceSlotWithIdOnly = await prisma.priceSlot.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PriceSlotCreateManyAndReturnArgs>(args?: SelectSubset<T, PriceSlotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PriceSlot.
+     * @param {PriceSlotDeleteArgs} args - Arguments to delete one PriceSlot.
+     * @example
+     * // Delete one PriceSlot
+     * const PriceSlot = await prisma.priceSlot.delete({
+     *   where: {
+     *     // ... filter to delete one PriceSlot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PriceSlotDeleteArgs>(args: SelectSubset<T, PriceSlotDeleteArgs<ExtArgs>>): Prisma__PriceSlotClient<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PriceSlot.
+     * @param {PriceSlotUpdateArgs} args - Arguments to update one PriceSlot.
+     * @example
+     * // Update one PriceSlot
+     * const priceSlot = await prisma.priceSlot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PriceSlotUpdateArgs>(args: SelectSubset<T, PriceSlotUpdateArgs<ExtArgs>>): Prisma__PriceSlotClient<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PriceSlots.
+     * @param {PriceSlotDeleteManyArgs} args - Arguments to filter PriceSlots to delete.
+     * @example
+     * // Delete a few PriceSlots
+     * const { count } = await prisma.priceSlot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PriceSlotDeleteManyArgs>(args?: SelectSubset<T, PriceSlotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PriceSlots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriceSlotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PriceSlots
+     * const priceSlot = await prisma.priceSlot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PriceSlotUpdateManyArgs>(args: SelectSubset<T, PriceSlotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PriceSlots and returns the data updated in the database.
+     * @param {PriceSlotUpdateManyAndReturnArgs} args - Arguments to update many PriceSlots.
+     * @example
+     * // Update many PriceSlots
+     * const priceSlot = await prisma.priceSlot.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PriceSlots and only return the `id`
+     * const priceSlotWithIdOnly = await prisma.priceSlot.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PriceSlotUpdateManyAndReturnArgs>(args: SelectSubset<T, PriceSlotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PriceSlot.
+     * @param {PriceSlotUpsertArgs} args - Arguments to update or create a PriceSlot.
+     * @example
+     * // Update or create a PriceSlot
+     * const priceSlot = await prisma.priceSlot.upsert({
+     *   create: {
+     *     // ... data to create a PriceSlot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PriceSlot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PriceSlotUpsertArgs>(args: SelectSubset<T, PriceSlotUpsertArgs<ExtArgs>>): Prisma__PriceSlotClient<$Result.GetResult<Prisma.$PriceSlotPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PriceSlots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriceSlotCountArgs} args - Arguments to filter PriceSlots to count.
+     * @example
+     * // Count the number of PriceSlots
+     * const count = await prisma.priceSlot.count({
+     *   where: {
+     *     // ... the filter for the PriceSlots we want to count
+     *   }
+     * })
+    **/
+    count<T extends PriceSlotCountArgs>(
+      args?: Subset<T, PriceSlotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PriceSlotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PriceSlot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriceSlotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PriceSlotAggregateArgs>(args: Subset<T, PriceSlotAggregateArgs>): Prisma.PrismaPromise<GetPriceSlotAggregateType<T>>
+
+    /**
+     * Group by PriceSlot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriceSlotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PriceSlotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PriceSlotGroupByArgs['orderBy'] }
+        : { orderBy?: PriceSlotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PriceSlotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPriceSlotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PriceSlot model
+   */
+  readonly fields: PriceSlotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PriceSlot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PriceSlotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    court<T extends CourtDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CourtDefaultArgs<ExtArgs>>): Prisma__CourtClient<$Result.GetResult<Prisma.$CourtPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PriceSlot model
+   */
+  interface PriceSlotFieldRefs {
+    readonly id: FieldRef<"PriceSlot", 'Int'>
+    readonly courtId: FieldRef<"PriceSlot", 'Int'>
+    readonly startTime: FieldRef<"PriceSlot", 'Int'>
+    readonly pricePerHour: FieldRef<"PriceSlot", 'Int'>
+    readonly createdAt: FieldRef<"PriceSlot", 'DateTime'>
+    readonly updatedAt: FieldRef<"PriceSlot", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PriceSlot findUnique
+   */
+  export type PriceSlotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
+    /**
+     * Filter, which PriceSlot to fetch.
+     */
+    where: PriceSlotWhereUniqueInput
+  }
+
+  /**
+   * PriceSlot findUniqueOrThrow
+   */
+  export type PriceSlotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
+    /**
+     * Filter, which PriceSlot to fetch.
+     */
+    where: PriceSlotWhereUniqueInput
+  }
+
+  /**
+   * PriceSlot findFirst
+   */
+  export type PriceSlotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
+    /**
+     * Filter, which PriceSlot to fetch.
+     */
+    where?: PriceSlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PriceSlots to fetch.
+     */
+    orderBy?: PriceSlotOrderByWithRelationInput | PriceSlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PriceSlots.
+     */
+    cursor?: PriceSlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PriceSlots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PriceSlots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PriceSlots.
+     */
+    distinct?: PriceSlotScalarFieldEnum | PriceSlotScalarFieldEnum[]
+  }
+
+  /**
+   * PriceSlot findFirstOrThrow
+   */
+  export type PriceSlotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
+    /**
+     * Filter, which PriceSlot to fetch.
+     */
+    where?: PriceSlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PriceSlots to fetch.
+     */
+    orderBy?: PriceSlotOrderByWithRelationInput | PriceSlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PriceSlots.
+     */
+    cursor?: PriceSlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PriceSlots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PriceSlots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PriceSlots.
+     */
+    distinct?: PriceSlotScalarFieldEnum | PriceSlotScalarFieldEnum[]
+  }
+
+  /**
+   * PriceSlot findMany
+   */
+  export type PriceSlotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
+    /**
+     * Filter, which PriceSlots to fetch.
+     */
+    where?: PriceSlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PriceSlots to fetch.
+     */
+    orderBy?: PriceSlotOrderByWithRelationInput | PriceSlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PriceSlots.
+     */
+    cursor?: PriceSlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PriceSlots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PriceSlots.
+     */
+    skip?: number
+    distinct?: PriceSlotScalarFieldEnum | PriceSlotScalarFieldEnum[]
+  }
+
+  /**
+   * PriceSlot create
+   */
+  export type PriceSlotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PriceSlot.
+     */
+    data: XOR<PriceSlotCreateInput, PriceSlotUncheckedCreateInput>
+  }
+
+  /**
+   * PriceSlot createMany
+   */
+  export type PriceSlotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PriceSlots.
+     */
+    data: PriceSlotCreateManyInput | PriceSlotCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PriceSlot createManyAndReturn
+   */
+  export type PriceSlotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * The data used to create many PriceSlots.
+     */
+    data: PriceSlotCreateManyInput | PriceSlotCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PriceSlot update
+   */
+  export type PriceSlotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PriceSlot.
+     */
+    data: XOR<PriceSlotUpdateInput, PriceSlotUncheckedUpdateInput>
+    /**
+     * Choose, which PriceSlot to update.
+     */
+    where: PriceSlotWhereUniqueInput
+  }
+
+  /**
+   * PriceSlot updateMany
+   */
+  export type PriceSlotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PriceSlots.
+     */
+    data: XOR<PriceSlotUpdateManyMutationInput, PriceSlotUncheckedUpdateManyInput>
+    /**
+     * Filter which PriceSlots to update
+     */
+    where?: PriceSlotWhereInput
+    /**
+     * Limit how many PriceSlots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PriceSlot updateManyAndReturn
+   */
+  export type PriceSlotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * The data used to update PriceSlots.
+     */
+    data: XOR<PriceSlotUpdateManyMutationInput, PriceSlotUncheckedUpdateManyInput>
+    /**
+     * Filter which PriceSlots to update
+     */
+    where?: PriceSlotWhereInput
+    /**
+     * Limit how many PriceSlots to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PriceSlot upsert
+   */
+  export type PriceSlotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PriceSlot to update in case it exists.
+     */
+    where: PriceSlotWhereUniqueInput
+    /**
+     * In case the PriceSlot found by the `where` argument doesn't exist, create a new PriceSlot with this data.
+     */
+    create: XOR<PriceSlotCreateInput, PriceSlotUncheckedCreateInput>
+    /**
+     * In case the PriceSlot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PriceSlotUpdateInput, PriceSlotUncheckedUpdateInput>
+  }
+
+  /**
+   * PriceSlot delete
+   */
+  export type PriceSlotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
+    /**
+     * Filter which PriceSlot to delete.
+     */
+    where: PriceSlotWhereUniqueInput
+  }
+
+  /**
+   * PriceSlot deleteMany
+   */
+  export type PriceSlotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PriceSlots to delete
+     */
+    where?: PriceSlotWhereInput
+    /**
+     * Limit how many PriceSlots to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PriceSlot without action
+   */
+  export type PriceSlotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriceSlot
+     */
+    select?: PriceSlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PriceSlot
+     */
+    omit?: PriceSlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriceSlotInclude<ExtArgs> | null
   }
 
 
@@ -9327,1131 +13035,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PaymentInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Review
-   */
-
-  export type AggregateReview = {
-    _count: ReviewCountAggregateOutputType | null
-    _avg: ReviewAvgAggregateOutputType | null
-    _sum: ReviewSumAggregateOutputType | null
-    _min: ReviewMinAggregateOutputType | null
-    _max: ReviewMaxAggregateOutputType | null
-  }
-
-  export type ReviewAvgAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    venueId: number | null
-    rating: number | null
-  }
-
-  export type ReviewSumAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    venueId: number | null
-    rating: number | null
-  }
-
-  export type ReviewMinAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    venueId: number | null
-    rating: number | null
-    comment: string | null
-    createdAt: Date | null
-  }
-
-  export type ReviewMaxAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    venueId: number | null
-    rating: number | null
-    comment: string | null
-    createdAt: Date | null
-  }
-
-  export type ReviewCountAggregateOutputType = {
-    id: number
-    userId: number
-    venueId: number
-    rating: number
-    comment: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type ReviewAvgAggregateInputType = {
-    id?: true
-    userId?: true
-    venueId?: true
-    rating?: true
-  }
-
-  export type ReviewSumAggregateInputType = {
-    id?: true
-    userId?: true
-    venueId?: true
-    rating?: true
-  }
-
-  export type ReviewMinAggregateInputType = {
-    id?: true
-    userId?: true
-    venueId?: true
-    rating?: true
-    comment?: true
-    createdAt?: true
-  }
-
-  export type ReviewMaxAggregateInputType = {
-    id?: true
-    userId?: true
-    venueId?: true
-    rating?: true
-    comment?: true
-    createdAt?: true
-  }
-
-  export type ReviewCountAggregateInputType = {
-    id?: true
-    userId?: true
-    venueId?: true
-    rating?: true
-    comment?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type ReviewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Review to aggregate.
-     */
-    where?: ReviewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Reviews to fetch.
-     */
-    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: ReviewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Reviews from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Reviews.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Reviews
-    **/
-    _count?: true | ReviewCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: ReviewAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ReviewSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ReviewMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ReviewMaxAggregateInputType
-  }
-
-  export type GetReviewAggregateType<T extends ReviewAggregateArgs> = {
-        [P in keyof T & keyof AggregateReview]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateReview[P]>
-      : GetScalarType<T[P], AggregateReview[P]>
-  }
-
-
-
-
-  export type ReviewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ReviewWhereInput
-    orderBy?: ReviewOrderByWithAggregationInput | ReviewOrderByWithAggregationInput[]
-    by: ReviewScalarFieldEnum[] | ReviewScalarFieldEnum
-    having?: ReviewScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ReviewCountAggregateInputType | true
-    _avg?: ReviewAvgAggregateInputType
-    _sum?: ReviewSumAggregateInputType
-    _min?: ReviewMinAggregateInputType
-    _max?: ReviewMaxAggregateInputType
-  }
-
-  export type ReviewGroupByOutputType = {
-    id: number
-    userId: number
-    venueId: number
-    rating: number
-    comment: string | null
-    createdAt: Date
-    _count: ReviewCountAggregateOutputType | null
-    _avg: ReviewAvgAggregateOutputType | null
-    _sum: ReviewSumAggregateOutputType | null
-    _min: ReviewMinAggregateOutputType | null
-    _max: ReviewMaxAggregateOutputType | null
-  }
-
-  type GetReviewGroupByPayload<T extends ReviewGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<ReviewGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ReviewGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ReviewGroupByOutputType[P]>
-            : GetScalarType<T[P], ReviewGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type ReviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    venueId?: boolean
-    rating?: boolean
-    comment?: boolean
-    createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    venue?: boolean | VenueDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["review"]>
-
-  export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    venueId?: boolean
-    rating?: boolean
-    comment?: boolean
-    createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    venue?: boolean | VenueDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["review"]>
-
-  export type ReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    venueId?: boolean
-    rating?: boolean
-    comment?: boolean
-    createdAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    venue?: boolean | VenueDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["review"]>
-
-  export type ReviewSelectScalar = {
-    id?: boolean
-    userId?: boolean
-    venueId?: boolean
-    rating?: boolean
-    comment?: boolean
-    createdAt?: boolean
-  }
-
-  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "venueId" | "rating" | "comment" | "createdAt", ExtArgs["result"]["review"]>
-  export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    venue?: boolean | VenueDefaultArgs<ExtArgs>
-  }
-  export type ReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    venue?: boolean | VenueDefaultArgs<ExtArgs>
-  }
-  export type ReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    venue?: boolean | VenueDefaultArgs<ExtArgs>
-  }
-
-  export type $ReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Review"
-    objects: {
-      user: Prisma.$UserPayload<ExtArgs>
-      venue: Prisma.$VenuePayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      userId: number
-      venueId: number
-      rating: number
-      comment: string | null
-      createdAt: Date
-    }, ExtArgs["result"]["review"]>
-    composites: {}
-  }
-
-  type ReviewGetPayload<S extends boolean | null | undefined | ReviewDefaultArgs> = $Result.GetResult<Prisma.$ReviewPayload, S>
-
-  type ReviewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<ReviewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: ReviewCountAggregateInputType | true
-    }
-
-  export interface ReviewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Review'], meta: { name: 'Review' } }
-    /**
-     * Find zero or one Review that matches the filter.
-     * @param {ReviewFindUniqueArgs} args - Arguments to find a Review
-     * @example
-     * // Get one Review
-     * const review = await prisma.review.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends ReviewFindUniqueArgs>(args: SelectSubset<T, ReviewFindUniqueArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Review that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {ReviewFindUniqueOrThrowArgs} args - Arguments to find a Review
-     * @example
-     * // Get one Review
-     * const review = await prisma.review.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends ReviewFindUniqueOrThrowArgs>(args: SelectSubset<T, ReviewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Review that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReviewFindFirstArgs} args - Arguments to find a Review
-     * @example
-     * // Get one Review
-     * const review = await prisma.review.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends ReviewFindFirstArgs>(args?: SelectSubset<T, ReviewFindFirstArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Review that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReviewFindFirstOrThrowArgs} args - Arguments to find a Review
-     * @example
-     * // Get one Review
-     * const review = await prisma.review.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends ReviewFindFirstOrThrowArgs>(args?: SelectSubset<T, ReviewFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Reviews that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReviewFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Reviews
-     * const reviews = await prisma.review.findMany()
-     * 
-     * // Get first 10 Reviews
-     * const reviews = await prisma.review.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const reviewWithIdOnly = await prisma.review.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends ReviewFindManyArgs>(args?: SelectSubset<T, ReviewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Review.
-     * @param {ReviewCreateArgs} args - Arguments to create a Review.
-     * @example
-     * // Create one Review
-     * const Review = await prisma.review.create({
-     *   data: {
-     *     // ... data to create a Review
-     *   }
-     * })
-     * 
-     */
-    create<T extends ReviewCreateArgs>(args: SelectSubset<T, ReviewCreateArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Reviews.
-     * @param {ReviewCreateManyArgs} args - Arguments to create many Reviews.
-     * @example
-     * // Create many Reviews
-     * const review = await prisma.review.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends ReviewCreateManyArgs>(args?: SelectSubset<T, ReviewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Reviews and returns the data saved in the database.
-     * @param {ReviewCreateManyAndReturnArgs} args - Arguments to create many Reviews.
-     * @example
-     * // Create many Reviews
-     * const review = await prisma.review.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Reviews and only return the `id`
-     * const reviewWithIdOnly = await prisma.review.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends ReviewCreateManyAndReturnArgs>(args?: SelectSubset<T, ReviewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Review.
-     * @param {ReviewDeleteArgs} args - Arguments to delete one Review.
-     * @example
-     * // Delete one Review
-     * const Review = await prisma.review.delete({
-     *   where: {
-     *     // ... filter to delete one Review
-     *   }
-     * })
-     * 
-     */
-    delete<T extends ReviewDeleteArgs>(args: SelectSubset<T, ReviewDeleteArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Review.
-     * @param {ReviewUpdateArgs} args - Arguments to update one Review.
-     * @example
-     * // Update one Review
-     * const review = await prisma.review.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends ReviewUpdateArgs>(args: SelectSubset<T, ReviewUpdateArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Reviews.
-     * @param {ReviewDeleteManyArgs} args - Arguments to filter Reviews to delete.
-     * @example
-     * // Delete a few Reviews
-     * const { count } = await prisma.review.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends ReviewDeleteManyArgs>(args?: SelectSubset<T, ReviewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Reviews.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReviewUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Reviews
-     * const review = await prisma.review.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends ReviewUpdateManyArgs>(args: SelectSubset<T, ReviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Reviews and returns the data updated in the database.
-     * @param {ReviewUpdateManyAndReturnArgs} args - Arguments to update many Reviews.
-     * @example
-     * // Update many Reviews
-     * const review = await prisma.review.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Reviews and only return the `id`
-     * const reviewWithIdOnly = await prisma.review.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends ReviewUpdateManyAndReturnArgs>(args: SelectSubset<T, ReviewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Review.
-     * @param {ReviewUpsertArgs} args - Arguments to update or create a Review.
-     * @example
-     * // Update or create a Review
-     * const review = await prisma.review.upsert({
-     *   create: {
-     *     // ... data to create a Review
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Review we want to update
-     *   }
-     * })
-     */
-    upsert<T extends ReviewUpsertArgs>(args: SelectSubset<T, ReviewUpsertArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Reviews.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReviewCountArgs} args - Arguments to filter Reviews to count.
-     * @example
-     * // Count the number of Reviews
-     * const count = await prisma.review.count({
-     *   where: {
-     *     // ... the filter for the Reviews we want to count
-     *   }
-     * })
-    **/
-    count<T extends ReviewCountArgs>(
-      args?: Subset<T, ReviewCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ReviewCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Review.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReviewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ReviewAggregateArgs>(args: Subset<T, ReviewAggregateArgs>): Prisma.PrismaPromise<GetReviewAggregateType<T>>
-
-    /**
-     * Group by Review.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReviewGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends ReviewGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ReviewGroupByArgs['orderBy'] }
-        : { orderBy?: ReviewGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, ReviewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReviewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Review model
-   */
-  readonly fields: ReviewFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Review.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__ReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    venue<T extends VenueDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VenueDefaultArgs<ExtArgs>>): Prisma__VenueClient<$Result.GetResult<Prisma.$VenuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Review model
-   */
-  interface ReviewFieldRefs {
-    readonly id: FieldRef<"Review", 'Int'>
-    readonly userId: FieldRef<"Review", 'Int'>
-    readonly venueId: FieldRef<"Review", 'Int'>
-    readonly rating: FieldRef<"Review", 'Int'>
-    readonly comment: FieldRef<"Review", 'String'>
-    readonly createdAt: FieldRef<"Review", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Review findUnique
-   */
-  export type ReviewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    /**
-     * Filter, which Review to fetch.
-     */
-    where: ReviewWhereUniqueInput
-  }
-
-  /**
-   * Review findUniqueOrThrow
-   */
-  export type ReviewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    /**
-     * Filter, which Review to fetch.
-     */
-    where: ReviewWhereUniqueInput
-  }
-
-  /**
-   * Review findFirst
-   */
-  export type ReviewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    /**
-     * Filter, which Review to fetch.
-     */
-    where?: ReviewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Reviews to fetch.
-     */
-    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Reviews.
-     */
-    cursor?: ReviewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Reviews from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Reviews.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Reviews.
-     */
-    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
-  }
-
-  /**
-   * Review findFirstOrThrow
-   */
-  export type ReviewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    /**
-     * Filter, which Review to fetch.
-     */
-    where?: ReviewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Reviews to fetch.
-     */
-    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Reviews.
-     */
-    cursor?: ReviewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Reviews from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Reviews.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Reviews.
-     */
-    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
-  }
-
-  /**
-   * Review findMany
-   */
-  export type ReviewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    /**
-     * Filter, which Reviews to fetch.
-     */
-    where?: ReviewWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Reviews to fetch.
-     */
-    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Reviews.
-     */
-    cursor?: ReviewWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Reviews from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Reviews.
-     */
-    skip?: number
-    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
-  }
-
-  /**
-   * Review create
-   */
-  export type ReviewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Review.
-     */
-    data: XOR<ReviewCreateInput, ReviewUncheckedCreateInput>
-  }
-
-  /**
-   * Review createMany
-   */
-  export type ReviewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Reviews.
-     */
-    data: ReviewCreateManyInput | ReviewCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Review createManyAndReturn
-   */
-  export type ReviewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * The data used to create many Reviews.
-     */
-    data: ReviewCreateManyInput | ReviewCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Review update
-   */
-  export type ReviewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Review.
-     */
-    data: XOR<ReviewUpdateInput, ReviewUncheckedUpdateInput>
-    /**
-     * Choose, which Review to update.
-     */
-    where: ReviewWhereUniqueInput
-  }
-
-  /**
-   * Review updateMany
-   */
-  export type ReviewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Reviews.
-     */
-    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyInput>
-    /**
-     * Filter which Reviews to update
-     */
-    where?: ReviewWhereInput
-    /**
-     * Limit how many Reviews to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Review updateManyAndReturn
-   */
-  export type ReviewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * The data used to update Reviews.
-     */
-    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyInput>
-    /**
-     * Filter which Reviews to update
-     */
-    where?: ReviewWhereInput
-    /**
-     * Limit how many Reviews to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Review upsert
-   */
-  export type ReviewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Review to update in case it exists.
-     */
-    where: ReviewWhereUniqueInput
-    /**
-     * In case the Review found by the `where` argument doesn't exist, create a new Review with this data.
-     */
-    create: XOR<ReviewCreateInput, ReviewUncheckedCreateInput>
-    /**
-     * In case the Review was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<ReviewUpdateInput, ReviewUncheckedUpdateInput>
-  }
-
-  /**
-   * Review delete
-   */
-  export type ReviewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    /**
-     * Filter which Review to delete.
-     */
-    where: ReviewWhereUniqueInput
-  }
-
-  /**
-   * Review deleteMany
-   */
-  export type ReviewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Reviews to delete
-     */
-    where?: ReviewWhereInput
-    /**
-     * Limit how many Reviews to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Review without action
-   */
-  export type ReviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
   }
 
 
@@ -14824,7 +17407,6 @@ export namespace Prisma {
     amenities: 'amenities',
     photos: 'photos',
     approved: 'approved',
-    rating: 'rating',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -14836,8 +17418,9 @@ export namespace Prisma {
     id: 'id',
     venueId: 'venueId',
     name: 'name',
+    slug: 'slug',
     sport: 'sport',
-    pricePerHour: 'pricePerHour',
+    type: 'type',
     currency: 'currency',
     openTime: 'openTime',
     closeTime: 'closeTime',
@@ -14846,6 +17429,32 @@ export namespace Prisma {
   };
 
   export type CourtScalarFieldEnum = (typeof CourtScalarFieldEnum)[keyof typeof CourtScalarFieldEnum]
+
+
+  export const VenueReviewScalarFieldEnum: {
+    id: 'id',
+    venueId: 'venueId',
+    userId: 'userId',
+    rating: 'rating',
+    comment: 'comment',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VenueReviewScalarFieldEnum = (typeof VenueReviewScalarFieldEnum)[keyof typeof VenueReviewScalarFieldEnum]
+
+
+  export const CourtReviewScalarFieldEnum: {
+    id: 'id',
+    courtId: 'courtId',
+    userId: 'userId',
+    rating: 'rating',
+    comment: 'comment',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CourtReviewScalarFieldEnum = (typeof CourtReviewScalarFieldEnum)[keyof typeof CourtReviewScalarFieldEnum]
 
 
   export const BookingScalarFieldEnum: {
@@ -14858,10 +17467,24 @@ export namespace Prisma {
     paymentId: 'paymentId',
     idempotencyKey: 'idempotencyKey',
     notes: 'notes',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    totalAmount: 'totalAmount',
+    currency: 'currency'
   };
 
   export type BookingScalarFieldEnum = (typeof BookingScalarFieldEnum)[keyof typeof BookingScalarFieldEnum]
+
+
+  export const PriceSlotScalarFieldEnum: {
+    id: 'id',
+    courtId: 'courtId',
+    startTime: 'startTime',
+    pricePerHour: 'pricePerHour',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PriceSlotScalarFieldEnum = (typeof PriceSlotScalarFieldEnum)[keyof typeof PriceSlotScalarFieldEnum]
 
 
   export const PaymentScalarFieldEnum: {
@@ -14879,18 +17502,6 @@ export namespace Prisma {
   };
 
   export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
-
-
-  export const ReviewScalarFieldEnum: {
-    id: 'id',
-    userId: 'userId',
-    venueId: 'venueId',
-    rating: 'rating',
-    comment: 'comment',
-    createdAt: 'createdAt'
-  };
-
-  export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
   export const EmailOtpScalarFieldEnum: {
@@ -15095,7 +17706,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     ownerProfile?: XOR<FacilityOwnerNullableScalarRelationFilter, FacilityOwnerWhereInput> | null
     bookings?: BookingListRelationFilter
-    reviews?: ReviewListRelationFilter
+    venueReviews?: VenueReviewListRelationFilter
+    courtReviews?: CourtReviewListRelationFilter
     Session?: SessionListRelationFilter
     Account?: AccountListRelationFilter
   }
@@ -15114,7 +17726,8 @@ export namespace Prisma {
     updatedAt?: SortOrder
     ownerProfile?: FacilityOwnerOrderByWithRelationInput
     bookings?: BookingOrderByRelationAggregateInput
-    reviews?: ReviewOrderByRelationAggregateInput
+    venueReviews?: VenueReviewOrderByRelationAggregateInput
+    courtReviews?: CourtReviewOrderByRelationAggregateInput
     Session?: SessionOrderByRelationAggregateInput
     Account?: AccountOrderByRelationAggregateInput
   }
@@ -15136,7 +17749,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     ownerProfile?: XOR<FacilityOwnerNullableScalarRelationFilter, FacilityOwnerWhereInput> | null
     bookings?: BookingListRelationFilter
-    reviews?: ReviewListRelationFilter
+    venueReviews?: VenueReviewListRelationFilter
+    courtReviews?: CourtReviewListRelationFilter
     Session?: SessionListRelationFilter
     Account?: AccountListRelationFilter
   }, "id" | "email">
@@ -15257,7 +17871,7 @@ export namespace Prisma {
     slug?: StringFilter<"Venue"> | string
     description?: StringNullableFilter<"Venue"> | string | null
     address?: StringFilter<"Venue"> | string
-    city?: StringFilter<"Venue"> | string
+    city?: StringNullableFilter<"Venue"> | string | null
     state?: StringNullableFilter<"Venue"> | string | null
     country?: StringNullableFilter<"Venue"> | string | null
     latitude?: FloatNullableFilter<"Venue"> | number | null
@@ -15265,12 +17879,11 @@ export namespace Prisma {
     amenities?: StringNullableListFilter<"Venue">
     photos?: StringNullableListFilter<"Venue">
     approved?: BoolFilter<"Venue"> | boolean
-    rating?: FloatNullableFilter<"Venue"> | number | null
     createdAt?: DateTimeFilter<"Venue"> | Date | string
     updatedAt?: DateTimeFilter<"Venue"> | Date | string
     owner?: XOR<FacilityOwnerScalarRelationFilter, FacilityOwnerWhereInput>
     courts?: CourtListRelationFilter
-    reviews?: ReviewListRelationFilter
+    reviews?: VenueReviewListRelationFilter
   }
 
   export type VenueOrderByWithRelationInput = {
@@ -15280,7 +17893,7 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrderInput | SortOrder
     address?: SortOrder
-    city?: SortOrder
+    city?: SortOrderInput | SortOrder
     state?: SortOrderInput | SortOrder
     country?: SortOrderInput | SortOrder
     latitude?: SortOrderInput | SortOrder
@@ -15288,12 +17901,11 @@ export namespace Prisma {
     amenities?: SortOrder
     photos?: SortOrder
     approved?: SortOrder
-    rating?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     owner?: FacilityOwnerOrderByWithRelationInput
     courts?: CourtOrderByRelationAggregateInput
-    reviews?: ReviewOrderByRelationAggregateInput
+    reviews?: VenueReviewOrderByRelationAggregateInput
   }
 
   export type VenueWhereUniqueInput = Prisma.AtLeast<{
@@ -15306,7 +17918,7 @@ export namespace Prisma {
     name?: StringFilter<"Venue"> | string
     description?: StringNullableFilter<"Venue"> | string | null
     address?: StringFilter<"Venue"> | string
-    city?: StringFilter<"Venue"> | string
+    city?: StringNullableFilter<"Venue"> | string | null
     state?: StringNullableFilter<"Venue"> | string | null
     country?: StringNullableFilter<"Venue"> | string | null
     latitude?: FloatNullableFilter<"Venue"> | number | null
@@ -15314,12 +17926,11 @@ export namespace Prisma {
     amenities?: StringNullableListFilter<"Venue">
     photos?: StringNullableListFilter<"Venue">
     approved?: BoolFilter<"Venue"> | boolean
-    rating?: FloatNullableFilter<"Venue"> | number | null
     createdAt?: DateTimeFilter<"Venue"> | Date | string
     updatedAt?: DateTimeFilter<"Venue"> | Date | string
     owner?: XOR<FacilityOwnerScalarRelationFilter, FacilityOwnerWhereInput>
     courts?: CourtListRelationFilter
-    reviews?: ReviewListRelationFilter
+    reviews?: VenueReviewListRelationFilter
   }, "id" | "slug">
 
   export type VenueOrderByWithAggregationInput = {
@@ -15329,7 +17940,7 @@ export namespace Prisma {
     slug?: SortOrder
     description?: SortOrderInput | SortOrder
     address?: SortOrder
-    city?: SortOrder
+    city?: SortOrderInput | SortOrder
     state?: SortOrderInput | SortOrder
     country?: SortOrderInput | SortOrder
     latitude?: SortOrderInput | SortOrder
@@ -15337,7 +17948,6 @@ export namespace Prisma {
     amenities?: SortOrder
     photos?: SortOrder
     approved?: SortOrder
-    rating?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: VenueCountOrderByAggregateInput
@@ -15357,7 +17967,7 @@ export namespace Prisma {
     slug?: StringWithAggregatesFilter<"Venue"> | string
     description?: StringNullableWithAggregatesFilter<"Venue"> | string | null
     address?: StringWithAggregatesFilter<"Venue"> | string
-    city?: StringWithAggregatesFilter<"Venue"> | string
+    city?: StringNullableWithAggregatesFilter<"Venue"> | string | null
     state?: StringNullableWithAggregatesFilter<"Venue"> | string | null
     country?: StringNullableWithAggregatesFilter<"Venue"> | string | null
     latitude?: FloatNullableWithAggregatesFilter<"Venue"> | number | null
@@ -15365,7 +17975,6 @@ export namespace Prisma {
     amenities?: StringNullableListFilter<"Venue">
     photos?: StringNullableListFilter<"Venue">
     approved?: BoolWithAggregatesFilter<"Venue"> | boolean
-    rating?: FloatNullableWithAggregatesFilter<"Venue"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Venue"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Venue"> | Date | string
   }
@@ -15377,56 +17986,67 @@ export namespace Prisma {
     id?: IntFilter<"Court"> | number
     venueId?: IntFilter<"Court"> | number
     name?: StringFilter<"Court"> | string
+    slug?: StringFilter<"Court"> | string
     sport?: StringFilter<"Court"> | string
-    pricePerHour?: IntFilter<"Court"> | number
+    type?: StringFilter<"Court"> | string
     currency?: StringFilter<"Court"> | string
     openTime?: IntFilter<"Court"> | number
     closeTime?: IntFilter<"Court"> | number
     createdAt?: DateTimeFilter<"Court"> | Date | string
     updatedAt?: DateTimeFilter<"Court"> | Date | string
     venue?: XOR<VenueScalarRelationFilter, VenueWhereInput>
+    priceSlots?: PriceSlotListRelationFilter
     bookings?: BookingListRelationFilter
+    reviews?: CourtReviewListRelationFilter
   }
 
   export type CourtOrderByWithRelationInput = {
     id?: SortOrder
     venueId?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
     sport?: SortOrder
-    pricePerHour?: SortOrder
+    type?: SortOrder
     currency?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     venue?: VenueOrderByWithRelationInput
+    priceSlots?: PriceSlotOrderByRelationAggregateInput
     bookings?: BookingOrderByRelationAggregateInput
+    reviews?: CourtReviewOrderByRelationAggregateInput
   }
 
   export type CourtWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    slug?: string
+    venueId_name?: CourtVenueIdNameCompoundUniqueInput
     AND?: CourtWhereInput | CourtWhereInput[]
     OR?: CourtWhereInput[]
     NOT?: CourtWhereInput | CourtWhereInput[]
     venueId?: IntFilter<"Court"> | number
     name?: StringFilter<"Court"> | string
     sport?: StringFilter<"Court"> | string
-    pricePerHour?: IntFilter<"Court"> | number
+    type?: StringFilter<"Court"> | string
     currency?: StringFilter<"Court"> | string
     openTime?: IntFilter<"Court"> | number
     closeTime?: IntFilter<"Court"> | number
     createdAt?: DateTimeFilter<"Court"> | Date | string
     updatedAt?: DateTimeFilter<"Court"> | Date | string
     venue?: XOR<VenueScalarRelationFilter, VenueWhereInput>
+    priceSlots?: PriceSlotListRelationFilter
     bookings?: BookingListRelationFilter
-  }, "id">
+    reviews?: CourtReviewListRelationFilter
+  }, "id" | "slug" | "venueId_name">
 
   export type CourtOrderByWithAggregationInput = {
     id?: SortOrder
     venueId?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
     sport?: SortOrder
-    pricePerHour?: SortOrder
+    type?: SortOrder
     currency?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
@@ -15446,13 +18066,154 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Court"> | number
     venueId?: IntWithAggregatesFilter<"Court"> | number
     name?: StringWithAggregatesFilter<"Court"> | string
+    slug?: StringWithAggregatesFilter<"Court"> | string
     sport?: StringWithAggregatesFilter<"Court"> | string
-    pricePerHour?: IntWithAggregatesFilter<"Court"> | number
+    type?: StringWithAggregatesFilter<"Court"> | string
     currency?: StringWithAggregatesFilter<"Court"> | string
     openTime?: IntWithAggregatesFilter<"Court"> | number
     closeTime?: IntWithAggregatesFilter<"Court"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Court"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Court"> | Date | string
+  }
+
+  export type VenueReviewWhereInput = {
+    AND?: VenueReviewWhereInput | VenueReviewWhereInput[]
+    OR?: VenueReviewWhereInput[]
+    NOT?: VenueReviewWhereInput | VenueReviewWhereInput[]
+    id?: IntFilter<"VenueReview"> | number
+    venueId?: IntFilter<"VenueReview"> | number
+    userId?: IntFilter<"VenueReview"> | number
+    rating?: IntFilter<"VenueReview"> | number
+    comment?: StringNullableFilter<"VenueReview"> | string | null
+    createdAt?: DateTimeFilter<"VenueReview"> | Date | string
+    updatedAt?: DateTimeFilter<"VenueReview"> | Date | string
+    venue?: XOR<VenueScalarRelationFilter, VenueWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type VenueReviewOrderByWithRelationInput = {
+    id?: SortOrder
+    venueId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+    comment?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    venue?: VenueOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type VenueReviewWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: VenueReviewWhereInput | VenueReviewWhereInput[]
+    OR?: VenueReviewWhereInput[]
+    NOT?: VenueReviewWhereInput | VenueReviewWhereInput[]
+    venueId?: IntFilter<"VenueReview"> | number
+    userId?: IntFilter<"VenueReview"> | number
+    rating?: IntFilter<"VenueReview"> | number
+    comment?: StringNullableFilter<"VenueReview"> | string | null
+    createdAt?: DateTimeFilter<"VenueReview"> | Date | string
+    updatedAt?: DateTimeFilter<"VenueReview"> | Date | string
+    venue?: XOR<VenueScalarRelationFilter, VenueWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type VenueReviewOrderByWithAggregationInput = {
+    id?: SortOrder
+    venueId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+    comment?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VenueReviewCountOrderByAggregateInput
+    _avg?: VenueReviewAvgOrderByAggregateInput
+    _max?: VenueReviewMaxOrderByAggregateInput
+    _min?: VenueReviewMinOrderByAggregateInput
+    _sum?: VenueReviewSumOrderByAggregateInput
+  }
+
+  export type VenueReviewScalarWhereWithAggregatesInput = {
+    AND?: VenueReviewScalarWhereWithAggregatesInput | VenueReviewScalarWhereWithAggregatesInput[]
+    OR?: VenueReviewScalarWhereWithAggregatesInput[]
+    NOT?: VenueReviewScalarWhereWithAggregatesInput | VenueReviewScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"VenueReview"> | number
+    venueId?: IntWithAggregatesFilter<"VenueReview"> | number
+    userId?: IntWithAggregatesFilter<"VenueReview"> | number
+    rating?: IntWithAggregatesFilter<"VenueReview"> | number
+    comment?: StringNullableWithAggregatesFilter<"VenueReview"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"VenueReview"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"VenueReview"> | Date | string
+  }
+
+  export type CourtReviewWhereInput = {
+    AND?: CourtReviewWhereInput | CourtReviewWhereInput[]
+    OR?: CourtReviewWhereInput[]
+    NOT?: CourtReviewWhereInput | CourtReviewWhereInput[]
+    id?: IntFilter<"CourtReview"> | number
+    courtId?: IntFilter<"CourtReview"> | number
+    userId?: IntFilter<"CourtReview"> | number
+    rating?: IntFilter<"CourtReview"> | number
+    comment?: StringNullableFilter<"CourtReview"> | string | null
+    createdAt?: DateTimeFilter<"CourtReview"> | Date | string
+    updatedAt?: DateTimeFilter<"CourtReview"> | Date | string
+    court?: XOR<CourtScalarRelationFilter, CourtWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CourtReviewOrderByWithRelationInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+    comment?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    court?: CourtOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type CourtReviewWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: CourtReviewWhereInput | CourtReviewWhereInput[]
+    OR?: CourtReviewWhereInput[]
+    NOT?: CourtReviewWhereInput | CourtReviewWhereInput[]
+    courtId?: IntFilter<"CourtReview"> | number
+    userId?: IntFilter<"CourtReview"> | number
+    rating?: IntFilter<"CourtReview"> | number
+    comment?: StringNullableFilter<"CourtReview"> | string | null
+    createdAt?: DateTimeFilter<"CourtReview"> | Date | string
+    updatedAt?: DateTimeFilter<"CourtReview"> | Date | string
+    court?: XOR<CourtScalarRelationFilter, CourtWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type CourtReviewOrderByWithAggregationInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+    comment?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CourtReviewCountOrderByAggregateInput
+    _avg?: CourtReviewAvgOrderByAggregateInput
+    _max?: CourtReviewMaxOrderByAggregateInput
+    _min?: CourtReviewMinOrderByAggregateInput
+    _sum?: CourtReviewSumOrderByAggregateInput
+  }
+
+  export type CourtReviewScalarWhereWithAggregatesInput = {
+    AND?: CourtReviewScalarWhereWithAggregatesInput | CourtReviewScalarWhereWithAggregatesInput[]
+    OR?: CourtReviewScalarWhereWithAggregatesInput[]
+    NOT?: CourtReviewScalarWhereWithAggregatesInput | CourtReviewScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"CourtReview"> | number
+    courtId?: IntWithAggregatesFilter<"CourtReview"> | number
+    userId?: IntWithAggregatesFilter<"CourtReview"> | number
+    rating?: IntWithAggregatesFilter<"CourtReview"> | number
+    comment?: StringNullableWithAggregatesFilter<"CourtReview"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"CourtReview"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CourtReview"> | Date | string
   }
 
   export type BookingWhereInput = {
@@ -15469,6 +18230,8 @@ export namespace Prisma {
     idempotencyKey?: StringNullableFilter<"Booking"> | string | null
     notes?: StringNullableFilter<"Booking"> | string | null
     createdAt?: DateTimeFilter<"Booking"> | Date | string
+    totalAmount?: IntFilter<"Booking"> | number
+    currency?: StringFilter<"Booking"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     court?: XOR<CourtScalarRelationFilter, CourtWhereInput>
     payment?: XOR<PaymentNullableScalarRelationFilter, PaymentWhereInput> | null
@@ -15485,6 +18248,8 @@ export namespace Prisma {
     idempotencyKey?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    totalAmount?: SortOrder
+    currency?: SortOrder
     user?: UserOrderByWithRelationInput
     court?: CourtOrderByWithRelationInput
     payment?: PaymentOrderByWithRelationInput
@@ -15505,6 +18270,8 @@ export namespace Prisma {
     status?: EnumBookingStatusFilter<"Booking"> | $Enums.BookingStatus
     notes?: StringNullableFilter<"Booking"> | string | null
     createdAt?: DateTimeFilter<"Booking"> | Date | string
+    totalAmount?: IntFilter<"Booking"> | number
+    currency?: StringFilter<"Booking"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     court?: XOR<CourtScalarRelationFilter, CourtWhereInput>
     payment?: XOR<PaymentNullableScalarRelationFilter, PaymentWhereInput> | null
@@ -15521,6 +18288,8 @@ export namespace Prisma {
     idempotencyKey?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    totalAmount?: SortOrder
+    currency?: SortOrder
     _count?: BookingCountOrderByAggregateInput
     _avg?: BookingAvgOrderByAggregateInput
     _max?: BookingMaxOrderByAggregateInput
@@ -15542,6 +18311,70 @@ export namespace Prisma {
     idempotencyKey?: StringNullableWithAggregatesFilter<"Booking"> | string | null
     notes?: StringNullableWithAggregatesFilter<"Booking"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Booking"> | Date | string
+    totalAmount?: IntWithAggregatesFilter<"Booking"> | number
+    currency?: StringWithAggregatesFilter<"Booking"> | string
+  }
+
+  export type PriceSlotWhereInput = {
+    AND?: PriceSlotWhereInput | PriceSlotWhereInput[]
+    OR?: PriceSlotWhereInput[]
+    NOT?: PriceSlotWhereInput | PriceSlotWhereInput[]
+    id?: IntFilter<"PriceSlot"> | number
+    courtId?: IntFilter<"PriceSlot"> | number
+    startTime?: IntFilter<"PriceSlot"> | number
+    pricePerHour?: IntFilter<"PriceSlot"> | number
+    createdAt?: DateTimeFilter<"PriceSlot"> | Date | string
+    updatedAt?: DateTimeFilter<"PriceSlot"> | Date | string
+    court?: XOR<CourtScalarRelationFilter, CourtWhereInput>
+  }
+
+  export type PriceSlotOrderByWithRelationInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    startTime?: SortOrder
+    pricePerHour?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    court?: CourtOrderByWithRelationInput
+  }
+
+  export type PriceSlotWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: PriceSlotWhereInput | PriceSlotWhereInput[]
+    OR?: PriceSlotWhereInput[]
+    NOT?: PriceSlotWhereInput | PriceSlotWhereInput[]
+    courtId?: IntFilter<"PriceSlot"> | number
+    startTime?: IntFilter<"PriceSlot"> | number
+    pricePerHour?: IntFilter<"PriceSlot"> | number
+    createdAt?: DateTimeFilter<"PriceSlot"> | Date | string
+    updatedAt?: DateTimeFilter<"PriceSlot"> | Date | string
+    court?: XOR<CourtScalarRelationFilter, CourtWhereInput>
+  }, "id">
+
+  export type PriceSlotOrderByWithAggregationInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    startTime?: SortOrder
+    pricePerHour?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PriceSlotCountOrderByAggregateInput
+    _avg?: PriceSlotAvgOrderByAggregateInput
+    _max?: PriceSlotMaxOrderByAggregateInput
+    _min?: PriceSlotMinOrderByAggregateInput
+    _sum?: PriceSlotSumOrderByAggregateInput
+  }
+
+  export type PriceSlotScalarWhereWithAggregatesInput = {
+    AND?: PriceSlotScalarWhereWithAggregatesInput | PriceSlotScalarWhereWithAggregatesInput[]
+    OR?: PriceSlotScalarWhereWithAggregatesInput[]
+    NOT?: PriceSlotScalarWhereWithAggregatesInput | PriceSlotScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"PriceSlot"> | number
+    courtId?: IntWithAggregatesFilter<"PriceSlot"> | number
+    startTime?: IntWithAggregatesFilter<"PriceSlot"> | number
+    pricePerHour?: IntWithAggregatesFilter<"PriceSlot"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"PriceSlot"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PriceSlot"> | Date | string
   }
 
   export type PaymentWhereInput = {
@@ -15629,71 +18462,6 @@ export namespace Prisma {
     receiptUrl?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     paymentMethod?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Payment"> | Date | string
-  }
-
-  export type ReviewWhereInput = {
-    AND?: ReviewWhereInput | ReviewWhereInput[]
-    OR?: ReviewWhereInput[]
-    NOT?: ReviewWhereInput | ReviewWhereInput[]
-    id?: IntFilter<"Review"> | number
-    userId?: IntFilter<"Review"> | number
-    venueId?: IntFilter<"Review"> | number
-    rating?: IntFilter<"Review"> | number
-    comment?: StringNullableFilter<"Review"> | string | null
-    createdAt?: DateTimeFilter<"Review"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    venue?: XOR<VenueScalarRelationFilter, VenueWhereInput>
-  }
-
-  export type ReviewOrderByWithRelationInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    venueId?: SortOrder
-    rating?: SortOrder
-    comment?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    user?: UserOrderByWithRelationInput
-    venue?: VenueOrderByWithRelationInput
-  }
-
-  export type ReviewWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: ReviewWhereInput | ReviewWhereInput[]
-    OR?: ReviewWhereInput[]
-    NOT?: ReviewWhereInput | ReviewWhereInput[]
-    userId?: IntFilter<"Review"> | number
-    venueId?: IntFilter<"Review"> | number
-    rating?: IntFilter<"Review"> | number
-    comment?: StringNullableFilter<"Review"> | string | null
-    createdAt?: DateTimeFilter<"Review"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    venue?: XOR<VenueScalarRelationFilter, VenueWhereInput>
-  }, "id">
-
-  export type ReviewOrderByWithAggregationInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    venueId?: SortOrder
-    rating?: SortOrder
-    comment?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    _count?: ReviewCountOrderByAggregateInput
-    _avg?: ReviewAvgOrderByAggregateInput
-    _max?: ReviewMaxOrderByAggregateInput
-    _min?: ReviewMinOrderByAggregateInput
-    _sum?: ReviewSumOrderByAggregateInput
-  }
-
-  export type ReviewScalarWhereWithAggregatesInput = {
-    AND?: ReviewScalarWhereWithAggregatesInput | ReviewScalarWhereWithAggregatesInput[]
-    OR?: ReviewScalarWhereWithAggregatesInput[]
-    NOT?: ReviewScalarWhereWithAggregatesInput | ReviewScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Review"> | number
-    userId?: IntWithAggregatesFilter<"Review"> | number
-    venueId?: IntWithAggregatesFilter<"Review"> | number
-    rating?: IntWithAggregatesFilter<"Review"> | number
-    comment?: StringNullableWithAggregatesFilter<"Review"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
   }
 
   export type EmailOtpWhereInput = {
@@ -15952,7 +18720,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     ownerProfile?: FacilityOwnerCreateNestedOneWithoutUserInput
     bookings?: BookingCreateNestedManyWithoutUserInput
-    reviews?: ReviewCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewCreateNestedManyWithoutUserInput
     Session?: SessionCreateNestedManyWithoutUserInput
     Account?: AccountCreateNestedManyWithoutUserInput
   }
@@ -15971,7 +18740,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     ownerProfile?: FacilityOwnerUncheckedCreateNestedOneWithoutUserInput
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewUncheckedCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewUncheckedCreateNestedManyWithoutUserInput
     Session?: SessionUncheckedCreateNestedManyWithoutUserInput
     Account?: AccountUncheckedCreateNestedManyWithoutUserInput
   }
@@ -15989,7 +18759,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ownerProfile?: FacilityOwnerUpdateOneWithoutUserNestedInput
     bookings?: BookingUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUpdateManyWithoutUserNestedInput
     Session?: SessionUpdateManyWithoutUserNestedInput
     Account?: AccountUpdateManyWithoutUserNestedInput
   }
@@ -16008,7 +18779,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ownerProfile?: FacilityOwnerUncheckedUpdateOneWithoutUserNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUncheckedUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUncheckedUpdateManyWithoutUserNestedInput
     Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
     Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -16129,7 +18901,7 @@ export namespace Prisma {
     slug: string
     description?: string | null
     address: string
-    city: string
+    city?: string | null
     state?: string | null
     country?: string | null
     latitude?: number | null
@@ -16137,12 +18909,11 @@ export namespace Prisma {
     amenities?: VenueCreateamenitiesInput | string[]
     photos?: VenueCreatephotosInput | string[]
     approved?: boolean
-    rating?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: FacilityOwnerCreateNestedOneWithoutVenuesInput
     courts?: CourtCreateNestedManyWithoutVenueInput
-    reviews?: ReviewCreateNestedManyWithoutVenueInput
+    reviews?: VenueReviewCreateNestedManyWithoutVenueInput
   }
 
   export type VenueUncheckedCreateInput = {
@@ -16152,7 +18923,7 @@ export namespace Prisma {
     slug: string
     description?: string | null
     address: string
-    city: string
+    city?: string | null
     state?: string | null
     country?: string | null
     latitude?: number | null
@@ -16160,11 +18931,10 @@ export namespace Prisma {
     amenities?: VenueCreateamenitiesInput | string[]
     photos?: VenueCreatephotosInput | string[]
     approved?: boolean
-    rating?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     courts?: CourtUncheckedCreateNestedManyWithoutVenueInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutVenueInput
+    reviews?: VenueReviewUncheckedCreateNestedManyWithoutVenueInput
   }
 
   export type VenueUpdateInput = {
@@ -16172,7 +18942,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -16180,12 +18950,11 @@ export namespace Prisma {
     amenities?: VenueUpdateamenitiesInput | string[]
     photos?: VenueUpdatephotosInput | string[]
     approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: FacilityOwnerUpdateOneRequiredWithoutVenuesNestedInput
     courts?: CourtUpdateManyWithoutVenueNestedInput
-    reviews?: ReviewUpdateManyWithoutVenueNestedInput
+    reviews?: VenueReviewUpdateManyWithoutVenueNestedInput
   }
 
   export type VenueUncheckedUpdateInput = {
@@ -16195,7 +18964,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -16203,11 +18972,10 @@ export namespace Prisma {
     amenities?: VenueUpdateamenitiesInput | string[]
     photos?: VenueUpdatephotosInput | string[]
     approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courts?: CourtUncheckedUpdateManyWithoutVenueNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutVenueNestedInput
+    reviews?: VenueReviewUncheckedUpdateManyWithoutVenueNestedInput
   }
 
   export type VenueCreateManyInput = {
@@ -16217,7 +18985,7 @@ export namespace Prisma {
     slug: string
     description?: string | null
     address: string
-    city: string
+    city?: string | null
     state?: string | null
     country?: string | null
     latitude?: number | null
@@ -16225,7 +18993,6 @@ export namespace Prisma {
     amenities?: VenueCreateamenitiesInput | string[]
     photos?: VenueCreatephotosInput | string[]
     approved?: boolean
-    rating?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16235,7 +19002,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -16243,7 +19010,6 @@ export namespace Prisma {
     amenities?: VenueUpdateamenitiesInput | string[]
     photos?: VenueUpdatephotosInput | string[]
     approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16255,7 +19021,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -16263,71 +19029,83 @@ export namespace Prisma {
     amenities?: VenueUpdateamenitiesInput | string[]
     photos?: VenueUpdatephotosInput | string[]
     approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CourtCreateInput = {
     name: string
+    slug: string
     sport: string
-    pricePerHour: number
+    type: string
     currency?: string
     openTime: number
     closeTime: number
     createdAt?: Date | string
     updatedAt?: Date | string
     venue: VenueCreateNestedOneWithoutCourtsInput
+    priceSlots?: PriceSlotCreateNestedManyWithoutCourtInput
     bookings?: BookingCreateNestedManyWithoutCourtInput
+    reviews?: CourtReviewCreateNestedManyWithoutCourtInput
   }
 
   export type CourtUncheckedCreateInput = {
     id?: number
     venueId: number
     name: string
+    slug: string
     sport: string
-    pricePerHour: number
+    type: string
     currency?: string
     openTime: number
     closeTime: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    priceSlots?: PriceSlotUncheckedCreateNestedManyWithoutCourtInput
     bookings?: BookingUncheckedCreateNestedManyWithoutCourtInput
+    reviews?: CourtReviewUncheckedCreateNestedManyWithoutCourtInput
   }
 
   export type CourtUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     sport?: StringFieldUpdateOperationsInput | string
-    pricePerHour?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     venue?: VenueUpdateOneRequiredWithoutCourtsNestedInput
+    priceSlots?: PriceSlotUpdateManyWithoutCourtNestedInput
     bookings?: BookingUpdateManyWithoutCourtNestedInput
+    reviews?: CourtReviewUpdateManyWithoutCourtNestedInput
   }
 
   export type CourtUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     venueId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     sport?: StringFieldUpdateOperationsInput | string
-    pricePerHour?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priceSlots?: PriceSlotUncheckedUpdateManyWithoutCourtNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutCourtNestedInput
+    reviews?: CourtReviewUncheckedUpdateManyWithoutCourtNestedInput
   }
 
   export type CourtCreateManyInput = {
     id?: number
     venueId: number
     name: string
+    slug: string
     sport: string
-    pricePerHour: number
+    type: string
     currency?: string
     openTime: number
     closeTime: number
@@ -16337,8 +19115,9 @@ export namespace Prisma {
 
   export type CourtUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     sport?: StringFieldUpdateOperationsInput | string
-    pricePerHour?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
@@ -16350,11 +19129,142 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     venueId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     sport?: StringFieldUpdateOperationsInput | string
-    pricePerHour?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VenueReviewCreateInput = {
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    venue: VenueCreateNestedOneWithoutReviewsInput
+    user: UserCreateNestedOneWithoutVenueReviewsInput
+  }
+
+  export type VenueReviewUncheckedCreateInput = {
+    id?: number
+    venueId: number
+    userId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VenueReviewUpdateInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    venue?: VenueUpdateOneRequiredWithoutReviewsNestedInput
+    user?: UserUpdateOneRequiredWithoutVenueReviewsNestedInput
+  }
+
+  export type VenueReviewUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    venueId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VenueReviewCreateManyInput = {
+    id?: number
+    venueId: number
+    userId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VenueReviewUpdateManyMutationInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VenueReviewUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    venueId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourtReviewCreateInput = {
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    court: CourtCreateNestedOneWithoutReviewsInput
+    user: UserCreateNestedOneWithoutCourtReviewsInput
+  }
+
+  export type CourtReviewUncheckedCreateInput = {
+    id?: number
+    courtId: number
+    userId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourtReviewUpdateInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    court?: CourtUpdateOneRequiredWithoutReviewsNestedInput
+    user?: UserUpdateOneRequiredWithoutCourtReviewsNestedInput
+  }
+
+  export type CourtReviewUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    courtId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourtReviewCreateManyInput = {
+    id?: number
+    courtId: number
+    userId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourtReviewUpdateManyMutationInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourtReviewUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    courtId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16367,6 +19277,8 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
     user: UserCreateNestedOneWithoutBookingsInput
     court: CourtCreateNestedOneWithoutBookingsInput
     payment?: PaymentCreateNestedOneWithoutBookingInput
@@ -16383,6 +19295,8 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
     payment?: PaymentUncheckedCreateNestedOneWithoutBookingInput
   }
 
@@ -16394,6 +19308,8 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutBookingsNestedInput
     court?: CourtUpdateOneRequiredWithoutBookingsNestedInput
     payment?: PaymentUpdateOneWithoutBookingNestedInput
@@ -16410,6 +19326,8 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     payment?: PaymentUncheckedUpdateOneWithoutBookingNestedInput
   }
 
@@ -16424,6 +19342,8 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
   }
 
   export type BookingUpdateManyMutationInput = {
@@ -16434,6 +19354,8 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
   }
 
   export type BookingUncheckedUpdateManyInput = {
@@ -16447,6 +19369,67 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PriceSlotCreateInput = {
+    startTime: number
+    pricePerHour: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    court: CourtCreateNestedOneWithoutPriceSlotsInput
+  }
+
+  export type PriceSlotUncheckedCreateInput = {
+    id?: number
+    courtId: number
+    startTime: number
+    pricePerHour: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PriceSlotUpdateInput = {
+    startTime?: IntFieldUpdateOperationsInput | number
+    pricePerHour?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    court?: CourtUpdateOneRequiredWithoutPriceSlotsNestedInput
+  }
+
+  export type PriceSlotUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    courtId?: IntFieldUpdateOperationsInput | number
+    startTime?: IntFieldUpdateOperationsInput | number
+    pricePerHour?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PriceSlotCreateManyInput = {
+    id?: number
+    courtId: number
+    startTime: number
+    pricePerHour: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PriceSlotUpdateManyMutationInput = {
+    startTime?: IntFieldUpdateOperationsInput | number
+    pricePerHour?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PriceSlotUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    courtId?: IntFieldUpdateOperationsInput | number
+    startTime?: IntFieldUpdateOperationsInput | number
+    pricePerHour?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentCreateInput = {
@@ -16540,64 +19523,6 @@ export namespace Prisma {
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
     receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
     paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReviewCreateInput = {
-    rating: number
-    comment?: string | null
-    createdAt?: Date | string
-    user: UserCreateNestedOneWithoutReviewsInput
-    venue: VenueCreateNestedOneWithoutReviewsInput
-  }
-
-  export type ReviewUncheckedCreateInput = {
-    id?: number
-    userId: number
-    venueId: number
-    rating: number
-    comment?: string | null
-    createdAt?: Date | string
-  }
-
-  export type ReviewUpdateInput = {
-    rating?: IntFieldUpdateOperationsInput | number
-    comment?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutReviewsNestedInput
-    venue?: VenueUpdateOneRequiredWithoutReviewsNestedInput
-  }
-
-  export type ReviewUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    venueId?: IntFieldUpdateOperationsInput | number
-    rating?: IntFieldUpdateOperationsInput | number
-    comment?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReviewCreateManyInput = {
-    id?: number
-    userId: number
-    venueId: number
-    rating: number
-    comment?: string | null
-    createdAt?: Date | string
-  }
-
-  export type ReviewUpdateManyMutationInput = {
-    rating?: IntFieldUpdateOperationsInput | number
-    comment?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReviewUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    venueId?: IntFieldUpdateOperationsInput | number
-    rating?: IntFieldUpdateOperationsInput | number
-    comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -16925,10 +19850,16 @@ export namespace Prisma {
     none?: BookingWhereInput
   }
 
-  export type ReviewListRelationFilter = {
-    every?: ReviewWhereInput
-    some?: ReviewWhereInput
-    none?: ReviewWhereInput
+  export type VenueReviewListRelationFilter = {
+    every?: VenueReviewWhereInput
+    some?: VenueReviewWhereInput
+    none?: VenueReviewWhereInput
+  }
+
+  export type CourtReviewListRelationFilter = {
+    every?: CourtReviewWhereInput
+    some?: CourtReviewWhereInput
+    none?: CourtReviewWhereInput
   }
 
   export type SessionListRelationFilter = {
@@ -16952,7 +19883,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type ReviewOrderByRelationAggregateInput = {
+  export type VenueReviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CourtReviewOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -17220,7 +20155,6 @@ export namespace Prisma {
     amenities?: SortOrder
     photos?: SortOrder
     approved?: SortOrder
-    rating?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -17230,7 +20164,6 @@ export namespace Prisma {
     ownerId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
-    rating?: SortOrder
   }
 
   export type VenueMaxOrderByAggregateInput = {
@@ -17246,7 +20179,6 @@ export namespace Prisma {
     latitude?: SortOrder
     longitude?: SortOrder
     approved?: SortOrder
-    rating?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -17264,7 +20196,6 @@ export namespace Prisma {
     latitude?: SortOrder
     longitude?: SortOrder
     approved?: SortOrder
-    rating?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -17274,7 +20205,6 @@ export namespace Prisma {
     ownerId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
-    rating?: SortOrder
   }
 
   export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -17298,12 +20228,28 @@ export namespace Prisma {
     isNot?: VenueWhereInput
   }
 
+  export type PriceSlotListRelationFilter = {
+    every?: PriceSlotWhereInput
+    some?: PriceSlotWhereInput
+    none?: PriceSlotWhereInput
+  }
+
+  export type PriceSlotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CourtVenueIdNameCompoundUniqueInput = {
+    venueId: number
+    name: string
+  }
+
   export type CourtCountOrderByAggregateInput = {
     id?: SortOrder
     venueId?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
     sport?: SortOrder
-    pricePerHour?: SortOrder
+    type?: SortOrder
     currency?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
@@ -17314,7 +20260,6 @@ export namespace Prisma {
   export type CourtAvgOrderByAggregateInput = {
     id?: SortOrder
     venueId?: SortOrder
-    pricePerHour?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
   }
@@ -17323,8 +20268,9 @@ export namespace Prisma {
     id?: SortOrder
     venueId?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
     sport?: SortOrder
-    pricePerHour?: SortOrder
+    type?: SortOrder
     currency?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
@@ -17336,8 +20282,9 @@ export namespace Prisma {
     id?: SortOrder
     venueId?: SortOrder
     name?: SortOrder
+    slug?: SortOrder
     sport?: SortOrder
-    pricePerHour?: SortOrder
+    type?: SortOrder
     currency?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
@@ -17348,9 +20295,101 @@ export namespace Prisma {
   export type CourtSumOrderByAggregateInput = {
     id?: SortOrder
     venueId?: SortOrder
-    pricePerHour?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
+  }
+
+  export type VenueReviewCountOrderByAggregateInput = {
+    id?: SortOrder
+    venueId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+    comment?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VenueReviewAvgOrderByAggregateInput = {
+    id?: SortOrder
+    venueId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+  }
+
+  export type VenueReviewMaxOrderByAggregateInput = {
+    id?: SortOrder
+    venueId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+    comment?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VenueReviewMinOrderByAggregateInput = {
+    id?: SortOrder
+    venueId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+    comment?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VenueReviewSumOrderByAggregateInput = {
+    id?: SortOrder
+    venueId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+  }
+
+  export type CourtScalarRelationFilter = {
+    is?: CourtWhereInput
+    isNot?: CourtWhereInput
+  }
+
+  export type CourtReviewCountOrderByAggregateInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+    comment?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CourtReviewAvgOrderByAggregateInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+  }
+
+  export type CourtReviewMaxOrderByAggregateInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+    comment?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CourtReviewMinOrderByAggregateInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
+    comment?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CourtReviewSumOrderByAggregateInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    userId?: SortOrder
+    rating?: SortOrder
   }
 
   export type EnumBookingStatusFilter<$PrismaModel = never> = {
@@ -17358,11 +20397,6 @@ export namespace Prisma {
     in?: $Enums.BookingStatus[] | ListEnumBookingStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.BookingStatus[] | ListEnumBookingStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumBookingStatusFilter<$PrismaModel> | $Enums.BookingStatus
-  }
-
-  export type CourtScalarRelationFilter = {
-    is?: CourtWhereInput
-    isNot?: CourtWhereInput
   }
 
   export type PaymentNullableScalarRelationFilter = {
@@ -17386,6 +20420,8 @@ export namespace Prisma {
     idempotencyKey?: SortOrder
     notes?: SortOrder
     createdAt?: SortOrder
+    totalAmount?: SortOrder
+    currency?: SortOrder
   }
 
   export type BookingAvgOrderByAggregateInput = {
@@ -17393,6 +20429,7 @@ export namespace Prisma {
     userId?: SortOrder
     courtId?: SortOrder
     paymentId?: SortOrder
+    totalAmount?: SortOrder
   }
 
   export type BookingMaxOrderByAggregateInput = {
@@ -17406,6 +20443,8 @@ export namespace Prisma {
     idempotencyKey?: SortOrder
     notes?: SortOrder
     createdAt?: SortOrder
+    totalAmount?: SortOrder
+    currency?: SortOrder
   }
 
   export type BookingMinOrderByAggregateInput = {
@@ -17419,6 +20458,8 @@ export namespace Prisma {
     idempotencyKey?: SortOrder
     notes?: SortOrder
     createdAt?: SortOrder
+    totalAmount?: SortOrder
+    currency?: SortOrder
   }
 
   export type BookingSumOrderByAggregateInput = {
@@ -17426,6 +20467,7 @@ export namespace Prisma {
     userId?: SortOrder
     courtId?: SortOrder
     paymentId?: SortOrder
+    totalAmount?: SortOrder
   }
 
   export type EnumBookingStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -17436,6 +20478,47 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumBookingStatusFilter<$PrismaModel>
     _max?: NestedEnumBookingStatusFilter<$PrismaModel>
+  }
+
+  export type PriceSlotCountOrderByAggregateInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    startTime?: SortOrder
+    pricePerHour?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PriceSlotAvgOrderByAggregateInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    startTime?: SortOrder
+    pricePerHour?: SortOrder
+  }
+
+  export type PriceSlotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    startTime?: SortOrder
+    pricePerHour?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PriceSlotMinOrderByAggregateInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    startTime?: SortOrder
+    pricePerHour?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PriceSlotSumOrderByAggregateInput = {
+    id?: SortOrder
+    courtId?: SortOrder
+    startTime?: SortOrder
+    pricePerHour?: SortOrder
   }
 
   export type EnumPaymentStatusFilter<$PrismaModel = never> = {
@@ -17512,47 +20595,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPaymentStatusFilter<$PrismaModel>
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
-  }
-
-  export type ReviewCountOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    venueId?: SortOrder
-    rating?: SortOrder
-    comment?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type ReviewAvgOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    venueId?: SortOrder
-    rating?: SortOrder
-  }
-
-  export type ReviewMaxOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    venueId?: SortOrder
-    rating?: SortOrder
-    comment?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type ReviewMinOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    venueId?: SortOrder
-    rating?: SortOrder
-    comment?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type ReviewSumOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    venueId?: SortOrder
-    rating?: SortOrder
   }
 
   export type EmailOtpCountOrderByAggregateInput = {
@@ -17721,11 +20763,18 @@ export namespace Prisma {
     connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
   }
 
-  export type ReviewCreateNestedManyWithoutUserInput = {
-    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
-    createMany?: ReviewCreateManyUserInputEnvelope
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  export type VenueReviewCreateNestedManyWithoutUserInput = {
+    create?: XOR<VenueReviewCreateWithoutUserInput, VenueReviewUncheckedCreateWithoutUserInput> | VenueReviewCreateWithoutUserInput[] | VenueReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VenueReviewCreateOrConnectWithoutUserInput | VenueReviewCreateOrConnectWithoutUserInput[]
+    createMany?: VenueReviewCreateManyUserInputEnvelope
+    connect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+  }
+
+  export type CourtReviewCreateNestedManyWithoutUserInput = {
+    create?: XOR<CourtReviewCreateWithoutUserInput, CourtReviewUncheckedCreateWithoutUserInput> | CourtReviewCreateWithoutUserInput[] | CourtReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CourtReviewCreateOrConnectWithoutUserInput | CourtReviewCreateOrConnectWithoutUserInput[]
+    createMany?: CourtReviewCreateManyUserInputEnvelope
+    connect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
   }
 
   export type SessionCreateNestedManyWithoutUserInput = {
@@ -17755,11 +20804,18 @@ export namespace Prisma {
     connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
   }
 
-  export type ReviewUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
-    createMany?: ReviewCreateManyUserInputEnvelope
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  export type VenueReviewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<VenueReviewCreateWithoutUserInput, VenueReviewUncheckedCreateWithoutUserInput> | VenueReviewCreateWithoutUserInput[] | VenueReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VenueReviewCreateOrConnectWithoutUserInput | VenueReviewCreateOrConnectWithoutUserInput[]
+    createMany?: VenueReviewCreateManyUserInputEnvelope
+    connect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+  }
+
+  export type CourtReviewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CourtReviewCreateWithoutUserInput, CourtReviewUncheckedCreateWithoutUserInput> | CourtReviewCreateWithoutUserInput[] | CourtReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CourtReviewCreateOrConnectWithoutUserInput | CourtReviewCreateOrConnectWithoutUserInput[]
+    createMany?: CourtReviewCreateManyUserInputEnvelope
+    connect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
   }
 
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
@@ -17828,18 +20884,32 @@ export namespace Prisma {
     deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
   }
 
-  export type ReviewUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
-    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ReviewCreateManyUserInputEnvelope
-    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  export type VenueReviewUpdateManyWithoutUserNestedInput = {
+    create?: XOR<VenueReviewCreateWithoutUserInput, VenueReviewUncheckedCreateWithoutUserInput> | VenueReviewCreateWithoutUserInput[] | VenueReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VenueReviewCreateOrConnectWithoutUserInput | VenueReviewCreateOrConnectWithoutUserInput[]
+    upsert?: VenueReviewUpsertWithWhereUniqueWithoutUserInput | VenueReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: VenueReviewCreateManyUserInputEnvelope
+    set?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    disconnect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    delete?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    connect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    update?: VenueReviewUpdateWithWhereUniqueWithoutUserInput | VenueReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: VenueReviewUpdateManyWithWhereWithoutUserInput | VenueReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: VenueReviewScalarWhereInput | VenueReviewScalarWhereInput[]
+  }
+
+  export type CourtReviewUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CourtReviewCreateWithoutUserInput, CourtReviewUncheckedCreateWithoutUserInput> | CourtReviewCreateWithoutUserInput[] | CourtReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CourtReviewCreateOrConnectWithoutUserInput | CourtReviewCreateOrConnectWithoutUserInput[]
+    upsert?: CourtReviewUpsertWithWhereUniqueWithoutUserInput | CourtReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CourtReviewCreateManyUserInputEnvelope
+    set?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    disconnect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    delete?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    connect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    update?: CourtReviewUpdateWithWhereUniqueWithoutUserInput | CourtReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CourtReviewUpdateManyWithWhereWithoutUserInput | CourtReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CourtReviewScalarWhereInput | CourtReviewScalarWhereInput[]
   }
 
   export type SessionUpdateManyWithoutUserNestedInput = {
@@ -17902,18 +20972,32 @@ export namespace Prisma {
     deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
   }
 
-  export type ReviewUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
-    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ReviewCreateManyUserInputEnvelope
-    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  export type VenueReviewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<VenueReviewCreateWithoutUserInput, VenueReviewUncheckedCreateWithoutUserInput> | VenueReviewCreateWithoutUserInput[] | VenueReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: VenueReviewCreateOrConnectWithoutUserInput | VenueReviewCreateOrConnectWithoutUserInput[]
+    upsert?: VenueReviewUpsertWithWhereUniqueWithoutUserInput | VenueReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: VenueReviewCreateManyUserInputEnvelope
+    set?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    disconnect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    delete?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    connect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    update?: VenueReviewUpdateWithWhereUniqueWithoutUserInput | VenueReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: VenueReviewUpdateManyWithWhereWithoutUserInput | VenueReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: VenueReviewScalarWhereInput | VenueReviewScalarWhereInput[]
+  }
+
+  export type CourtReviewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CourtReviewCreateWithoutUserInput, CourtReviewUncheckedCreateWithoutUserInput> | CourtReviewCreateWithoutUserInput[] | CourtReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CourtReviewCreateOrConnectWithoutUserInput | CourtReviewCreateOrConnectWithoutUserInput[]
+    upsert?: CourtReviewUpsertWithWhereUniqueWithoutUserInput | CourtReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CourtReviewCreateManyUserInputEnvelope
+    set?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    disconnect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    delete?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    connect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    update?: CourtReviewUpdateWithWhereUniqueWithoutUserInput | CourtReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CourtReviewUpdateManyWithWhereWithoutUserInput | CourtReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CourtReviewScalarWhereInput | CourtReviewScalarWhereInput[]
   }
 
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
@@ -18021,11 +21105,11 @@ export namespace Prisma {
     connect?: CourtWhereUniqueInput | CourtWhereUniqueInput[]
   }
 
-  export type ReviewCreateNestedManyWithoutVenueInput = {
-    create?: XOR<ReviewCreateWithoutVenueInput, ReviewUncheckedCreateWithoutVenueInput> | ReviewCreateWithoutVenueInput[] | ReviewUncheckedCreateWithoutVenueInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutVenueInput | ReviewCreateOrConnectWithoutVenueInput[]
-    createMany?: ReviewCreateManyVenueInputEnvelope
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  export type VenueReviewCreateNestedManyWithoutVenueInput = {
+    create?: XOR<VenueReviewCreateWithoutVenueInput, VenueReviewUncheckedCreateWithoutVenueInput> | VenueReviewCreateWithoutVenueInput[] | VenueReviewUncheckedCreateWithoutVenueInput[]
+    connectOrCreate?: VenueReviewCreateOrConnectWithoutVenueInput | VenueReviewCreateOrConnectWithoutVenueInput[]
+    createMany?: VenueReviewCreateManyVenueInputEnvelope
+    connect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
   }
 
   export type CourtUncheckedCreateNestedManyWithoutVenueInput = {
@@ -18035,11 +21119,11 @@ export namespace Prisma {
     connect?: CourtWhereUniqueInput | CourtWhereUniqueInput[]
   }
 
-  export type ReviewUncheckedCreateNestedManyWithoutVenueInput = {
-    create?: XOR<ReviewCreateWithoutVenueInput, ReviewUncheckedCreateWithoutVenueInput> | ReviewCreateWithoutVenueInput[] | ReviewUncheckedCreateWithoutVenueInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutVenueInput | ReviewCreateOrConnectWithoutVenueInput[]
-    createMany?: ReviewCreateManyVenueInputEnvelope
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  export type VenueReviewUncheckedCreateNestedManyWithoutVenueInput = {
+    create?: XOR<VenueReviewCreateWithoutVenueInput, VenueReviewUncheckedCreateWithoutVenueInput> | VenueReviewCreateWithoutVenueInput[] | VenueReviewUncheckedCreateWithoutVenueInput[]
+    connectOrCreate?: VenueReviewCreateOrConnectWithoutVenueInput | VenueReviewCreateOrConnectWithoutVenueInput[]
+    createMany?: VenueReviewCreateManyVenueInputEnvelope
+    connect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
   }
 
   export type NullableFloatFieldUpdateOperationsInput = {
@@ -18082,18 +21166,18 @@ export namespace Prisma {
     deleteMany?: CourtScalarWhereInput | CourtScalarWhereInput[]
   }
 
-  export type ReviewUpdateManyWithoutVenueNestedInput = {
-    create?: XOR<ReviewCreateWithoutVenueInput, ReviewUncheckedCreateWithoutVenueInput> | ReviewCreateWithoutVenueInput[] | ReviewUncheckedCreateWithoutVenueInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutVenueInput | ReviewCreateOrConnectWithoutVenueInput[]
-    upsert?: ReviewUpsertWithWhereUniqueWithoutVenueInput | ReviewUpsertWithWhereUniqueWithoutVenueInput[]
-    createMany?: ReviewCreateManyVenueInputEnvelope
-    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    update?: ReviewUpdateWithWhereUniqueWithoutVenueInput | ReviewUpdateWithWhereUniqueWithoutVenueInput[]
-    updateMany?: ReviewUpdateManyWithWhereWithoutVenueInput | ReviewUpdateManyWithWhereWithoutVenueInput[]
-    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  export type VenueReviewUpdateManyWithoutVenueNestedInput = {
+    create?: XOR<VenueReviewCreateWithoutVenueInput, VenueReviewUncheckedCreateWithoutVenueInput> | VenueReviewCreateWithoutVenueInput[] | VenueReviewUncheckedCreateWithoutVenueInput[]
+    connectOrCreate?: VenueReviewCreateOrConnectWithoutVenueInput | VenueReviewCreateOrConnectWithoutVenueInput[]
+    upsert?: VenueReviewUpsertWithWhereUniqueWithoutVenueInput | VenueReviewUpsertWithWhereUniqueWithoutVenueInput[]
+    createMany?: VenueReviewCreateManyVenueInputEnvelope
+    set?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    disconnect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    delete?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    connect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    update?: VenueReviewUpdateWithWhereUniqueWithoutVenueInput | VenueReviewUpdateWithWhereUniqueWithoutVenueInput[]
+    updateMany?: VenueReviewUpdateManyWithWhereWithoutVenueInput | VenueReviewUpdateManyWithWhereWithoutVenueInput[]
+    deleteMany?: VenueReviewScalarWhereInput | VenueReviewScalarWhereInput[]
   }
 
   export type CourtUncheckedUpdateManyWithoutVenueNestedInput = {
@@ -18110,24 +21194,31 @@ export namespace Prisma {
     deleteMany?: CourtScalarWhereInput | CourtScalarWhereInput[]
   }
 
-  export type ReviewUncheckedUpdateManyWithoutVenueNestedInput = {
-    create?: XOR<ReviewCreateWithoutVenueInput, ReviewUncheckedCreateWithoutVenueInput> | ReviewCreateWithoutVenueInput[] | ReviewUncheckedCreateWithoutVenueInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutVenueInput | ReviewCreateOrConnectWithoutVenueInput[]
-    upsert?: ReviewUpsertWithWhereUniqueWithoutVenueInput | ReviewUpsertWithWhereUniqueWithoutVenueInput[]
-    createMany?: ReviewCreateManyVenueInputEnvelope
-    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    update?: ReviewUpdateWithWhereUniqueWithoutVenueInput | ReviewUpdateWithWhereUniqueWithoutVenueInput[]
-    updateMany?: ReviewUpdateManyWithWhereWithoutVenueInput | ReviewUpdateManyWithWhereWithoutVenueInput[]
-    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  export type VenueReviewUncheckedUpdateManyWithoutVenueNestedInput = {
+    create?: XOR<VenueReviewCreateWithoutVenueInput, VenueReviewUncheckedCreateWithoutVenueInput> | VenueReviewCreateWithoutVenueInput[] | VenueReviewUncheckedCreateWithoutVenueInput[]
+    connectOrCreate?: VenueReviewCreateOrConnectWithoutVenueInput | VenueReviewCreateOrConnectWithoutVenueInput[]
+    upsert?: VenueReviewUpsertWithWhereUniqueWithoutVenueInput | VenueReviewUpsertWithWhereUniqueWithoutVenueInput[]
+    createMany?: VenueReviewCreateManyVenueInputEnvelope
+    set?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    disconnect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    delete?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    connect?: VenueReviewWhereUniqueInput | VenueReviewWhereUniqueInput[]
+    update?: VenueReviewUpdateWithWhereUniqueWithoutVenueInput | VenueReviewUpdateWithWhereUniqueWithoutVenueInput[]
+    updateMany?: VenueReviewUpdateManyWithWhereWithoutVenueInput | VenueReviewUpdateManyWithWhereWithoutVenueInput[]
+    deleteMany?: VenueReviewScalarWhereInput | VenueReviewScalarWhereInput[]
   }
 
   export type VenueCreateNestedOneWithoutCourtsInput = {
     create?: XOR<VenueCreateWithoutCourtsInput, VenueUncheckedCreateWithoutCourtsInput>
     connectOrCreate?: VenueCreateOrConnectWithoutCourtsInput
     connect?: VenueWhereUniqueInput
+  }
+
+  export type PriceSlotCreateNestedManyWithoutCourtInput = {
+    create?: XOR<PriceSlotCreateWithoutCourtInput, PriceSlotUncheckedCreateWithoutCourtInput> | PriceSlotCreateWithoutCourtInput[] | PriceSlotUncheckedCreateWithoutCourtInput[]
+    connectOrCreate?: PriceSlotCreateOrConnectWithoutCourtInput | PriceSlotCreateOrConnectWithoutCourtInput[]
+    createMany?: PriceSlotCreateManyCourtInputEnvelope
+    connect?: PriceSlotWhereUniqueInput | PriceSlotWhereUniqueInput[]
   }
 
   export type BookingCreateNestedManyWithoutCourtInput = {
@@ -18137,11 +21228,32 @@ export namespace Prisma {
     connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
   }
 
+  export type CourtReviewCreateNestedManyWithoutCourtInput = {
+    create?: XOR<CourtReviewCreateWithoutCourtInput, CourtReviewUncheckedCreateWithoutCourtInput> | CourtReviewCreateWithoutCourtInput[] | CourtReviewUncheckedCreateWithoutCourtInput[]
+    connectOrCreate?: CourtReviewCreateOrConnectWithoutCourtInput | CourtReviewCreateOrConnectWithoutCourtInput[]
+    createMany?: CourtReviewCreateManyCourtInputEnvelope
+    connect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+  }
+
+  export type PriceSlotUncheckedCreateNestedManyWithoutCourtInput = {
+    create?: XOR<PriceSlotCreateWithoutCourtInput, PriceSlotUncheckedCreateWithoutCourtInput> | PriceSlotCreateWithoutCourtInput[] | PriceSlotUncheckedCreateWithoutCourtInput[]
+    connectOrCreate?: PriceSlotCreateOrConnectWithoutCourtInput | PriceSlotCreateOrConnectWithoutCourtInput[]
+    createMany?: PriceSlotCreateManyCourtInputEnvelope
+    connect?: PriceSlotWhereUniqueInput | PriceSlotWhereUniqueInput[]
+  }
+
   export type BookingUncheckedCreateNestedManyWithoutCourtInput = {
     create?: XOR<BookingCreateWithoutCourtInput, BookingUncheckedCreateWithoutCourtInput> | BookingCreateWithoutCourtInput[] | BookingUncheckedCreateWithoutCourtInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutCourtInput | BookingCreateOrConnectWithoutCourtInput[]
     createMany?: BookingCreateManyCourtInputEnvelope
     connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+  }
+
+  export type CourtReviewUncheckedCreateNestedManyWithoutCourtInput = {
+    create?: XOR<CourtReviewCreateWithoutCourtInput, CourtReviewUncheckedCreateWithoutCourtInput> | CourtReviewCreateWithoutCourtInput[] | CourtReviewUncheckedCreateWithoutCourtInput[]
+    connectOrCreate?: CourtReviewCreateOrConnectWithoutCourtInput | CourtReviewCreateOrConnectWithoutCourtInput[]
+    createMany?: CourtReviewCreateManyCourtInputEnvelope
+    connect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
   }
 
   export type VenueUpdateOneRequiredWithoutCourtsNestedInput = {
@@ -18150,6 +21262,20 @@ export namespace Prisma {
     upsert?: VenueUpsertWithoutCourtsInput
     connect?: VenueWhereUniqueInput
     update?: XOR<XOR<VenueUpdateToOneWithWhereWithoutCourtsInput, VenueUpdateWithoutCourtsInput>, VenueUncheckedUpdateWithoutCourtsInput>
+  }
+
+  export type PriceSlotUpdateManyWithoutCourtNestedInput = {
+    create?: XOR<PriceSlotCreateWithoutCourtInput, PriceSlotUncheckedCreateWithoutCourtInput> | PriceSlotCreateWithoutCourtInput[] | PriceSlotUncheckedCreateWithoutCourtInput[]
+    connectOrCreate?: PriceSlotCreateOrConnectWithoutCourtInput | PriceSlotCreateOrConnectWithoutCourtInput[]
+    upsert?: PriceSlotUpsertWithWhereUniqueWithoutCourtInput | PriceSlotUpsertWithWhereUniqueWithoutCourtInput[]
+    createMany?: PriceSlotCreateManyCourtInputEnvelope
+    set?: PriceSlotWhereUniqueInput | PriceSlotWhereUniqueInput[]
+    disconnect?: PriceSlotWhereUniqueInput | PriceSlotWhereUniqueInput[]
+    delete?: PriceSlotWhereUniqueInput | PriceSlotWhereUniqueInput[]
+    connect?: PriceSlotWhereUniqueInput | PriceSlotWhereUniqueInput[]
+    update?: PriceSlotUpdateWithWhereUniqueWithoutCourtInput | PriceSlotUpdateWithWhereUniqueWithoutCourtInput[]
+    updateMany?: PriceSlotUpdateManyWithWhereWithoutCourtInput | PriceSlotUpdateManyWithWhereWithoutCourtInput[]
+    deleteMany?: PriceSlotScalarWhereInput | PriceSlotScalarWhereInput[]
   }
 
   export type BookingUpdateManyWithoutCourtNestedInput = {
@@ -18166,6 +21292,34 @@ export namespace Prisma {
     deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
   }
 
+  export type CourtReviewUpdateManyWithoutCourtNestedInput = {
+    create?: XOR<CourtReviewCreateWithoutCourtInput, CourtReviewUncheckedCreateWithoutCourtInput> | CourtReviewCreateWithoutCourtInput[] | CourtReviewUncheckedCreateWithoutCourtInput[]
+    connectOrCreate?: CourtReviewCreateOrConnectWithoutCourtInput | CourtReviewCreateOrConnectWithoutCourtInput[]
+    upsert?: CourtReviewUpsertWithWhereUniqueWithoutCourtInput | CourtReviewUpsertWithWhereUniqueWithoutCourtInput[]
+    createMany?: CourtReviewCreateManyCourtInputEnvelope
+    set?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    disconnect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    delete?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    connect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    update?: CourtReviewUpdateWithWhereUniqueWithoutCourtInput | CourtReviewUpdateWithWhereUniqueWithoutCourtInput[]
+    updateMany?: CourtReviewUpdateManyWithWhereWithoutCourtInput | CourtReviewUpdateManyWithWhereWithoutCourtInput[]
+    deleteMany?: CourtReviewScalarWhereInput | CourtReviewScalarWhereInput[]
+  }
+
+  export type PriceSlotUncheckedUpdateManyWithoutCourtNestedInput = {
+    create?: XOR<PriceSlotCreateWithoutCourtInput, PriceSlotUncheckedCreateWithoutCourtInput> | PriceSlotCreateWithoutCourtInput[] | PriceSlotUncheckedCreateWithoutCourtInput[]
+    connectOrCreate?: PriceSlotCreateOrConnectWithoutCourtInput | PriceSlotCreateOrConnectWithoutCourtInput[]
+    upsert?: PriceSlotUpsertWithWhereUniqueWithoutCourtInput | PriceSlotUpsertWithWhereUniqueWithoutCourtInput[]
+    createMany?: PriceSlotCreateManyCourtInputEnvelope
+    set?: PriceSlotWhereUniqueInput | PriceSlotWhereUniqueInput[]
+    disconnect?: PriceSlotWhereUniqueInput | PriceSlotWhereUniqueInput[]
+    delete?: PriceSlotWhereUniqueInput | PriceSlotWhereUniqueInput[]
+    connect?: PriceSlotWhereUniqueInput | PriceSlotWhereUniqueInput[]
+    update?: PriceSlotUpdateWithWhereUniqueWithoutCourtInput | PriceSlotUpdateWithWhereUniqueWithoutCourtInput[]
+    updateMany?: PriceSlotUpdateManyWithWhereWithoutCourtInput | PriceSlotUpdateManyWithWhereWithoutCourtInput[]
+    deleteMany?: PriceSlotScalarWhereInput | PriceSlotScalarWhereInput[]
+  }
+
   export type BookingUncheckedUpdateManyWithoutCourtNestedInput = {
     create?: XOR<BookingCreateWithoutCourtInput, BookingUncheckedCreateWithoutCourtInput> | BookingCreateWithoutCourtInput[] | BookingUncheckedCreateWithoutCourtInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutCourtInput | BookingCreateOrConnectWithoutCourtInput[]
@@ -18178,6 +21332,76 @@ export namespace Prisma {
     update?: BookingUpdateWithWhereUniqueWithoutCourtInput | BookingUpdateWithWhereUniqueWithoutCourtInput[]
     updateMany?: BookingUpdateManyWithWhereWithoutCourtInput | BookingUpdateManyWithWhereWithoutCourtInput[]
     deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
+  }
+
+  export type CourtReviewUncheckedUpdateManyWithoutCourtNestedInput = {
+    create?: XOR<CourtReviewCreateWithoutCourtInput, CourtReviewUncheckedCreateWithoutCourtInput> | CourtReviewCreateWithoutCourtInput[] | CourtReviewUncheckedCreateWithoutCourtInput[]
+    connectOrCreate?: CourtReviewCreateOrConnectWithoutCourtInput | CourtReviewCreateOrConnectWithoutCourtInput[]
+    upsert?: CourtReviewUpsertWithWhereUniqueWithoutCourtInput | CourtReviewUpsertWithWhereUniqueWithoutCourtInput[]
+    createMany?: CourtReviewCreateManyCourtInputEnvelope
+    set?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    disconnect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    delete?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    connect?: CourtReviewWhereUniqueInput | CourtReviewWhereUniqueInput[]
+    update?: CourtReviewUpdateWithWhereUniqueWithoutCourtInput | CourtReviewUpdateWithWhereUniqueWithoutCourtInput[]
+    updateMany?: CourtReviewUpdateManyWithWhereWithoutCourtInput | CourtReviewUpdateManyWithWhereWithoutCourtInput[]
+    deleteMany?: CourtReviewScalarWhereInput | CourtReviewScalarWhereInput[]
+  }
+
+  export type VenueCreateNestedOneWithoutReviewsInput = {
+    create?: XOR<VenueCreateWithoutReviewsInput, VenueUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: VenueCreateOrConnectWithoutReviewsInput
+    connect?: VenueWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutVenueReviewsInput = {
+    create?: XOR<UserCreateWithoutVenueReviewsInput, UserUncheckedCreateWithoutVenueReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVenueReviewsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type VenueUpdateOneRequiredWithoutReviewsNestedInput = {
+    create?: XOR<VenueCreateWithoutReviewsInput, VenueUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: VenueCreateOrConnectWithoutReviewsInput
+    upsert?: VenueUpsertWithoutReviewsInput
+    connect?: VenueWhereUniqueInput
+    update?: XOR<XOR<VenueUpdateToOneWithWhereWithoutReviewsInput, VenueUpdateWithoutReviewsInput>, VenueUncheckedUpdateWithoutReviewsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutVenueReviewsNestedInput = {
+    create?: XOR<UserCreateWithoutVenueReviewsInput, UserUncheckedCreateWithoutVenueReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVenueReviewsInput
+    upsert?: UserUpsertWithoutVenueReviewsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVenueReviewsInput, UserUpdateWithoutVenueReviewsInput>, UserUncheckedUpdateWithoutVenueReviewsInput>
+  }
+
+  export type CourtCreateNestedOneWithoutReviewsInput = {
+    create?: XOR<CourtCreateWithoutReviewsInput, CourtUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: CourtCreateOrConnectWithoutReviewsInput
+    connect?: CourtWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCourtReviewsInput = {
+    create?: XOR<UserCreateWithoutCourtReviewsInput, UserUncheckedCreateWithoutCourtReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCourtReviewsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type CourtUpdateOneRequiredWithoutReviewsNestedInput = {
+    create?: XOR<CourtCreateWithoutReviewsInput, CourtUncheckedCreateWithoutReviewsInput>
+    connectOrCreate?: CourtCreateOrConnectWithoutReviewsInput
+    upsert?: CourtUpsertWithoutReviewsInput
+    connect?: CourtWhereUniqueInput
+    update?: XOR<XOR<CourtUpdateToOneWithWhereWithoutReviewsInput, CourtUpdateWithoutReviewsInput>, CourtUncheckedUpdateWithoutReviewsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCourtReviewsNestedInput = {
+    create?: XOR<UserCreateWithoutCourtReviewsInput, UserUncheckedCreateWithoutCourtReviewsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCourtReviewsInput
+    upsert?: UserUpsertWithoutCourtReviewsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCourtReviewsInput, UserUpdateWithoutCourtReviewsInput>, UserUncheckedUpdateWithoutCourtReviewsInput>
   }
 
   export type UserCreateNestedOneWithoutBookingsInput = {
@@ -18244,6 +21468,20 @@ export namespace Prisma {
     update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutBookingInput, PaymentUpdateWithoutBookingInput>, PaymentUncheckedUpdateWithoutBookingInput>
   }
 
+  export type CourtCreateNestedOneWithoutPriceSlotsInput = {
+    create?: XOR<CourtCreateWithoutPriceSlotsInput, CourtUncheckedCreateWithoutPriceSlotsInput>
+    connectOrCreate?: CourtCreateOrConnectWithoutPriceSlotsInput
+    connect?: CourtWhereUniqueInput
+  }
+
+  export type CourtUpdateOneRequiredWithoutPriceSlotsNestedInput = {
+    create?: XOR<CourtCreateWithoutPriceSlotsInput, CourtUncheckedCreateWithoutPriceSlotsInput>
+    connectOrCreate?: CourtCreateOrConnectWithoutPriceSlotsInput
+    upsert?: CourtUpsertWithoutPriceSlotsInput
+    connect?: CourtWhereUniqueInput
+    update?: XOR<XOR<CourtUpdateToOneWithWhereWithoutPriceSlotsInput, CourtUpdateWithoutPriceSlotsInput>, CourtUncheckedUpdateWithoutPriceSlotsInput>
+  }
+
   export type BookingCreateNestedOneWithoutPaymentInput = {
     create?: XOR<BookingCreateWithoutPaymentInput, BookingUncheckedCreateWithoutPaymentInput>
     connectOrCreate?: BookingCreateOrConnectWithoutPaymentInput
@@ -18262,34 +21500,6 @@ export namespace Prisma {
     delete?: BookingWhereInput | boolean
     connect?: BookingWhereUniqueInput
     update?: XOR<XOR<BookingUpdateToOneWithWhereWithoutPaymentInput, BookingUpdateWithoutPaymentInput>, BookingUncheckedUpdateWithoutPaymentInput>
-  }
-
-  export type UserCreateNestedOneWithoutReviewsInput = {
-    create?: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutReviewsInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type VenueCreateNestedOneWithoutReviewsInput = {
-    create?: XOR<VenueCreateWithoutReviewsInput, VenueUncheckedCreateWithoutReviewsInput>
-    connectOrCreate?: VenueCreateOrConnectWithoutReviewsInput
-    connect?: VenueWhereUniqueInput
-  }
-
-  export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
-    create?: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutReviewsInput
-    upsert?: UserUpsertWithoutReviewsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewsInput, UserUpdateWithoutReviewsInput>, UserUncheckedUpdateWithoutReviewsInput>
-  }
-
-  export type VenueUpdateOneRequiredWithoutReviewsNestedInput = {
-    create?: XOR<VenueCreateWithoutReviewsInput, VenueUncheckedCreateWithoutReviewsInput>
-    connectOrCreate?: VenueCreateOrConnectWithoutReviewsInput
-    upsert?: VenueUpsertWithoutReviewsInput
-    connect?: VenueWhereUniqueInput
-    update?: XOR<XOR<VenueUpdateToOneWithWhereWithoutReviewsInput, VenueUpdateWithoutReviewsInput>, VenueUncheckedUpdateWithoutReviewsInput>
   }
 
   export type UserCreateNestedOneWithoutSessionInput = {
@@ -18595,6 +21805,8 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
     court: CourtCreateNestedOneWithoutBookingsInput
     payment?: PaymentCreateNestedOneWithoutBookingInput
   }
@@ -18609,6 +21821,8 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
     payment?: PaymentUncheckedCreateNestedOneWithoutBookingInput
   }
 
@@ -18622,28 +21836,57 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ReviewCreateWithoutUserInput = {
+  export type VenueReviewCreateWithoutUserInput = {
     rating: number
     comment?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
     venue: VenueCreateNestedOneWithoutReviewsInput
   }
 
-  export type ReviewUncheckedCreateWithoutUserInput = {
+  export type VenueReviewUncheckedCreateWithoutUserInput = {
     id?: number
     venueId: number
     rating: number
     comment?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type ReviewCreateOrConnectWithoutUserInput = {
-    where: ReviewWhereUniqueInput
-    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
+  export type VenueReviewCreateOrConnectWithoutUserInput = {
+    where: VenueReviewWhereUniqueInput
+    create: XOR<VenueReviewCreateWithoutUserInput, VenueReviewUncheckedCreateWithoutUserInput>
   }
 
-  export type ReviewCreateManyUserInputEnvelope = {
-    data: ReviewCreateManyUserInput | ReviewCreateManyUserInput[]
+  export type VenueReviewCreateManyUserInputEnvelope = {
+    data: VenueReviewCreateManyUserInput | VenueReviewCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CourtReviewCreateWithoutUserInput = {
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    court: CourtCreateNestedOneWithoutReviewsInput
+  }
+
+  export type CourtReviewUncheckedCreateWithoutUserInput = {
+    id?: number
+    courtId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourtReviewCreateOrConnectWithoutUserInput = {
+    where: CourtReviewWhereUniqueInput
+    create: XOR<CourtReviewCreateWithoutUserInput, CourtReviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type CourtReviewCreateManyUserInputEnvelope = {
+    data: CourtReviewCreateManyUserInput | CourtReviewCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -18759,34 +22002,66 @@ export namespace Prisma {
     idempotencyKey?: StringNullableFilter<"Booking"> | string | null
     notes?: StringNullableFilter<"Booking"> | string | null
     createdAt?: DateTimeFilter<"Booking"> | Date | string
+    totalAmount?: IntFilter<"Booking"> | number
+    currency?: StringFilter<"Booking"> | string
   }
 
-  export type ReviewUpsertWithWhereUniqueWithoutUserInput = {
-    where: ReviewWhereUniqueInput
-    update: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
-    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
+  export type VenueReviewUpsertWithWhereUniqueWithoutUserInput = {
+    where: VenueReviewWhereUniqueInput
+    update: XOR<VenueReviewUpdateWithoutUserInput, VenueReviewUncheckedUpdateWithoutUserInput>
+    create: XOR<VenueReviewCreateWithoutUserInput, VenueReviewUncheckedCreateWithoutUserInput>
   }
 
-  export type ReviewUpdateWithWhereUniqueWithoutUserInput = {
-    where: ReviewWhereUniqueInput
-    data: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
+  export type VenueReviewUpdateWithWhereUniqueWithoutUserInput = {
+    where: VenueReviewWhereUniqueInput
+    data: XOR<VenueReviewUpdateWithoutUserInput, VenueReviewUncheckedUpdateWithoutUserInput>
   }
 
-  export type ReviewUpdateManyWithWhereWithoutUserInput = {
-    where: ReviewScalarWhereInput
-    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutUserInput>
+  export type VenueReviewUpdateManyWithWhereWithoutUserInput = {
+    where: VenueReviewScalarWhereInput
+    data: XOR<VenueReviewUpdateManyMutationInput, VenueReviewUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type ReviewScalarWhereInput = {
-    AND?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
-    OR?: ReviewScalarWhereInput[]
-    NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
-    id?: IntFilter<"Review"> | number
-    userId?: IntFilter<"Review"> | number
-    venueId?: IntFilter<"Review"> | number
-    rating?: IntFilter<"Review"> | number
-    comment?: StringNullableFilter<"Review"> | string | null
-    createdAt?: DateTimeFilter<"Review"> | Date | string
+  export type VenueReviewScalarWhereInput = {
+    AND?: VenueReviewScalarWhereInput | VenueReviewScalarWhereInput[]
+    OR?: VenueReviewScalarWhereInput[]
+    NOT?: VenueReviewScalarWhereInput | VenueReviewScalarWhereInput[]
+    id?: IntFilter<"VenueReview"> | number
+    venueId?: IntFilter<"VenueReview"> | number
+    userId?: IntFilter<"VenueReview"> | number
+    rating?: IntFilter<"VenueReview"> | number
+    comment?: StringNullableFilter<"VenueReview"> | string | null
+    createdAt?: DateTimeFilter<"VenueReview"> | Date | string
+    updatedAt?: DateTimeFilter<"VenueReview"> | Date | string
+  }
+
+  export type CourtReviewUpsertWithWhereUniqueWithoutUserInput = {
+    where: CourtReviewWhereUniqueInput
+    update: XOR<CourtReviewUpdateWithoutUserInput, CourtReviewUncheckedUpdateWithoutUserInput>
+    create: XOR<CourtReviewCreateWithoutUserInput, CourtReviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type CourtReviewUpdateWithWhereUniqueWithoutUserInput = {
+    where: CourtReviewWhereUniqueInput
+    data: XOR<CourtReviewUpdateWithoutUserInput, CourtReviewUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CourtReviewUpdateManyWithWhereWithoutUserInput = {
+    where: CourtReviewScalarWhereInput
+    data: XOR<CourtReviewUpdateManyMutationInput, CourtReviewUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CourtReviewScalarWhereInput = {
+    AND?: CourtReviewScalarWhereInput | CourtReviewScalarWhereInput[]
+    OR?: CourtReviewScalarWhereInput[]
+    NOT?: CourtReviewScalarWhereInput | CourtReviewScalarWhereInput[]
+    id?: IntFilter<"CourtReview"> | number
+    courtId?: IntFilter<"CourtReview"> | number
+    userId?: IntFilter<"CourtReview"> | number
+    rating?: IntFilter<"CourtReview"> | number
+    comment?: StringNullableFilter<"CourtReview"> | string | null
+    createdAt?: DateTimeFilter<"CourtReview"> | Date | string
+    updatedAt?: DateTimeFilter<"CourtReview"> | Date | string
   }
 
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
@@ -18858,7 +22133,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     bookings?: BookingCreateNestedManyWithoutUserInput
-    reviews?: ReviewCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewCreateNestedManyWithoutUserInput
     Session?: SessionCreateNestedManyWithoutUserInput
     Account?: AccountCreateNestedManyWithoutUserInput
   }
@@ -18876,7 +22152,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewUncheckedCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewUncheckedCreateNestedManyWithoutUserInput
     Session?: SessionUncheckedCreateNestedManyWithoutUserInput
     Account?: AccountUncheckedCreateNestedManyWithoutUserInput
   }
@@ -18891,7 +22168,7 @@ export namespace Prisma {
     slug: string
     description?: string | null
     address: string
-    city: string
+    city?: string | null
     state?: string | null
     country?: string | null
     latitude?: number | null
@@ -18899,11 +22176,10 @@ export namespace Prisma {
     amenities?: VenueCreateamenitiesInput | string[]
     photos?: VenueCreatephotosInput | string[]
     approved?: boolean
-    rating?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     courts?: CourtCreateNestedManyWithoutVenueInput
-    reviews?: ReviewCreateNestedManyWithoutVenueInput
+    reviews?: VenueReviewCreateNestedManyWithoutVenueInput
   }
 
   export type VenueUncheckedCreateWithoutOwnerInput = {
@@ -18912,7 +22188,7 @@ export namespace Prisma {
     slug: string
     description?: string | null
     address: string
-    city: string
+    city?: string | null
     state?: string | null
     country?: string | null
     latitude?: number | null
@@ -18920,11 +22196,10 @@ export namespace Prisma {
     amenities?: VenueCreateamenitiesInput | string[]
     photos?: VenueCreatephotosInput | string[]
     approved?: boolean
-    rating?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     courts?: CourtUncheckedCreateNestedManyWithoutVenueInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutVenueInput
+    reviews?: VenueReviewUncheckedCreateNestedManyWithoutVenueInput
   }
 
   export type VenueCreateOrConnectWithoutOwnerInput = {
@@ -18960,7 +22235,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUpdateManyWithoutUserNestedInput
     Session?: SessionUpdateManyWithoutUserNestedInput
     Account?: AccountUpdateManyWithoutUserNestedInput
   }
@@ -18978,7 +22254,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUncheckedUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUncheckedUpdateManyWithoutUserNestedInput
     Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
     Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -19009,7 +22286,7 @@ export namespace Prisma {
     slug?: StringFilter<"Venue"> | string
     description?: StringNullableFilter<"Venue"> | string | null
     address?: StringFilter<"Venue"> | string
-    city?: StringFilter<"Venue"> | string
+    city?: StringNullableFilter<"Venue"> | string | null
     state?: StringNullableFilter<"Venue"> | string | null
     country?: StringNullableFilter<"Venue"> | string | null
     latitude?: FloatNullableFilter<"Venue"> | number | null
@@ -19017,7 +22294,6 @@ export namespace Prisma {
     amenities?: StringNullableListFilter<"Venue">
     photos?: StringNullableListFilter<"Venue">
     approved?: BoolFilter<"Venue"> | boolean
-    rating?: FloatNullableFilter<"Venue"> | number | null
     createdAt?: DateTimeFilter<"Venue"> | Date | string
     updatedAt?: DateTimeFilter<"Venue"> | Date | string
   }
@@ -19048,27 +22324,33 @@ export namespace Prisma {
 
   export type CourtCreateWithoutVenueInput = {
     name: string
+    slug: string
     sport: string
-    pricePerHour: number
+    type: string
     currency?: string
     openTime: number
     closeTime: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    priceSlots?: PriceSlotCreateNestedManyWithoutCourtInput
     bookings?: BookingCreateNestedManyWithoutCourtInput
+    reviews?: CourtReviewCreateNestedManyWithoutCourtInput
   }
 
   export type CourtUncheckedCreateWithoutVenueInput = {
     id?: number
     name: string
+    slug: string
     sport: string
-    pricePerHour: number
+    type: string
     currency?: string
     openTime: number
     closeTime: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    priceSlots?: PriceSlotUncheckedCreateNestedManyWithoutCourtInput
     bookings?: BookingUncheckedCreateNestedManyWithoutCourtInput
+    reviews?: CourtReviewUncheckedCreateNestedManyWithoutCourtInput
   }
 
   export type CourtCreateOrConnectWithoutVenueInput = {
@@ -19081,28 +22363,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ReviewCreateWithoutVenueInput = {
+  export type VenueReviewCreateWithoutVenueInput = {
     rating: number
     comment?: string | null
     createdAt?: Date | string
-    user: UserCreateNestedOneWithoutReviewsInput
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutVenueReviewsInput
   }
 
-  export type ReviewUncheckedCreateWithoutVenueInput = {
+  export type VenueReviewUncheckedCreateWithoutVenueInput = {
     id?: number
     userId: number
     rating: number
     comment?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type ReviewCreateOrConnectWithoutVenueInput = {
-    where: ReviewWhereUniqueInput
-    create: XOR<ReviewCreateWithoutVenueInput, ReviewUncheckedCreateWithoutVenueInput>
+  export type VenueReviewCreateOrConnectWithoutVenueInput = {
+    where: VenueReviewWhereUniqueInput
+    create: XOR<VenueReviewCreateWithoutVenueInput, VenueReviewUncheckedCreateWithoutVenueInput>
   }
 
-  export type ReviewCreateManyVenueInputEnvelope = {
-    data: ReviewCreateManyVenueInput | ReviewCreateManyVenueInput[]
+  export type VenueReviewCreateManyVenueInputEnvelope = {
+    data: VenueReviewCreateManyVenueInput | VenueReviewCreateManyVenueInput[]
     skipDuplicates?: boolean
   }
 
@@ -19159,8 +22443,9 @@ export namespace Prisma {
     id?: IntFilter<"Court"> | number
     venueId?: IntFilter<"Court"> | number
     name?: StringFilter<"Court"> | string
+    slug?: StringFilter<"Court"> | string
     sport?: StringFilter<"Court"> | string
-    pricePerHour?: IntFilter<"Court"> | number
+    type?: StringFilter<"Court"> | string
     currency?: StringFilter<"Court"> | string
     openTime?: IntFilter<"Court"> | number
     closeTime?: IntFilter<"Court"> | number
@@ -19168,20 +22453,20 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Court"> | Date | string
   }
 
-  export type ReviewUpsertWithWhereUniqueWithoutVenueInput = {
-    where: ReviewWhereUniqueInput
-    update: XOR<ReviewUpdateWithoutVenueInput, ReviewUncheckedUpdateWithoutVenueInput>
-    create: XOR<ReviewCreateWithoutVenueInput, ReviewUncheckedCreateWithoutVenueInput>
+  export type VenueReviewUpsertWithWhereUniqueWithoutVenueInput = {
+    where: VenueReviewWhereUniqueInput
+    update: XOR<VenueReviewUpdateWithoutVenueInput, VenueReviewUncheckedUpdateWithoutVenueInput>
+    create: XOR<VenueReviewCreateWithoutVenueInput, VenueReviewUncheckedCreateWithoutVenueInput>
   }
 
-  export type ReviewUpdateWithWhereUniqueWithoutVenueInput = {
-    where: ReviewWhereUniqueInput
-    data: XOR<ReviewUpdateWithoutVenueInput, ReviewUncheckedUpdateWithoutVenueInput>
+  export type VenueReviewUpdateWithWhereUniqueWithoutVenueInput = {
+    where: VenueReviewWhereUniqueInput
+    data: XOR<VenueReviewUpdateWithoutVenueInput, VenueReviewUncheckedUpdateWithoutVenueInput>
   }
 
-  export type ReviewUpdateManyWithWhereWithoutVenueInput = {
-    where: ReviewScalarWhereInput
-    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutVenueInput>
+  export type VenueReviewUpdateManyWithWhereWithoutVenueInput = {
+    where: VenueReviewScalarWhereInput
+    data: XOR<VenueReviewUpdateManyMutationInput, VenueReviewUncheckedUpdateManyWithoutVenueInput>
   }
 
   export type VenueCreateWithoutCourtsInput = {
@@ -19189,7 +22474,7 @@ export namespace Prisma {
     slug: string
     description?: string | null
     address: string
-    city: string
+    city?: string | null
     state?: string | null
     country?: string | null
     latitude?: number | null
@@ -19197,11 +22482,10 @@ export namespace Prisma {
     amenities?: VenueCreateamenitiesInput | string[]
     photos?: VenueCreatephotosInput | string[]
     approved?: boolean
-    rating?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: FacilityOwnerCreateNestedOneWithoutVenuesInput
-    reviews?: ReviewCreateNestedManyWithoutVenueInput
+    reviews?: VenueReviewCreateNestedManyWithoutVenueInput
   }
 
   export type VenueUncheckedCreateWithoutCourtsInput = {
@@ -19211,7 +22495,7 @@ export namespace Prisma {
     slug: string
     description?: string | null
     address: string
-    city: string
+    city?: string | null
     state?: string | null
     country?: string | null
     latitude?: number | null
@@ -19219,15 +22503,39 @@ export namespace Prisma {
     amenities?: VenueCreateamenitiesInput | string[]
     photos?: VenueCreatephotosInput | string[]
     approved?: boolean
-    rating?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    reviews?: ReviewUncheckedCreateNestedManyWithoutVenueInput
+    reviews?: VenueReviewUncheckedCreateNestedManyWithoutVenueInput
   }
 
   export type VenueCreateOrConnectWithoutCourtsInput = {
     where: VenueWhereUniqueInput
     create: XOR<VenueCreateWithoutCourtsInput, VenueUncheckedCreateWithoutCourtsInput>
+  }
+
+  export type PriceSlotCreateWithoutCourtInput = {
+    startTime: number
+    pricePerHour: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PriceSlotUncheckedCreateWithoutCourtInput = {
+    id?: number
+    startTime: number
+    pricePerHour: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PriceSlotCreateOrConnectWithoutCourtInput = {
+    where: PriceSlotWhereUniqueInput
+    create: XOR<PriceSlotCreateWithoutCourtInput, PriceSlotUncheckedCreateWithoutCourtInput>
+  }
+
+  export type PriceSlotCreateManyCourtInputEnvelope = {
+    data: PriceSlotCreateManyCourtInput | PriceSlotCreateManyCourtInput[]
+    skipDuplicates?: boolean
   }
 
   export type BookingCreateWithoutCourtInput = {
@@ -19238,6 +22546,8 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
     user: UserCreateNestedOneWithoutBookingsInput
     payment?: PaymentCreateNestedOneWithoutBookingInput
   }
@@ -19252,6 +22562,8 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
     payment?: PaymentUncheckedCreateNestedOneWithoutBookingInput
   }
 
@@ -19262,6 +22574,33 @@ export namespace Prisma {
 
   export type BookingCreateManyCourtInputEnvelope = {
     data: BookingCreateManyCourtInput | BookingCreateManyCourtInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CourtReviewCreateWithoutCourtInput = {
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCourtReviewsInput
+  }
+
+  export type CourtReviewUncheckedCreateWithoutCourtInput = {
+    id?: number
+    userId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourtReviewCreateOrConnectWithoutCourtInput = {
+    where: CourtReviewWhereUniqueInput
+    create: XOR<CourtReviewCreateWithoutCourtInput, CourtReviewUncheckedCreateWithoutCourtInput>
+  }
+
+  export type CourtReviewCreateManyCourtInputEnvelope = {
+    data: CourtReviewCreateManyCourtInput | CourtReviewCreateManyCourtInput[]
     skipDuplicates?: boolean
   }
 
@@ -19281,7 +22620,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -19289,11 +22628,10 @@ export namespace Prisma {
     amenities?: VenueUpdateamenitiesInput | string[]
     photos?: VenueUpdatephotosInput | string[]
     approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: FacilityOwnerUpdateOneRequiredWithoutVenuesNestedInput
-    reviews?: ReviewUpdateManyWithoutVenueNestedInput
+    reviews?: VenueReviewUpdateManyWithoutVenueNestedInput
   }
 
   export type VenueUncheckedUpdateWithoutCourtsInput = {
@@ -19303,7 +22641,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -19311,10 +22649,37 @@ export namespace Prisma {
     amenities?: VenueUpdateamenitiesInput | string[]
     photos?: VenueUpdatephotosInput | string[]
     approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    reviews?: ReviewUncheckedUpdateManyWithoutVenueNestedInput
+    reviews?: VenueReviewUncheckedUpdateManyWithoutVenueNestedInput
+  }
+
+  export type PriceSlotUpsertWithWhereUniqueWithoutCourtInput = {
+    where: PriceSlotWhereUniqueInput
+    update: XOR<PriceSlotUpdateWithoutCourtInput, PriceSlotUncheckedUpdateWithoutCourtInput>
+    create: XOR<PriceSlotCreateWithoutCourtInput, PriceSlotUncheckedCreateWithoutCourtInput>
+  }
+
+  export type PriceSlotUpdateWithWhereUniqueWithoutCourtInput = {
+    where: PriceSlotWhereUniqueInput
+    data: XOR<PriceSlotUpdateWithoutCourtInput, PriceSlotUncheckedUpdateWithoutCourtInput>
+  }
+
+  export type PriceSlotUpdateManyWithWhereWithoutCourtInput = {
+    where: PriceSlotScalarWhereInput
+    data: XOR<PriceSlotUpdateManyMutationInput, PriceSlotUncheckedUpdateManyWithoutCourtInput>
+  }
+
+  export type PriceSlotScalarWhereInput = {
+    AND?: PriceSlotScalarWhereInput | PriceSlotScalarWhereInput[]
+    OR?: PriceSlotScalarWhereInput[]
+    NOT?: PriceSlotScalarWhereInput | PriceSlotScalarWhereInput[]
+    id?: IntFilter<"PriceSlot"> | number
+    courtId?: IntFilter<"PriceSlot"> | number
+    startTime?: IntFilter<"PriceSlot"> | number
+    pricePerHour?: IntFilter<"PriceSlot"> | number
+    createdAt?: DateTimeFilter<"PriceSlot"> | Date | string
+    updatedAt?: DateTimeFilter<"PriceSlot"> | Date | string
   }
 
   export type BookingUpsertWithWhereUniqueWithoutCourtInput = {
@@ -19333,6 +22698,374 @@ export namespace Prisma {
     data: XOR<BookingUpdateManyMutationInput, BookingUncheckedUpdateManyWithoutCourtInput>
   }
 
+  export type CourtReviewUpsertWithWhereUniqueWithoutCourtInput = {
+    where: CourtReviewWhereUniqueInput
+    update: XOR<CourtReviewUpdateWithoutCourtInput, CourtReviewUncheckedUpdateWithoutCourtInput>
+    create: XOR<CourtReviewCreateWithoutCourtInput, CourtReviewUncheckedCreateWithoutCourtInput>
+  }
+
+  export type CourtReviewUpdateWithWhereUniqueWithoutCourtInput = {
+    where: CourtReviewWhereUniqueInput
+    data: XOR<CourtReviewUpdateWithoutCourtInput, CourtReviewUncheckedUpdateWithoutCourtInput>
+  }
+
+  export type CourtReviewUpdateManyWithWhereWithoutCourtInput = {
+    where: CourtReviewScalarWhereInput
+    data: XOR<CourtReviewUpdateManyMutationInput, CourtReviewUncheckedUpdateManyWithoutCourtInput>
+  }
+
+  export type VenueCreateWithoutReviewsInput = {
+    name: string
+    slug: string
+    description?: string | null
+    address: string
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    amenities?: VenueCreateamenitiesInput | string[]
+    photos?: VenueCreatephotosInput | string[]
+    approved?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner: FacilityOwnerCreateNestedOneWithoutVenuesInput
+    courts?: CourtCreateNestedManyWithoutVenueInput
+  }
+
+  export type VenueUncheckedCreateWithoutReviewsInput = {
+    id?: number
+    ownerId: number
+    name: string
+    slug: string
+    description?: string | null
+    address: string
+    city?: string | null
+    state?: string | null
+    country?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    amenities?: VenueCreateamenitiesInput | string[]
+    photos?: VenueCreatephotosInput | string[]
+    approved?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    courts?: CourtUncheckedCreateNestedManyWithoutVenueInput
+  }
+
+  export type VenueCreateOrConnectWithoutReviewsInput = {
+    where: VenueWhereUniqueInput
+    create: XOR<VenueCreateWithoutReviewsInput, VenueUncheckedCreateWithoutReviewsInput>
+  }
+
+  export type UserCreateWithoutVenueReviewsInput = {
+    email: string
+    fullName: string
+    avatarUrl?: string | null
+    avatarPublicId?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    emailVerified?: boolean
+    ownerProfileId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ownerProfile?: FacilityOwnerCreateNestedOneWithoutUserInput
+    bookings?: BookingCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewCreateNestedManyWithoutUserInput
+    Session?: SessionCreateNestedManyWithoutUserInput
+    Account?: AccountCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutVenueReviewsInput = {
+    id?: number
+    email: string
+    fullName: string
+    avatarUrl?: string | null
+    avatarPublicId?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    emailVerified?: boolean
+    ownerProfileId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ownerProfile?: FacilityOwnerUncheckedCreateNestedOneWithoutUserInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewUncheckedCreateNestedManyWithoutUserInput
+    Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    Account?: AccountUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutVenueReviewsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutVenueReviewsInput, UserUncheckedCreateWithoutVenueReviewsInput>
+  }
+
+  export type VenueUpsertWithoutReviewsInput = {
+    update: XOR<VenueUpdateWithoutReviewsInput, VenueUncheckedUpdateWithoutReviewsInput>
+    create: XOR<VenueCreateWithoutReviewsInput, VenueUncheckedCreateWithoutReviewsInput>
+    where?: VenueWhereInput
+  }
+
+  export type VenueUpdateToOneWithWhereWithoutReviewsInput = {
+    where?: VenueWhereInput
+    data: XOR<VenueUpdateWithoutReviewsInput, VenueUncheckedUpdateWithoutReviewsInput>
+  }
+
+  export type VenueUpdateWithoutReviewsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    amenities?: VenueUpdateamenitiesInput | string[]
+    photos?: VenueUpdatephotosInput | string[]
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: FacilityOwnerUpdateOneRequiredWithoutVenuesNestedInput
+    courts?: CourtUpdateManyWithoutVenueNestedInput
+  }
+
+  export type VenueUncheckedUpdateWithoutReviewsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ownerId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    state?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    amenities?: VenueUpdateamenitiesInput | string[]
+    photos?: VenueUpdatephotosInput | string[]
+    approved?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    courts?: CourtUncheckedUpdateManyWithoutVenueNestedInput
+  }
+
+  export type UserUpsertWithoutVenueReviewsInput = {
+    update: XOR<UserUpdateWithoutVenueReviewsInput, UserUncheckedUpdateWithoutVenueReviewsInput>
+    create: XOR<UserCreateWithoutVenueReviewsInput, UserUncheckedCreateWithoutVenueReviewsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutVenueReviewsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutVenueReviewsInput, UserUncheckedUpdateWithoutVenueReviewsInput>
+  }
+
+  export type UserUpdateWithoutVenueReviewsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarPublicId?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    ownerProfileId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ownerProfile?: FacilityOwnerUpdateOneWithoutUserNestedInput
+    bookings?: BookingUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUpdateManyWithoutUserNestedInput
+    Session?: SessionUpdateManyWithoutUserNestedInput
+    Account?: AccountUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutVenueReviewsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarPublicId?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    ownerProfileId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ownerProfile?: FacilityOwnerUncheckedUpdateOneWithoutUserNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUncheckedUpdateManyWithoutUserNestedInput
+    Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type CourtCreateWithoutReviewsInput = {
+    name: string
+    slug: string
+    sport: string
+    type: string
+    currency?: string
+    openTime: number
+    closeTime: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    venue: VenueCreateNestedOneWithoutCourtsInput
+    priceSlots?: PriceSlotCreateNestedManyWithoutCourtInput
+    bookings?: BookingCreateNestedManyWithoutCourtInput
+  }
+
+  export type CourtUncheckedCreateWithoutReviewsInput = {
+    id?: number
+    venueId: number
+    name: string
+    slug: string
+    sport: string
+    type: string
+    currency?: string
+    openTime: number
+    closeTime: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    priceSlots?: PriceSlotUncheckedCreateNestedManyWithoutCourtInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutCourtInput
+  }
+
+  export type CourtCreateOrConnectWithoutReviewsInput = {
+    where: CourtWhereUniqueInput
+    create: XOR<CourtCreateWithoutReviewsInput, CourtUncheckedCreateWithoutReviewsInput>
+  }
+
+  export type UserCreateWithoutCourtReviewsInput = {
+    email: string
+    fullName: string
+    avatarUrl?: string | null
+    avatarPublicId?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    emailVerified?: boolean
+    ownerProfileId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ownerProfile?: FacilityOwnerCreateNestedOneWithoutUserInput
+    bookings?: BookingCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewCreateNestedManyWithoutUserInput
+    Session?: SessionCreateNestedManyWithoutUserInput
+    Account?: AccountCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCourtReviewsInput = {
+    id?: number
+    email: string
+    fullName: string
+    avatarUrl?: string | null
+    avatarPublicId?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    emailVerified?: boolean
+    ownerProfileId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ownerProfile?: FacilityOwnerUncheckedCreateNestedOneWithoutUserInput
+    bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewUncheckedCreateNestedManyWithoutUserInput
+    Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    Account?: AccountUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCourtReviewsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCourtReviewsInput, UserUncheckedCreateWithoutCourtReviewsInput>
+  }
+
+  export type CourtUpsertWithoutReviewsInput = {
+    update: XOR<CourtUpdateWithoutReviewsInput, CourtUncheckedUpdateWithoutReviewsInput>
+    create: XOR<CourtCreateWithoutReviewsInput, CourtUncheckedCreateWithoutReviewsInput>
+    where?: CourtWhereInput
+  }
+
+  export type CourtUpdateToOneWithWhereWithoutReviewsInput = {
+    where?: CourtWhereInput
+    data: XOR<CourtUpdateWithoutReviewsInput, CourtUncheckedUpdateWithoutReviewsInput>
+  }
+
+  export type CourtUpdateWithoutReviewsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    sport?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    currency?: StringFieldUpdateOperationsInput | string
+    openTime?: IntFieldUpdateOperationsInput | number
+    closeTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    venue?: VenueUpdateOneRequiredWithoutCourtsNestedInput
+    priceSlots?: PriceSlotUpdateManyWithoutCourtNestedInput
+    bookings?: BookingUpdateManyWithoutCourtNestedInput
+  }
+
+  export type CourtUncheckedUpdateWithoutReviewsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    venueId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    sport?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    currency?: StringFieldUpdateOperationsInput | string
+    openTime?: IntFieldUpdateOperationsInput | number
+    closeTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priceSlots?: PriceSlotUncheckedUpdateManyWithoutCourtNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutCourtNestedInput
+  }
+
+  export type UserUpsertWithoutCourtReviewsInput = {
+    update: XOR<UserUpdateWithoutCourtReviewsInput, UserUncheckedUpdateWithoutCourtReviewsInput>
+    create: XOR<UserCreateWithoutCourtReviewsInput, UserUncheckedCreateWithoutCourtReviewsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCourtReviewsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCourtReviewsInput, UserUncheckedUpdateWithoutCourtReviewsInput>
+  }
+
+  export type UserUpdateWithoutCourtReviewsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarPublicId?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    ownerProfileId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ownerProfile?: FacilityOwnerUpdateOneWithoutUserNestedInput
+    bookings?: BookingUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUpdateManyWithoutUserNestedInput
+    Session?: SessionUpdateManyWithoutUserNestedInput
+    Account?: AccountUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCourtReviewsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarPublicId?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    ownerProfileId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ownerProfile?: FacilityOwnerUncheckedUpdateOneWithoutUserNestedInput
+    bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUncheckedUpdateManyWithoutUserNestedInput
+    Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutBookingsInput = {
     email: string
     fullName: string
@@ -19345,7 +23078,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     ownerProfile?: FacilityOwnerCreateNestedOneWithoutUserInput
-    reviews?: ReviewCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewCreateNestedManyWithoutUserInput
     Session?: SessionCreateNestedManyWithoutUserInput
     Account?: AccountCreateNestedManyWithoutUserInput
   }
@@ -19363,7 +23097,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     ownerProfile?: FacilityOwnerUncheckedCreateNestedOneWithoutUserInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewUncheckedCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewUncheckedCreateNestedManyWithoutUserInput
     Session?: SessionUncheckedCreateNestedManyWithoutUserInput
     Account?: AccountUncheckedCreateNestedManyWithoutUserInput
   }
@@ -19375,27 +23110,33 @@ export namespace Prisma {
 
   export type CourtCreateWithoutBookingsInput = {
     name: string
+    slug: string
     sport: string
-    pricePerHour: number
+    type: string
     currency?: string
     openTime: number
     closeTime: number
     createdAt?: Date | string
     updatedAt?: Date | string
     venue: VenueCreateNestedOneWithoutCourtsInput
+    priceSlots?: PriceSlotCreateNestedManyWithoutCourtInput
+    reviews?: CourtReviewCreateNestedManyWithoutCourtInput
   }
 
   export type CourtUncheckedCreateWithoutBookingsInput = {
     id?: number
     venueId: number
     name: string
+    slug: string
     sport: string
-    pricePerHour: number
+    type: string
     currency?: string
     openTime: number
     closeTime: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    priceSlots?: PriceSlotUncheckedCreateNestedManyWithoutCourtInput
+    reviews?: CourtReviewUncheckedCreateNestedManyWithoutCourtInput
   }
 
   export type CourtCreateOrConnectWithoutBookingsInput = {
@@ -19456,7 +23197,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ownerProfile?: FacilityOwnerUpdateOneWithoutUserNestedInput
-    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUpdateManyWithoutUserNestedInput
     Session?: SessionUpdateManyWithoutUserNestedInput
     Account?: AccountUpdateManyWithoutUserNestedInput
   }
@@ -19474,7 +23216,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ownerProfile?: FacilityOwnerUncheckedUpdateOneWithoutUserNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUncheckedUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUncheckedUpdateManyWithoutUserNestedInput
     Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
     Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -19492,27 +23235,33 @@ export namespace Prisma {
 
   export type CourtUpdateWithoutBookingsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     sport?: StringFieldUpdateOperationsInput | string
-    pricePerHour?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     venue?: VenueUpdateOneRequiredWithoutCourtsNestedInput
+    priceSlots?: PriceSlotUpdateManyWithoutCourtNestedInput
+    reviews?: CourtReviewUpdateManyWithoutCourtNestedInput
   }
 
   export type CourtUncheckedUpdateWithoutBookingsInput = {
     id?: IntFieldUpdateOperationsInput | number
     venueId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     sport?: StringFieldUpdateOperationsInput | string
-    pricePerHour?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priceSlots?: PriceSlotUncheckedUpdateManyWithoutCourtNestedInput
+    reviews?: CourtReviewUncheckedUpdateManyWithoutCourtNestedInput
   }
 
   export type PaymentUpsertWithoutBookingInput = {
@@ -19551,6 +23300,84 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CourtCreateWithoutPriceSlotsInput = {
+    name: string
+    slug: string
+    sport: string
+    type: string
+    currency?: string
+    openTime: number
+    closeTime: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    venue: VenueCreateNestedOneWithoutCourtsInput
+    bookings?: BookingCreateNestedManyWithoutCourtInput
+    reviews?: CourtReviewCreateNestedManyWithoutCourtInput
+  }
+
+  export type CourtUncheckedCreateWithoutPriceSlotsInput = {
+    id?: number
+    venueId: number
+    name: string
+    slug: string
+    sport: string
+    type: string
+    currency?: string
+    openTime: number
+    closeTime: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bookings?: BookingUncheckedCreateNestedManyWithoutCourtInput
+    reviews?: CourtReviewUncheckedCreateNestedManyWithoutCourtInput
+  }
+
+  export type CourtCreateOrConnectWithoutPriceSlotsInput = {
+    where: CourtWhereUniqueInput
+    create: XOR<CourtCreateWithoutPriceSlotsInput, CourtUncheckedCreateWithoutPriceSlotsInput>
+  }
+
+  export type CourtUpsertWithoutPriceSlotsInput = {
+    update: XOR<CourtUpdateWithoutPriceSlotsInput, CourtUncheckedUpdateWithoutPriceSlotsInput>
+    create: XOR<CourtCreateWithoutPriceSlotsInput, CourtUncheckedCreateWithoutPriceSlotsInput>
+    where?: CourtWhereInput
+  }
+
+  export type CourtUpdateToOneWithWhereWithoutPriceSlotsInput = {
+    where?: CourtWhereInput
+    data: XOR<CourtUpdateWithoutPriceSlotsInput, CourtUncheckedUpdateWithoutPriceSlotsInput>
+  }
+
+  export type CourtUpdateWithoutPriceSlotsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    sport?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    currency?: StringFieldUpdateOperationsInput | string
+    openTime?: IntFieldUpdateOperationsInput | number
+    closeTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    venue?: VenueUpdateOneRequiredWithoutCourtsNestedInput
+    bookings?: BookingUpdateManyWithoutCourtNestedInput
+    reviews?: CourtReviewUpdateManyWithoutCourtNestedInput
+  }
+
+  export type CourtUncheckedUpdateWithoutPriceSlotsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    venueId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    sport?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    currency?: StringFieldUpdateOperationsInput | string
+    openTime?: IntFieldUpdateOperationsInput | number
+    closeTime?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUncheckedUpdateManyWithoutCourtNestedInput
+    reviews?: CourtReviewUncheckedUpdateManyWithoutCourtNestedInput
+  }
+
   export type BookingCreateWithoutPaymentInput = {
     startTime: Date | string
     endTime: Date | string
@@ -19559,6 +23386,8 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
     user: UserCreateNestedOneWithoutBookingsInput
     court: CourtCreateNestedOneWithoutBookingsInput
   }
@@ -19574,6 +23403,8 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
   }
 
   export type BookingCreateOrConnectWithoutPaymentInput = {
@@ -19600,6 +23431,8 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutBookingsNestedInput
     court?: CourtUpdateOneRequiredWithoutBookingsNestedInput
   }
@@ -19615,190 +23448,8 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserCreateWithoutReviewsInput = {
-    email: string
-    fullName: string
-    avatarUrl?: string | null
-    avatarPublicId?: string | null
-    passwordHash: string
-    role?: $Enums.Role
-    emailVerified?: boolean
-    ownerProfileId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    ownerProfile?: FacilityOwnerCreateNestedOneWithoutUserInput
-    bookings?: BookingCreateNestedManyWithoutUserInput
-    Session?: SessionCreateNestedManyWithoutUserInput
-    Account?: AccountCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutReviewsInput = {
-    id?: number
-    email: string
-    fullName: string
-    avatarUrl?: string | null
-    avatarPublicId?: string | null
-    passwordHash: string
-    role?: $Enums.Role
-    emailVerified?: boolean
-    ownerProfileId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    ownerProfile?: FacilityOwnerUncheckedCreateNestedOneWithoutUserInput
-    bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
-    Session?: SessionUncheckedCreateNestedManyWithoutUserInput
-    Account?: AccountUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutReviewsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
-  }
-
-  export type VenueCreateWithoutReviewsInput = {
-    name: string
-    slug: string
-    description?: string | null
-    address: string
-    city: string
-    state?: string | null
-    country?: string | null
-    latitude?: number | null
-    longitude?: number | null
-    amenities?: VenueCreateamenitiesInput | string[]
-    photos?: VenueCreatephotosInput | string[]
-    approved?: boolean
-    rating?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    owner: FacilityOwnerCreateNestedOneWithoutVenuesInput
-    courts?: CourtCreateNestedManyWithoutVenueInput
-  }
-
-  export type VenueUncheckedCreateWithoutReviewsInput = {
-    id?: number
-    ownerId: number
-    name: string
-    slug: string
-    description?: string | null
-    address: string
-    city: string
-    state?: string | null
-    country?: string | null
-    latitude?: number | null
-    longitude?: number | null
-    amenities?: VenueCreateamenitiesInput | string[]
-    photos?: VenueCreatephotosInput | string[]
-    approved?: boolean
-    rating?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    courts?: CourtUncheckedCreateNestedManyWithoutVenueInput
-  }
-
-  export type VenueCreateOrConnectWithoutReviewsInput = {
-    where: VenueWhereUniqueInput
-    create: XOR<VenueCreateWithoutReviewsInput, VenueUncheckedCreateWithoutReviewsInput>
-  }
-
-  export type UserUpsertWithoutReviewsInput = {
-    update: XOR<UserUpdateWithoutReviewsInput, UserUncheckedUpdateWithoutReviewsInput>
-    create: XOR<UserCreateWithoutReviewsInput, UserUncheckedCreateWithoutReviewsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutReviewsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutReviewsInput, UserUncheckedUpdateWithoutReviewsInput>
-  }
-
-  export type UserUpdateWithoutReviewsInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    fullName?: StringFieldUpdateOperationsInput | string
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarPublicId?: NullableStringFieldUpdateOperationsInput | string | null
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    ownerProfileId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ownerProfile?: FacilityOwnerUpdateOneWithoutUserNestedInput
-    bookings?: BookingUpdateManyWithoutUserNestedInput
-    Session?: SessionUpdateManyWithoutUserNestedInput
-    Account?: AccountUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutReviewsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    fullName?: StringFieldUpdateOperationsInput | string
-    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    avatarPublicId?: NullableStringFieldUpdateOperationsInput | string | null
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    ownerProfileId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ownerProfile?: FacilityOwnerUncheckedUpdateOneWithoutUserNestedInput
-    bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
-    Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type VenueUpsertWithoutReviewsInput = {
-    update: XOR<VenueUpdateWithoutReviewsInput, VenueUncheckedUpdateWithoutReviewsInput>
-    create: XOR<VenueCreateWithoutReviewsInput, VenueUncheckedCreateWithoutReviewsInput>
-    where?: VenueWhereInput
-  }
-
-  export type VenueUpdateToOneWithWhereWithoutReviewsInput = {
-    where?: VenueWhereInput
-    data: XOR<VenueUpdateWithoutReviewsInput, VenueUncheckedUpdateWithoutReviewsInput>
-  }
-
-  export type VenueUpdateWithoutReviewsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    amenities?: VenueUpdateamenitiesInput | string[]
-    photos?: VenueUpdatephotosInput | string[]
-    approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    owner?: FacilityOwnerUpdateOneRequiredWithoutVenuesNestedInput
-    courts?: CourtUpdateManyWithoutVenueNestedInput
-  }
-
-  export type VenueUncheckedUpdateWithoutReviewsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    ownerId?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
-    state?: NullableStringFieldUpdateOperationsInput | string | null
-    country?: NullableStringFieldUpdateOperationsInput | string | null
-    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
-    amenities?: VenueUpdateamenitiesInput | string[]
-    photos?: VenueUpdatephotosInput | string[]
-    approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    courts?: CourtUncheckedUpdateManyWithoutVenueNestedInput
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCreateWithoutSessionInput = {
@@ -19814,7 +23465,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     ownerProfile?: FacilityOwnerCreateNestedOneWithoutUserInput
     bookings?: BookingCreateNestedManyWithoutUserInput
-    reviews?: ReviewCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewCreateNestedManyWithoutUserInput
     Account?: AccountCreateNestedManyWithoutUserInput
   }
 
@@ -19832,7 +23484,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     ownerProfile?: FacilityOwnerUncheckedCreateNestedOneWithoutUserInput
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewUncheckedCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewUncheckedCreateNestedManyWithoutUserInput
     Account?: AccountUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -19865,7 +23518,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ownerProfile?: FacilityOwnerUpdateOneWithoutUserNestedInput
     bookings?: BookingUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUpdateManyWithoutUserNestedInput
     Account?: AccountUpdateManyWithoutUserNestedInput
   }
 
@@ -19883,7 +23537,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ownerProfile?: FacilityOwnerUncheckedUpdateOneWithoutUserNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUncheckedUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUncheckedUpdateManyWithoutUserNestedInput
     Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -19900,7 +23555,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     ownerProfile?: FacilityOwnerCreateNestedOneWithoutUserInput
     bookings?: BookingCreateNestedManyWithoutUserInput
-    reviews?: ReviewCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewCreateNestedManyWithoutUserInput
     Session?: SessionCreateNestedManyWithoutUserInput
   }
 
@@ -19918,7 +23574,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     ownerProfile?: FacilityOwnerUncheckedCreateNestedOneWithoutUserInput
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    venueReviews?: VenueReviewUncheckedCreateNestedManyWithoutUserInput
+    courtReviews?: CourtReviewUncheckedCreateNestedManyWithoutUserInput
     Session?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -19951,7 +23608,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ownerProfile?: FacilityOwnerUpdateOneWithoutUserNestedInput
     bookings?: BookingUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUpdateManyWithoutUserNestedInput
     Session?: SessionUpdateManyWithoutUserNestedInput
   }
 
@@ -19969,7 +23627,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ownerProfile?: FacilityOwnerUncheckedUpdateOneWithoutUserNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    venueReviews?: VenueReviewUncheckedUpdateManyWithoutUserNestedInput
+    courtReviews?: CourtReviewUncheckedUpdateManyWithoutUserNestedInput
     Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -19983,14 +23642,26 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
   }
 
-  export type ReviewCreateManyUserInput = {
+  export type VenueReviewCreateManyUserInput = {
     id?: number
     venueId: number
     rating: number
     comment?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CourtReviewCreateManyUserInput = {
+    id?: number
+    courtId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type SessionCreateManyUserInput = {
@@ -20018,6 +23689,8 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     court?: CourtUpdateOneRequiredWithoutBookingsNestedInput
     payment?: PaymentUpdateOneWithoutBookingNestedInput
   }
@@ -20032,6 +23705,8 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     payment?: PaymentUncheckedUpdateOneWithoutBookingNestedInput
   }
 
@@ -20045,29 +23720,60 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ReviewUpdateWithoutUserInput = {
+  export type VenueReviewUpdateWithoutUserInput = {
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     venue?: VenueUpdateOneRequiredWithoutReviewsNestedInput
   }
 
-  export type ReviewUncheckedUpdateWithoutUserInput = {
+  export type VenueReviewUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     venueId?: IntFieldUpdateOperationsInput | number
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ReviewUncheckedUpdateManyWithoutUserInput = {
+  export type VenueReviewUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     venueId?: IntFieldUpdateOperationsInput | number
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourtReviewUpdateWithoutUserInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    court?: CourtUpdateOneRequiredWithoutReviewsNestedInput
+  }
+
+  export type CourtReviewUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    courtId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourtReviewUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    courtId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -20125,7 +23831,7 @@ export namespace Prisma {
     slug: string
     description?: string | null
     address: string
-    city: string
+    city?: string | null
     state?: string | null
     country?: string | null
     latitude?: number | null
@@ -20133,7 +23839,6 @@ export namespace Prisma {
     amenities?: VenueCreateamenitiesInput | string[]
     photos?: VenueCreatephotosInput | string[]
     approved?: boolean
-    rating?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -20143,7 +23848,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -20151,11 +23856,10 @@ export namespace Prisma {
     amenities?: VenueUpdateamenitiesInput | string[]
     photos?: VenueUpdatephotosInput | string[]
     approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courts?: CourtUpdateManyWithoutVenueNestedInput
-    reviews?: ReviewUpdateManyWithoutVenueNestedInput
+    reviews?: VenueReviewUpdateManyWithoutVenueNestedInput
   }
 
   export type VenueUncheckedUpdateWithoutOwnerInput = {
@@ -20164,7 +23868,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -20172,11 +23876,10 @@ export namespace Prisma {
     amenities?: VenueUpdateamenitiesInput | string[]
     photos?: VenueUpdatephotosInput | string[]
     approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     courts?: CourtUncheckedUpdateManyWithoutVenueNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutVenueNestedInput
+    reviews?: VenueReviewUncheckedUpdateManyWithoutVenueNestedInput
   }
 
   export type VenueUncheckedUpdateManyWithoutOwnerInput = {
@@ -20185,7 +23888,7 @@ export namespace Prisma {
     slug?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     address?: StringFieldUpdateOperationsInput | string
-    city?: StringFieldUpdateOperationsInput | string
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     state?: NullableStringFieldUpdateOperationsInput | string | null
     country?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -20193,7 +23896,6 @@ export namespace Prisma {
     amenities?: VenueUpdateamenitiesInput | string[]
     photos?: VenueUpdatephotosInput | string[]
     approved?: BoolFieldUpdateOperationsInput | boolean
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20201,8 +23903,9 @@ export namespace Prisma {
   export type CourtCreateManyVenueInput = {
     id?: number
     name: string
+    slug: string
     sport: string
-    pricePerHour: number
+    type: string
     currency?: string
     openTime: number
     closeTime: number
@@ -20210,44 +23913,52 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ReviewCreateManyVenueInput = {
+  export type VenueReviewCreateManyVenueInput = {
     id?: number
     userId: number
     rating: number
     comment?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CourtUpdateWithoutVenueInput = {
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     sport?: StringFieldUpdateOperationsInput | string
-    pricePerHour?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priceSlots?: PriceSlotUpdateManyWithoutCourtNestedInput
     bookings?: BookingUpdateManyWithoutCourtNestedInput
+    reviews?: CourtReviewUpdateManyWithoutCourtNestedInput
   }
 
   export type CourtUncheckedUpdateWithoutVenueInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     sport?: StringFieldUpdateOperationsInput | string
-    pricePerHour?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priceSlots?: PriceSlotUncheckedUpdateManyWithoutCourtNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutCourtNestedInput
+    reviews?: CourtReviewUncheckedUpdateManyWithoutCourtNestedInput
   }
 
   export type CourtUncheckedUpdateManyWithoutVenueInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     sport?: StringFieldUpdateOperationsInput | string
-    pricePerHour?: IntFieldUpdateOperationsInput | number
+    type?: StringFieldUpdateOperationsInput | string
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
@@ -20255,27 +23966,38 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ReviewUpdateWithoutVenueInput = {
+  export type VenueReviewUpdateWithoutVenueInput = {
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutReviewsNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutVenueReviewsNestedInput
   }
 
-  export type ReviewUncheckedUpdateWithoutVenueInput = {
+  export type VenueReviewUncheckedUpdateWithoutVenueInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ReviewUncheckedUpdateManyWithoutVenueInput = {
+  export type VenueReviewUncheckedUpdateManyWithoutVenueInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PriceSlotCreateManyCourtInput = {
+    id?: number
+    startTime: number
+    pricePerHour: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type BookingCreateManyCourtInput = {
@@ -20288,6 +24010,40 @@ export namespace Prisma {
     idempotencyKey?: string | null
     notes?: string | null
     createdAt?: Date | string
+    totalAmount: number
+    currency?: string
+  }
+
+  export type CourtReviewCreateManyCourtInput = {
+    id?: number
+    userId: number
+    rating: number
+    comment?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PriceSlotUpdateWithoutCourtInput = {
+    startTime?: IntFieldUpdateOperationsInput | number
+    pricePerHour?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PriceSlotUncheckedUpdateWithoutCourtInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    startTime?: IntFieldUpdateOperationsInput | number
+    pricePerHour?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PriceSlotUncheckedUpdateManyWithoutCourtInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    startTime?: IntFieldUpdateOperationsInput | number
+    pricePerHour?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BookingUpdateWithoutCourtInput = {
@@ -20298,6 +24054,8 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutBookingsNestedInput
     payment?: PaymentUpdateOneWithoutBookingNestedInput
   }
@@ -20312,6 +24070,8 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
     payment?: PaymentUncheckedUpdateOneWithoutBookingNestedInput
   }
 
@@ -20325,6 +24085,34 @@ export namespace Prisma {
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalAmount?: IntFieldUpdateOperationsInput | number
+    currency?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CourtReviewUpdateWithoutCourtInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCourtReviewsNestedInput
+  }
+
+  export type CourtReviewUncheckedUpdateWithoutCourtInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourtReviewUncheckedUpdateManyWithoutCourtInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

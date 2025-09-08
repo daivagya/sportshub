@@ -1,13 +1,14 @@
 import React from "react";
-import Navbar from "@/components/owner/Navbar";
-import { AuthProvider } from "@/app/context/AuthenticationProvider";
-const layout = ({ children }: { children: React.ReactNode }) => {
+import Navbar from "@/components/owner/client-components/Navbar";
+import { getCurrentUser } from "@/lib/session";
+import { redirect } from "next/navigation";
+const layout = async ({ children }: { children: React.ReactNode }) => {
+  const user = await getCurrentUser();
+  if (user?.role !== "OWNER") redirect("/login");
   return (
     <div>
-      {/* <AuthProvider> */}
-        <Navbar />
-        {children}
-      {/* </AuthProvider> */}
+      <Navbar />
+      {children}
     </div>
   );
 };

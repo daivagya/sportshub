@@ -1,44 +1,17 @@
-"use client";
-import React from "react";
-import VenuesTable from "@/components/owner/VenuesTable";
-import AddVenueForm from "@/components/owner/AddVenueForm";
-import { useState } from "react";
-function Page() {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-  // 2. The onClose handler function
-  // This function will be passed as a prop to your form.
-  // Its only job is to update the state and hide the form.
-  const handleCloseForm = () => {
-    setIsFormOpen(false);
-  };
-
-  // Function to open the form
-  const handleOpenForm = () => {
-    setIsFormOpen(true);
-  };
-
+// src/app/(owner)/manager/venues/page.tsx
+import VenuesManager from "@/components/owner/client-components/VenuesManager";
+import OwnedVenuesContent from "@/components/owner/server-components/OwnedVenuesContent";
+export const dynamic = "force-dynamic"
+export default function Page() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Manage Venues</h1>
-        <button
-          onClick={() => handleOpenForm()}
-          className="mt-3 sm:mt-0 bg-green-600 text-white px-5 py-2 rounded-lg shadow hover:bg-green-700 transition"
-        >
-          + Add Venue
-        </button>
-      </div>
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">Manage Venues</h1>
 
-      {/* Add Venue Form */}
-      {isFormOpen && <AddVenueForm onClose={handleCloseForm} />}
+      {/* Client component manages form open/close */}
+      <VenuesManager />
 
-      {/* Card Wrapper */}
-      <div className="bg-white shadow rounded-lg p-4">
-        <VenuesTable />
-      </div>
+      {/* Server component fetches and displays venues */}
+      <OwnedVenuesContent />
     </div>
   );
 }
-
-export default Page;

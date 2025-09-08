@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import BookingsTable from "@/components/owner/BookingsTable";
+import BookingsTable from "@/components/owner/client-components/BookingsTable";
 
 export default function ManagerBookingsPage() {
   const [filter, setFilter] = useState("all");
