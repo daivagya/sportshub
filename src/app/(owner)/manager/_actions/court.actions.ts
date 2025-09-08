@@ -2,6 +2,7 @@
 import { db as prisma } from "@/lib/prisma";
 import { AddCourtInput } from "@/types/next-auth";
 import { revalidatePath } from "next/cache";
+import { UpdateCourtByIdInput } from "@/types/next-auth";
 
 export async function addCourt(input: AddCourtInput) {
   const {
@@ -14,8 +15,10 @@ export async function addCourt(input: AddCourtInput) {
     priceSlots,
     currency,
     slug,
+    imageUrl,
   } = input;
 
+  console.log("Imgae url------------->", imageUrl);
   // Basic validation
   if (!priceSlots || priceSlots.length === 0) {
     return { error: "At least one price slot is required." };
@@ -54,6 +57,7 @@ export async function addCourt(input: AddCourtInput) {
             pricePerHour: Number(slot.price), // Map form 'price' to DB 'pricePerHour'
           })),
         },
+        imageUrl,
       },
     });
 
@@ -68,6 +72,7 @@ export async function addCourt(input: AddCourtInput) {
   }
 }
 
+//GET COURTS BY VENUE SLUG
 export async function getCourtsByVenueSlug(slug: string) {
   const venue = await prisma.venue.findUnique({
     where: { slug },
@@ -85,6 +90,7 @@ export async function getCourtsByVenueSlug(slug: string) {
           closeTime: true,
           priceSlots: true,
           slug: true,
+          imageUrl: true,
           // --- CHANGES ARE HERE ---
           // 1. Select only the 'rating' from each review
           reviews: {
@@ -130,21 +136,69 @@ export async function getCourtsByVenueSlug(slug: string) {
   return { venue, courts: processedCourts };
 }
 
-
-export async function deleteCourtBySlug(slug: string, pathname: string) {
+//DELETE COURT
+export async function deleteCourtById(id: number) {
   try {
-    // Directly delete the court where the slug matches
-    await prisma.court.delete({
-      where: { slug: slug },
+    // Delete the court
+    const deletedCourt = await prisma.court.delete({
+      where: { id },
     });
 
-    revalidatePath(pathname);
+    // Revalidate relevant paths so updated data shows
+    revalidatePath("/manager/venues"); // All venues list
 
-    return { success: true, message: "Court deleted successfully." };
+    return { success: true, court: deletedCourt };
+  } catch (error: any) {
+    console.error("Failed to delete court:", error);
+    return { success: false, error: error.message || "Failed to delete court" };
+  }
+}
+
+//GET COURT BY SLUG
+export async function getCourtByCourtSlug(slug: string) {
+  try {
+    const court = await prisma.court.findUnique({
+      where: { slug },
+      include: {
+        venue: true, // include relations if needed
+      },
+    });
+
+    return court;
   } catch (error) {
-    // This will catch errors, including if no record with that slug was found
-    const errorMessage =
-      error instanceof Error ? error.message : "An unknown error occurred";
-    return { success: false, error: errorMessage };
+    console.error("Error fetching court by slug:", error);
+    return null;
+  }
+}
+
+//UPDATE COURT
+export async function updateCourtById(data: UpdateCourtByIdInput) {
+  try {
+    const updatedCourt = await prisma.court.update({
+      where: { id: data.id },
+      data: {
+        ...(data.name && { name: data.name }),
+        ...(data.slug && { slug: data.slug }),
+        ...(data.sport && { sport: data.sport }),
+        ...(data.type && { type: data.type }),
+        ...(data.openTime !== undefined && { openTime: data.openTime }),
+        ...(data.closeTime !== undefined && { closeTime: data.closeTime }),
+        ...(data.currency && { currency: data.currency }),
+        ...(data.priceSlots && {
+          priceSlots: {
+            deleteMany: {}, // remove old slots
+            create: data.priceSlots.map((slot) => ({
+              startTime: slot.startTime,
+              pricePerHour: Number(slot.price),
+            })),
+          },
+        }),
+      },
+    });
+
+    return updatedCourt;
+  } catch (error) {
+    console.error("Failed to update court:", error);
+    return null;
   }
 }

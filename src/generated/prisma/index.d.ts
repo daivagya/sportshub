@@ -5986,6 +5986,7 @@ export namespace Prisma {
     currency: string | null
     openTime: number | null
     closeTime: number | null
+    imageUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6000,6 +6001,7 @@ export namespace Prisma {
     currency: string | null
     openTime: number | null
     closeTime: number | null
+    imageUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6014,6 +6016,7 @@ export namespace Prisma {
     currency: number
     openTime: number
     closeTime: number
+    imageUrl: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6044,6 +6047,7 @@ export namespace Prisma {
     currency?: true
     openTime?: true
     closeTime?: true
+    imageUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6058,6 +6062,7 @@ export namespace Prisma {
     currency?: true
     openTime?: true
     closeTime?: true
+    imageUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6072,6 +6077,7 @@ export namespace Prisma {
     currency?: true
     openTime?: true
     closeTime?: true
+    imageUrl?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6173,6 +6179,7 @@ export namespace Prisma {
     currency: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt: Date
     updatedAt: Date
     _count: CourtCountAggregateOutputType | null
@@ -6206,6 +6213,7 @@ export namespace Prisma {
     currency?: boolean
     openTime?: boolean
     closeTime?: boolean
+    imageUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     venue?: boolean | VenueDefaultArgs<ExtArgs>
@@ -6225,6 +6233,7 @@ export namespace Prisma {
     currency?: boolean
     openTime?: boolean
     closeTime?: boolean
+    imageUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     venue?: boolean | VenueDefaultArgs<ExtArgs>
@@ -6240,6 +6249,7 @@ export namespace Prisma {
     currency?: boolean
     openTime?: boolean
     closeTime?: boolean
+    imageUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     venue?: boolean | VenueDefaultArgs<ExtArgs>
@@ -6255,11 +6265,12 @@ export namespace Prisma {
     currency?: boolean
     openTime?: boolean
     closeTime?: boolean
+    imageUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CourtOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "venueId" | "name" | "slug" | "sport" | "type" | "currency" | "openTime" | "closeTime" | "createdAt" | "updatedAt", ExtArgs["result"]["court"]>
+  export type CourtOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "venueId" | "name" | "slug" | "sport" | "type" | "currency" | "openTime" | "closeTime" | "imageUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["court"]>
   export type CourtInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     venue?: boolean | VenueDefaultArgs<ExtArgs>
     priceSlots?: boolean | Court$priceSlotsArgs<ExtArgs>
@@ -6292,6 +6303,7 @@ export namespace Prisma {
       currency: string
       openTime: number
       closeTime: number
+      imageUrl: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["court"]>
@@ -6730,6 +6742,7 @@ export namespace Prisma {
     readonly currency: FieldRef<"Court", 'String'>
     readonly openTime: FieldRef<"Court", 'Int'>
     readonly closeTime: FieldRef<"Court", 'Int'>
+    readonly imageUrl: FieldRef<"Court", 'String'>
     readonly createdAt: FieldRef<"Court", 'DateTime'>
     readonly updatedAt: FieldRef<"Court", 'DateTime'>
   }
@@ -17424,6 +17437,7 @@ export namespace Prisma {
     currency: 'currency',
     openTime: 'openTime',
     closeTime: 'closeTime',
+    imageUrl: 'imageUrl',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -17992,6 +18006,7 @@ export namespace Prisma {
     currency?: StringFilter<"Court"> | string
     openTime?: IntFilter<"Court"> | number
     closeTime?: IntFilter<"Court"> | number
+    imageUrl?: StringFilter<"Court"> | string
     createdAt?: DateTimeFilter<"Court"> | Date | string
     updatedAt?: DateTimeFilter<"Court"> | Date | string
     venue?: XOR<VenueScalarRelationFilter, VenueWhereInput>
@@ -18010,6 +18025,7 @@ export namespace Prisma {
     currency?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     venue?: VenueOrderByWithRelationInput
@@ -18032,6 +18048,7 @@ export namespace Prisma {
     currency?: StringFilter<"Court"> | string
     openTime?: IntFilter<"Court"> | number
     closeTime?: IntFilter<"Court"> | number
+    imageUrl?: StringFilter<"Court"> | string
     createdAt?: DateTimeFilter<"Court"> | Date | string
     updatedAt?: DateTimeFilter<"Court"> | Date | string
     venue?: XOR<VenueScalarRelationFilter, VenueWhereInput>
@@ -18050,6 +18067,7 @@ export namespace Prisma {
     currency?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CourtCountOrderByAggregateInput
@@ -18072,6 +18090,7 @@ export namespace Prisma {
     currency?: StringWithAggregatesFilter<"Court"> | string
     openTime?: IntWithAggregatesFilter<"Court"> | number
     closeTime?: IntWithAggregatesFilter<"Court"> | number
+    imageUrl?: StringWithAggregatesFilter<"Court"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Court"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Court"> | Date | string
   }
@@ -19041,6 +19060,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     venue: VenueCreateNestedOneWithoutCourtsInput
@@ -19059,6 +19079,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     priceSlots?: PriceSlotUncheckedCreateNestedManyWithoutCourtInput
@@ -19074,6 +19095,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     venue?: VenueUpdateOneRequiredWithoutCourtsNestedInput
@@ -19092,6 +19114,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     priceSlots?: PriceSlotUncheckedUpdateManyWithoutCourtNestedInput
@@ -19109,6 +19132,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19121,6 +19145,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19135,6 +19160,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20253,6 +20279,7 @@ export namespace Prisma {
     currency?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -20274,6 +20301,7 @@ export namespace Prisma {
     currency?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -20288,6 +20316,7 @@ export namespace Prisma {
     currency?: SortOrder
     openTime?: SortOrder
     closeTime?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -22330,6 +22359,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     priceSlots?: PriceSlotCreateNestedManyWithoutCourtInput
@@ -22346,6 +22376,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     priceSlots?: PriceSlotUncheckedCreateNestedManyWithoutCourtInput
@@ -22449,6 +22480,7 @@ export namespace Prisma {
     currency?: StringFilter<"Court"> | string
     openTime?: IntFilter<"Court"> | number
     closeTime?: IntFilter<"Court"> | number
+    imageUrl?: StringFilter<"Court"> | string
     createdAt?: DateTimeFilter<"Court"> | Date | string
     updatedAt?: DateTimeFilter<"Court"> | Date | string
   }
@@ -22906,6 +22938,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     venue: VenueCreateNestedOneWithoutCourtsInput
@@ -22923,6 +22956,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     priceSlots?: PriceSlotUncheckedCreateNestedManyWithoutCourtInput
@@ -22995,6 +23029,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     venue?: VenueUpdateOneRequiredWithoutCourtsNestedInput
@@ -23012,6 +23047,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     priceSlots?: PriceSlotUncheckedUpdateManyWithoutCourtNestedInput
@@ -23116,6 +23152,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     venue: VenueCreateNestedOneWithoutCourtsInput
@@ -23133,6 +23170,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     priceSlots?: PriceSlotUncheckedCreateNestedManyWithoutCourtInput
@@ -23241,6 +23279,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     venue?: VenueUpdateOneRequiredWithoutCourtsNestedInput
@@ -23258,6 +23297,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     priceSlots?: PriceSlotUncheckedUpdateManyWithoutCourtNestedInput
@@ -23308,6 +23348,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     venue: VenueCreateNestedOneWithoutCourtsInput
@@ -23325,6 +23366,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     bookings?: BookingUncheckedCreateNestedManyWithoutCourtInput
@@ -23355,6 +23397,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     venue?: VenueUpdateOneRequiredWithoutCourtsNestedInput
@@ -23372,6 +23415,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUncheckedUpdateManyWithoutCourtNestedInput
@@ -23909,6 +23953,7 @@ export namespace Prisma {
     currency?: string
     openTime: number
     closeTime: number
+    imageUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23930,6 +23975,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     priceSlots?: PriceSlotUpdateManyWithoutCourtNestedInput
@@ -23946,6 +23992,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     priceSlots?: PriceSlotUncheckedUpdateManyWithoutCourtNestedInput
@@ -23962,6 +24009,7 @@ export namespace Prisma {
     currency?: StringFieldUpdateOperationsInput | string
     openTime?: IntFieldUpdateOperationsInput | number
     closeTime?: IntFieldUpdateOperationsInput | number
+    imageUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

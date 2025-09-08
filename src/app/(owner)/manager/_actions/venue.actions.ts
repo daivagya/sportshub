@@ -110,8 +110,6 @@ export async function getOwnedVenues() {
         updatedAt: true,
       },
     });
-
-    console.log("Get owned venues action hitted--------------", venues);
     return Response.json(venues);
   } catch (err) {
     console.error("Error fetching owned venues:", err);

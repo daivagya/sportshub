@@ -2,6 +2,7 @@
 import { getCourtsByVenueSlug } from "@/app/(owner)/manager/_actions/court.actions";
 import CourtManager from "../client-components/CourtManager";
 import { Court } from "@/types/next-auth";
+import toast from "react-hot-toast";
 
 interface CourtsSectionProps {
   venueSlug: string;
@@ -10,11 +11,12 @@ interface CourtsSectionProps {
 // FIX: Receive props as an object { venueSlug }
 export default async function CourtsSection({ venueSlug }: CourtsSectionProps) {
   const { venue, courts } = await getCourtsByVenueSlug(venueSlug);
+  if(!venue) toast.error("Venue not found. Please try again.");
   console.log("------------------courts>>", courts);
   return (
     <CourtManager
       venueSlug={venueSlug}
-      venueName={courts[0].venueName}
+      venueName={venue!.name}
       venueId={venue?.id}
       initialCourts={courts}
     />

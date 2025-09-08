@@ -53,7 +53,7 @@ export type Court = {
   slug: string;
   // Data added during processing
   venueName: string;
-
+  imageUrl: string;
   // Aggregated review data
   reviewCount: number;
   averageRating: number;
@@ -74,6 +74,21 @@ export type AddCourtInput = {
   openTime: number;
   closeTime: number;
   slug: string;
+  imageUrl: string;
 };
+
+
+export interface UpdateCourtByIdInput {
+  id: number;
+  name?: string;
+  slug?: string;
+  sport?: string;
+  type?: string;
+  openTime?: number;
+  closeTime?: number;
+  currency?: string;
+  imageUrl?: string;
+  priceSlots?: { startTime: number; price: string }[];
+}
 
 export {};

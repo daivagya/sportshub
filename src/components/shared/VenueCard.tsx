@@ -18,7 +18,6 @@ export default function VenueCard({ venue, href }: VenueCardProps) {
   //     ? Math.min(...courts.map((c) => c.pricePerHour))
   //     : undefined;
   // const minRupees = minPaisa ? Math.round(minPaisa / 100) : undefined;
-  console.log("------venue card", venue);
 
   return (
     <div className="relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition group">
@@ -79,7 +78,7 @@ export default function VenueCard({ venue, href }: VenueCardProps) {
             href={href}
             className="rounded-lg bg-green-600 px-3 py-2 text-sm text-white font-medium hover:bg-green-700 transition"
           >
-            View Details
+            Manage details
           </Link>
         ) : (
           <Link

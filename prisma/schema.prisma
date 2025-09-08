@@ -80,6 +80,7 @@ model Court {
   closeTime    Int
   bookings     Booking[]
   reviews      CourtReview[] // court-specific reviews
+  imageUrl     String       // ✅ Single image for the court
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
@@ -89,6 +90,7 @@ model Court {
   @@index([sport])
   @@index([type])
 }
+
 
 model VenueReview {
   id        Int      @id @default(autoincrement())

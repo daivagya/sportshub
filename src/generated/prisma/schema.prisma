@@ -81,6 +81,7 @@ model Court {
   closeTime  Int
   bookings   Booking[]
   reviews    CourtReview[] // court-specific reviews
+  imageUrl   String // ✅ Single image for the court
   createdAt  DateTime      @default(now())
   updatedAt  DateTime      @updatedAt
 

@@ -3,16 +3,7 @@
 import { useTransition } from "react";
 import toast from "react-hot-toast";
 import { TrashIcon } from "@heroicons/react/24/outline";
-
-// Mock API – replace with your real API call
-async function deleteCourtBySlug(slug: string, pathname: string) {
-  return new Promise<{ success: boolean; error?: string }>((resolve) =>
-    setTimeout(() => {
-      if (Math.random() > 0.2) resolve({ success: true });
-      else resolve({ success: false, error: "Server error" });
-    }, 1200)
-  );
-}
+import { deleteCourtById} from "@/app/(owner)/manager/_actions/court.actions";
 
 interface DeleteCourtModalProps {
   court: any;
@@ -39,7 +30,7 @@ export default function DeleteCourtModal({
 
   const handleDelete = () => {
     startTransition(async () => {
-      const result = await deleteCourtBySlug(court.slug, pathname);
+      const result = await deleteCourtById(court.id);
       if (result.success) {
         toast.success(`Court "${court.name}" deleted successfully.`);
         onClose();

@@ -173,6 +173,7 @@ exports.Prisma.CourtScalarFieldEnum = {
   currency: 'currency',
   openTime: 'openTime',
   closeTime: 'closeTime',
+  imageUrl: 'imageUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

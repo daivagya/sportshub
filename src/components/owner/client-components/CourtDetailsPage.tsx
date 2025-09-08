@@ -1,26 +1,23 @@
 "use client";
-
 import { useState } from "react";
-import {
-  CameraIcon,
-  PencilIcon,
-  TrashIcon,
-  StarIcon,
-} from "@heroicons/react/24/solid";
-import toast from "react-hot-toast";
-import DeleteCourtModal from "@/components/owner/client-components/DeleteCourtForm";
-import FileUploader from "@/components/shared/FileUploader"; // Reusable uploader
+import DeleteCourtModal from "./DeleteCourtForm";
+import UpdateCourtModal from "./UpdateCourtForm";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import { PencilIcon } from "@heroicons/react/24/outline";
+import FileUploader from "@/components/shared/FileUploader";
+import { format } from "date-fns";
+import { StarIcon } from "@heroicons/react/24/outline";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { usePathname } from "next/navigation";
+import { uploadImagesToCloudinary } from "@/lib/cloudinary-client";
+// import { deleteImageFromCloudinary } from "@/lib/cloudinary-client";
 
-export default function CourtDetailsPage({
-  court,
-  initialImages = [],
-}: {
-  court: any;
-  initialImages?: string[];
-}) {
+export function CourtDetailsPage({ court }: { court: any }) {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [images, setImages] = useState(initialImages);
-  console.log("-------------------------------------------- ");
+  const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+  const [images, setImages] = useState<string[]>([]);
   if (!court) {
     return (
       <div className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
@@ -36,10 +33,10 @@ export default function CourtDetailsPage({
     );
   }
 
-  const handleUploadComplete = (newImageUrl: string) => {
-    setImages((prevImages) => [...prevImages, newImageUrl]);
-    toast.success("Image uploaded successfully!");
-  };
+  const handleUploadComplete = (newUrls: string[]) => {
+  setImages((prev) => [...prev, ...newUrls]);
+  toast.success("Images uploaded successfully!");
+};
 
   const formatTime = (time: number) =>
     `${String(Math.floor(time / 60)).padStart(2, "0")}:${String(
@@ -61,7 +58,7 @@ export default function CourtDetailsPage({
                   {court.venueName}
                 </p>
               </div>
-              <div className="flex items-center mt-4 md:mt-0">
+              {/* <div className="flex items-center mt-4 md:mt-0">
                 <StarIcon className="w-6 h-6 text-yellow-500" />
                 <span className="text-xl font-bold text-gray-800 dark:text-gray-200 ml-2">
                   {court.averageRating.toFixed(1)}
@@ -69,7 +66,7 @@ export default function CourtDetailsPage({
                 <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
                   ({court.reviewCount} reviews)
                 </span>
-              </div>
+              </div> */}
             </div>
 
             {/* Main Grid */}
@@ -100,21 +97,13 @@ export default function CourtDetailsPage({
                         {formatTime(court.closeTime)}
                       </dd>
                     </div>
-                    <div>
+                    {/* <div>
                       <dt className="font-semibold">Base Price:</dt>
                       <dd className="text-gray-600 dark:text-gray-300">
                         {court.currency} {court.priceSlots[0]?.price || "N/A"} /
                         slot
                       </dd>
-                    </div>
-                    <div>
-                      <dt className="font-semibold">Slug:</dt>
-                      <dd>
-                        <code className="text-xs bg-gray-200 dark:bg-gray-600 p-1 rounded">
-                          {court.slug}
-                        </code>
-                      </dd>
-                    </div>
+                    </div> */}
                   </dl>
                 </div>
 
@@ -131,14 +120,14 @@ export default function CourtDetailsPage({
                   </h3>
                   <div className="space-y-3">
                     <button
-                      onClick={() => toast("Update logic not implemented yet.")}
+                      onClick={() => setUpdateModalOpen(true)}
                       className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition"
                     >
                       <PencilIcon className="w-5 h-5" /> Update Details
                     </button>
                     <button
                       onClick={() => setDeleteModalOpen(true)}
-                      className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition"
+                      className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 transition"
                     >
                       <TrashIcon className="w-5 h-5" /> Delete Court
                     </button>
@@ -149,7 +138,7 @@ export default function CourtDetailsPage({
               {/* Right Column: Image Gallery & Upload */}
               <div className="lg:col-span-2">
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <CameraIcon className="w-6 h-6 text-gray-600 dark:text-gray-300" />{" "}
+                  {/* <CameraIcon className="w-6 h-6 text-gray-600 dark:text-gray-300" />{" "} */}
                   Image Gallery
                 </h2>
 
@@ -195,6 +184,12 @@ export default function CourtDetailsPage({
         court={court}
         isOpen={isDeleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
+      />
+
+      <UpdateCourtModal
+        court={court}
+        isOpen={isUpdateModalOpen}
+        onClose={() => setUpdateModalOpen(false)}
       />
     </div>
   );
