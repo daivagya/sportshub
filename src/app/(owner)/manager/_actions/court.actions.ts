@@ -184,6 +184,7 @@ export async function updateCourtById(data: UpdateCourtByIdInput) {
         ...(data.openTime !== undefined && { openTime: data.openTime }),
         ...(data.closeTime !== undefined && { closeTime: data.closeTime }),
         ...(data.currency && { currency: data.currency }),
+        ...(data.imageUrl && { imageUrl: data.imageUrl }),
         ...(data.priceSlots && {
           priceSlots: {
             deleteMany: {}, // remove old slots

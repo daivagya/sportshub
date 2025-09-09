@@ -70,10 +70,13 @@ export default function CourtManager({
               venueId={venueId}
               status="AVAILABLE"
               rating={4.5}
-              imageUrl={`https://placehold.co/600x400/000000/FFFFFF?text=${court.name.replace(
-                " ",
-                "+"
-              )}`}
+              imageUrl={
+                court?.imageUrl ||
+                `https://placehold.co/600x400/000000/FFFFFF?text=${court.name.replace(
+                  " ",
+                  "+"
+                )}`
+              }
             />
           ))}
         </div>

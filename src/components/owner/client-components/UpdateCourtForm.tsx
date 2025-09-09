@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, startTransition } from "react";
+import { useEffect, useState, startTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateCourtById } from "@/app/(owner)/manager/_actions/court.actions";
 import GAMES from "@/constants/games";
@@ -17,126 +17,253 @@ interface UpdateCourtFormProps {
   isOpen: boolean;
 }
 
-export default function UpdateCourtModal({ court, isOpen, onClose }: UpdateCourtFormProps) {
+export default function UpdateCourtModal({
+  court,
+  isOpen,
+  onClose,
+}: UpdateCourtFormProps) {
   const router = useRouter();
-  const [name, setName] = useState(court.name ?? "");
-  const [sport, setSport] = useState(court.sport ?? "Badminton");
-  const [type, setType] = useState<string>(court.type ?? "Indoor");
-  const [useTieredPricing, setUseTieredPricing] = useState((court.priceSlots?.length ?? 0) > 1);
-  const [fixedPrice, setFixedPrice] = useState(
-    court.priceSlots?.length === 1 ? String(court.priceSlots[0].price ?? "") : ""
+
+  // --- form state (initialized from court when modal opens) ---
+  const [name, setName] = useState<string>(court?.name ?? "");
+  const [sport, setSport] = useState<string>(
+    court?.sport ?? GAMES?.[0] ?? "Badminton"
   );
-  const [openTime, setOpenTime] = useState(court.openTime ?? 8);
-  const [closeTime, setCloseTime] = useState(court.closeTime ?? 22);
+  const [type, setType] = useState<"Indoor" | "Outdoor">(
+    (court?.type as "Indoor" | "Outdoor") ?? "Indoor"
+  );
+  const [openTime, setOpenTime] = useState<number>(court?.openTime ?? 8);
+  const [closeTime, setCloseTime] = useState<number>(court?.closeTime ?? 22);
+
+  const [useTieredPricing, setUseTieredPricing] = useState<boolean>(
+    (court?.priceSlots?.length ?? 0) > 1
+  );
+  const [fixedPrice, setFixedPrice] = useState<string>(
+    court?.priceSlots?.length === 1
+      ? String(court.priceSlots![0].price ?? "")
+      : ""
+  );
   const [priceSlots, setPriceSlots] = useState<PriceSlotInput[]>(
-    court.priceSlots?.map((s) => ({ startTime: s.startTime, price: String(s.price) })) ?? [
-      { startTime: openTime, price: "" },
-    ]
+    (court?.priceSlots?.map((s) => ({
+      startTime: s.startTime,
+      price: String(s.price),
+    })) ?? [{ startTime: court?.openTime ?? 8, price: "" }]) as PriceSlotInput[]
   );
 
-  // Image handling
+  // Image
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(court.imageUrl ?? null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    court?.imageUrl ?? null
+  );
+  const [imageUploading, setImageUploading] = useState(false);
 
+  // misc
   const [loading, setLoading] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // utility
+  const allHours = Array.from({ length: 24 }, (_, i) => i);
+  const availableSlotHours = allHours.filter(
+    (h) => h > openTime && h < closeTime
+  );
+
+  // base input styling (consistent)
+  const baseInput =
+    "w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition";
+
+  // Re-init state whenever modal opens (so repeated opens show fresh data)
   useEffect(() => {
+    if (!isOpen) return;
+    setName(court?.name ?? "");
+    setSport(court?.sport ?? GAMES?.[0] ?? "Badminton");
+    setType((court?.type as "Indoor" | "Outdoor") ?? "Indoor");
+    setOpenTime(court?.openTime ?? 8);
+    setCloseTime(court?.closeTime ?? 22);
+    setUseTieredPricing((court?.priceSlots?.length ?? 0) > 1);
+    setFixedPrice(
+      court?.priceSlots?.length === 1
+        ? String(court.priceSlots![0].price ?? "")
+        : ""
+    );
+    setPriceSlots(
+      (court?.priceSlots?.map((s) => ({
+        startTime: s.startTime,
+        price: String(s.price),
+      })) ?? [
+        { startTime: court?.openTime ?? 8, price: "" },
+      ]) as PriceSlotInput[]
+    );
+    setImageFile(null);
+    setPreviewUrl(court?.imageUrl ?? null);
+    setError(null);
+  }, [isOpen, court]);
+
+  // keep first slot aligned with openTime
+  useEffect(() => {
+    setPriceSlots((slots) => {
+      const updated = slots.map((s, i) =>
+        i === 0 ? { ...s, startTime: openTime } : s
+      );
+      return updated.filter((s) => s.startTime >= openTime);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openTime]);
+
+  // ESC to close
+  useEffect(() => {
+    if (!isOpen) return;
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") handleClose();
     };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
-
-  useEffect(() => {
-    setPriceSlots((current) => {
-      const updated = [...current];
-      if (updated.length > 0) updated[0].startTime = openTime;
-      return updated.filter((slot) => slot.startTime >= openTime);
-    });
-  }, [openTime]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   const handleClose = () => {
     setIsClosing(true);
-    setTimeout(onClose, 300);
+    setTimeout(() => {
+      onClose();
+      setIsClosing(false);
+    }, 260);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError(null);
     const file = e.target.files?.[0] ?? null;
     setImageFile(file);
-    setPreviewUrl(file ? URL.createObjectURL(file) : court.imageUrl ?? null);
+    setPreviewUrl(file ? URL.createObjectURL(file) : court?.imageUrl ?? null);
   };
 
-  const handlePriceSlotChange = (index: number, field: "startTime" | "price", value: string) => {
-    const updated = [...priceSlots];
-    updated[index] = {
-      ...updated[index],
-      [field]: field === "price" ? value : Number(value),
-    };
-    setPriceSlots(updated);
+  const handlePriceSlotChange = (
+    i: number,
+    field: "startTime" | "price",
+    value: string
+  ) => {
+    setPriceSlots((slots) =>
+      slots.map((s, idx) =>
+        idx === i
+          ? { ...s, [field]: field === "price" ? value : Number(value) }
+          : s
+      )
+    );
   };
 
   const handleAddPriceSlot = () => {
     const last = priceSlots[priceSlots.length - 1];
-    const newStart = last.startTime + 1;
-    if (newStart < closeTime) setPriceSlots([...priceSlots, { startTime: newStart, price: "" }]);
-    else setError("Cannot add slot at or after closing time.");
+    const newStart = last ? last.startTime + 1 : openTime + 1;
+    if (newStart >= closeTime) {
+      setError("Cannot add a slot that starts at or after closing time.");
+      return;
+    }
+    if (priceSlots.some((p) => p.startTime === newStart)) {
+      setError("Slot start time conflicts with existing slot.");
+      return;
+    }
+    setPriceSlots([...priceSlots, { startTime: newStart, price: "" }]);
+    setError(null);
   };
 
-  const handleRemovePriceSlot = (index: number) => {
-    if (index === 0 || priceSlots.length <= 1) return;
-    setPriceSlots(priceSlots.filter((_, i) => i !== index));
+  const handleRemovePriceSlot = (i: number) => {
+    if (i === 0 || priceSlots.length <= 1) return;
+    setPriceSlots((s) => s.filter((_, idx) => idx !== i));
   };
 
+  // submit: uploads image (if changed) then calls updateCourtById
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
     if (!name.trim()) return setError("Court name required.");
-    if (openTime >= closeTime) return setError("Open time must be before close time.");
+    if (openTime >= closeTime)
+      return setError("Open time must be before close time.");
+    if (imageUploading) return setError("Please wait for the image upload.");
 
+    // validate price slots
     let formattedPriceSlots: PriceSlotInput[] = [];
-
     if (useTieredPricing) {
-      const sorted = [...priceSlots].sort((a, b) => a.startTime - b.startTime);
-      for (let i = 0; i < sorted.length; i++) {
-        const slot = sorted[i];
-        if (!slot.price || Number(slot.price) <= 0)
-          return setError(`Set valid price for slot at ${slot.startTime}:00`);
-        if (slot.startTime < openTime || slot.startTime >= closeTime)
-          return setError(`Slot ${slot.startTime}:00 outside operating hours`);
-        if (i > 0 && slot.startTime === sorted[i - 1].startTime)
-          return setError(`Duplicate slot at ${slot.startTime}:00`);
+      const cleaned = [...priceSlots]
+        .map((s) => ({
+          startTime: Number(s.startTime),
+          price: String(s.price).trim(),
+        }))
+        .sort((a, b) => a.startTime - b.startTime);
+
+      for (let i = 0; i < cleaned.length; i++) {
+        const s = cleaned[i];
+        if (!s.price || Number(s.price) <= 0)
+          return setError("Please set valid prices for all slots.");
+        if (s.startTime < openTime || s.startTime >= closeTime)
+          return setError(
+            `Slot at ${String(s.startTime).padStart(
+              2,
+              "0"
+            )}:00 is outside operating hours.`
+          );
+        if (i > 0 && s.startTime === cleaned[i - 1].startTime)
+          return setError(
+            `Duplicate slot at ${String(s.startTime).padStart(2, "0")}:00.`
+          );
       }
-      formattedPriceSlots = sorted;
+      formattedPriceSlots = cleaned;
     } else {
-      if (!fixedPrice || Number(fixedPrice) <= 0) return setError("Set valid fixed price");
+      if (!fixedPrice || Number(fixedPrice) <= 0)
+        return setError("Please set a valid fixed price.");
       formattedPriceSlots = [{ startTime: openTime, price: fixedPrice }];
     }
 
-    let uploadedImageUrl: string | null = court.imageUrl ?? null;
+    setLoading(true);
+
+    // Upload image if user selected a new file
+    let uploadedImageUrl: string | null = court?.imageUrl ?? null;
     if (imageFile) {
+      const preset =
+        process.env.NEXT_PUBLIC_CLOUDINARY_PRESET ||
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+      const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+      if (!preset || !cloudName) {
+        setLoading(false);
+        return setError(
+          "Image upload not configured (missing Cloudinary keys)."
+        );
+      }
+
+      setImageUploading(true);
       try {
-        const formData = new FormData();
-        formData.append("file", imageFile);
-        formData.append(
-          "upload_preset",
-          process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
-        );
+        const fd = new FormData();
+        fd.append("file", imageFile);
+        fd.append("upload_preset", preset);
+
         const res = await fetch(
-          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-          { method: "POST", body: formData }
+          `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+          { method: "POST", body: fd }
         );
+
+        if (!res.ok) {
+          setImageUploading(false);
+          setLoading(false);
+          return setError("Image upload failed. Try again.");
+        }
+
         const data = await res.json();
-        uploadedImageUrl = data.secure_url;
-      } catch {
-        return setError("Image upload failed");
+        if (!data?.secure_url) {
+          setImageUploading(false);
+          setLoading(false);
+          return setError("Invalid image upload response.");
+        }
+        uploadedImageUrl = String(data.secure_url);
+      } catch (err) {
+        console.error(err);
+        setImageUploading(false);
+        setLoading(false);
+        return setError("Image upload failed. Check your connection.");
+      } finally {
+        setImageUploading(false);
       }
     }
 
-    setLoading(true);
+    // call update API
     try {
       await updateCourtById({
         id: court.id,
@@ -147,125 +274,310 @@ export default function UpdateCourtModal({ court, isOpen, onClose }: UpdateCourt
         closeTime,
         priceSlots: formattedPriceSlots,
         imageUrl: uploadedImageUrl!,
-      });
+      } as any);
+
       handleClose();
+
+      // refresh so manager sees updated image on details page
+      startTransition(() => router.refresh());
     } catch (err) {
       console.error(err);
       setError("Failed to update court. Try again.");
     } finally {
       setLoading(false);
-      startTransition(() => router.refresh());
     }
   };
 
   if (!isOpen) return null;
 
-  const allHours = Array.from({ length: 24 }, (_, i) => i);
-  const availableSlotHours = allHours.filter((h) => h > openTime && h < closeTime);
-
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50 backdrop-blur-sm p-4 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 p-4 transition-opacity ${
         isClosing ? "opacity-0" : "opacity-100"
       }`}
       onClick={handleClose}
     >
       <div
-        className={`relative bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-lg transition-all duration-300 flex flex-col max-h-[90vh] ${
-          isClosing ? "opacity-0 scale-95" : "opacity-100 scale-100"
+        className={`bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col min-h-0 overflow-hidden transition-transform ${
+          isClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b dark:border-gray-600">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Update Court</h3>
-          <button onClick={handleClose} className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
+        <div className="flex items-center justify-between p-5 border-b dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            Update Court
+          </h3>
+          <button
+            onClick={handleClose}
+            className="text-gray-500 hover:text-gray-800"
+          >
             ✕
           </button>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col flex-grow min-h-0">
-          <div className="p-6 space-y-6 overflow-y-auto">
-            {/* Court Name */}
+        {/* Form (flex column, body scrolls) */}
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            {/* Name */}
             <div>
-              <label className="block mb-2 text-sm font-medium">Court Name</label>
+              <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                Court Name
+              </label>
               <input
-                type="text"
+                className={baseInput}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="input-style"
-                required
+                placeholder="e.g., Synthetic Court 1"
               />
             </div>
 
-            {/* Sport + Type */}
-            <div className="grid grid-cols-2 gap-6">
-              <select value={sport} onChange={(e) => setSport(e.target.value)} className="input-style">
-                {GAMES.map((g) => <option key={g} value={g}>{g}</option>)}
-              </select>
-              <select value={type} onChange={(e) => setType(e.target.value as "Indoor" | "Outdoor")} className="input-style">
-                <option value="Indoor">Indoor</option>
-                <option value="Outdoor">Outdoor</option>
-              </select>
+            {/* sport + type */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Sport
+                </label>
+                <select
+                  className={baseInput}
+                  value={sport}
+                  onChange={(e) => setSport(e.target.value)}
+                >
+                  {Array.isArray(GAMES) ? (
+                    GAMES.map((g) => (
+                      <option key={g} value={g}>
+                        {g}
+                      </option>
+                    ))
+                  ) : (
+                    <option>{String(sport)}</option>
+                  )}
+                </select>
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Type
+                </label>
+                <select
+                  className={baseInput}
+                  value={type}
+                  onChange={(e) =>
+                    setType(e.target.value as "Indoor" | "Outdoor")
+                  }
+                >
+                  <option value="Indoor">Indoor</option>
+                  <option value="Outdoor">Outdoor</option>
+                </select>
+              </div>
             </div>
 
-            {/* Image Upload */}
+            {/* Image upload (compact) */}
             <div>
-              <label className="block mb-2 text-sm font-medium">Court Image</label>
-              <input type="file" accept="image/*" onChange={handleImageChange} className="block w-full" />
-              {previewUrl && <img src={previewUrl} alt="Preview" className="mt-3 w-full h-40 object-cover rounded-lg border" />}
+              <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                Court Image
+              </label>
+
+              <div className="flex items-center gap-4">
+                <label
+                  htmlFor="update-court-image"
+                  className="inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed rounded-lg cursor-pointer text-sm
+                             border-green-600 text-green-600 hover:bg-green-50 transition"
+                >
+                  <span>
+                    {imageFile
+                      ? "Change image"
+                      : previewUrl
+                      ? "Change image"
+                      : "Upload image"}
+                  </span>
+                </label>
+
+                <input
+                  id="update-court-image"
+                  type="file"
+                  accept="image/*"
+                  className="sr-only"
+                  onChange={handleImageChange}
+                />
+
+                <div className="w-32 h-24 flex items-center justify-center rounded-md border overflow-hidden bg-white dark:bg-gray-700">
+                  {previewUrl ? (
+                    <img
+                      src={previewUrl}
+                      alt="preview"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="text-xs text-gray-400">No image</div>
+                  )}
+                </div>
+              </div>
+
+              <p className="mt-2 text-xs text-gray-500">
+                Recommended: 1200×800 px. Max size: 5MB.
+              </p>
             </div>
 
-            {/* Hours */}
-            <div className="grid grid-cols-2 gap-6">
-              <select value={openTime} onChange={(e) => setOpenTime(Number(e.target.value))} className="input-style">
-                {allHours.map((h) => <option key={h} value={h}>{h}:00</option>)}
-              </select>
-              <select value={closeTime} onChange={(e) => setCloseTime(Number(e.target.value))} className="input-style">
-                {allHours.map((h) => <option key={h} value={h}>{h}:00</option>)}
-              </select>
+            {/* hours */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Opens At
+                </label>
+                <select
+                  className={baseInput}
+                  value={openTime}
+                  onChange={(e) => setOpenTime(Number(e.target.value))}
+                >
+                  {allHours.map((h) => (
+                    <option key={h} value={h}>
+                      {String(h).padStart(2, "0")}:00
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Closes At
+                </label>
+                <select
+                  className={baseInput}
+                  value={closeTime}
+                  onChange={(e) => setCloseTime(Number(e.target.value))}
+                >
+                  {allHours.map((h) => (
+                    <option key={h} value={h}>
+                      {String(h).padStart(2, "0")}:00
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {/* Pricing */}
             <div className="space-y-4 p-4 border rounded-lg dark:border-gray-600">
-              <label className="flex items-center cursor-pointer">
-                <input type="checkbox" checked={useTieredPricing} onChange={(e) => setUseTieredPricing(e.target.checked)} className="sr-only peer" />
-                <div className="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-blue-600 relative after:absolute after:top-0.5 after:left-[2px] after:w-5 after:h-5 after:bg-white after:rounded-full after:transition-all peer-checked:after:translate-x-full" />
-                <span className="ml-3 text-sm">Use tiered pricing</span>
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={useTieredPricing}
+                  onChange={(e) => {
+                    const next = e.target.checked;
+                    setUseTieredPricing(next);
+                    // if switching to fixed, set fixedPrice from first slot
+                    if (!next) {
+                      setFixedPrice(priceSlots[0]?.price ?? "");
+                    } else {
+                      // ensure there's at least one slot
+                      if (!priceSlots || priceSlots.length === 0) {
+                        setPriceSlots([
+                          { startTime: openTime, price: fixedPrice || "" },
+                        ]);
+                      }
+                    }
+                  }}
+                />
+                <span className="text-sm">Use tiered pricing</span>
               </label>
+
               {useTieredPricing ? (
-                <div className="space-y-4 pt-4 border-t">
+                <div className="space-y-3">
                   {priceSlots.map((slot, i) => (
-                    <div key={i} className="grid grid-cols-12 gap-2 items-center p-3 bg-gray-50 rounded-lg">
-                      <div className="col-span-5">
-                        {i === 0 ? <p>{slot.startTime}:00</p> : (
-                          <select value={slot.startTime} onChange={(e) => handlePriceSlotChange(i, "startTime", e.target.value)}>
-                            {availableSlotHours.map((h) => <option key={h} value={h}>{h}:00</option>)}
-                          </select>
-                        )}
-                      </div>
-                      <div className="col-span-5">
-                        <input type="number" value={slot.price} onChange={(e) => handlePriceSlotChange(i, "price", e.target.value)} className="input-style" placeholder="Price" />
-                      </div>
-                      <div className="col-span-2 flex justify-center">
-                        {i > 0 && <button type="button" onClick={() => handleRemovePriceSlot(i)} className="text-red-500">✕</button>}
-                      </div>
+                    <div key={i} className="flex items-center gap-2">
+                      {i === 0 ? (
+                        <div className="text-center px-3 py-2 bg-gray-100 rounded-md text-sm">
+                          {String(slot.startTime).padStart(2, "0")}:00
+                        </div>
+                      ) : (
+                        <select
+                          className="w-24 rounded-lg border border-gray-300 bg-white dark:bg-gray-700 px-2 py-2 text-sm"
+                          value={String(slot.startTime)}
+                          onChange={(e) =>
+                            handlePriceSlotChange(
+                              i,
+                              "startTime",
+                              e.target.value
+                            )
+                          }
+                        >
+                          {availableSlotHours.map((h) => (
+                            <option key={h} value={h}>
+                              {String(h).padStart(2, "0")}:00
+                            </option>
+                          ))}
+                        </select>
+                      )}
+
+                      <input
+                        className={`${baseInput} flex-1`}
+                        type="number"
+                        min={0}
+                        placeholder="₹ Price"
+                        value={slot.price}
+                        onChange={(e) =>
+                          handlePriceSlotChange(i, "price", e.target.value)
+                        }
+                      />
+
+                      {i > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemovePriceSlot(i)}
+                          className="text-red-500 px-2"
+                        >
+                          ✕
+                        </button>
+                      )}
                     </div>
                   ))}
-                  <button type="button" onClick={handleAddPriceSlot} className="w-full text-blue-600 border rounded-lg py-2">+ Add Price Slot</button>
+
+                  <button
+                    type="button"
+                    onClick={handleAddPriceSlot}
+                    className="block w-full text-blue-600 border border-blue-600 rounded-lg py-1 text-sm"
+                  >
+                    + Add Price Slot
+                  </button>
                 </div>
               ) : (
-                <input type="number" value={fixedPrice} onChange={(e) => setFixedPrice(e.target.value)} className="input-style" placeholder="Price per hour" />
+                <input
+                  className={baseInput}
+                  type="number"
+                  placeholder="Price per hour (₹)"
+                  value={fixedPrice}
+                  onChange={(e) => setFixedPrice(e.target.value)}
+                />
               )}
             </div>
-          </div>
 
-          {error && <div className="p-4 mx-6 mb-4 text-sm text-red-800 bg-red-50 rounded-lg">{error}</div>}
+            {/* Buttons placed immediately after pricing so they appear right below it and inside the scroll area */}
+            <div className="pt-4 border-t dark:border-gray-700">
+              {error && (
+                <div className="pb-2 text-sm text-red-600">{error}</div>
+              )}
 
-          <div className="flex justify-end p-6 border-t">
-            <button type="button" onClick={handleClose} className="btn-secondary">Cancel</button>
-            <button type="submit" disabled={loading} className="btn-primary ml-3">{loading ? "Updating..." : "Update Court"}</button>
+              <div className="flex justify-end gap-3 mt-3">
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="min-w-[100px] px-4 py-2 rounded-lg border-2 border-green-600 text-green-700 bg-white hover:bg-green-50 transition"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={loading || imageUploading}
+                  className={`min-w-[120px] px-4 py-2 rounded-lg text-white transition ${
+                    loading || imageUploading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-green-600 hover:bg-green-700 hover:ring-2 hover:ring-green-300 focus:ring-2 focus:ring-green-300"
+                  }`}
+                >
+                  {loading ? "Updating..." : "Update Court"}
+                </button>
+              </div>
+            </div>
           </div>
         </form>
       </div>

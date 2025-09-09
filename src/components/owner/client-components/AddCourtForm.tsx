@@ -111,11 +111,25 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
     }
   };
 
+  function validatePriceInput(value: string): string {
+    if (!value) return "";
+    const num = parseInt(value, 10);
+    if (isNaN(num)) return "";
+
+    // Round down to nearest 10
+    return Math.round(num / 10) * 10 + "";
+  }
   // ---------- PRICE SLOTS helpers ----------
-  const updateSlot = (i: number, field: "startTime" | "price", value: string) => {
+  const updateSlot = (
+    i: number,
+    field: "startTime" | "price",
+    value: string
+  ) => {
     setPriceSlots((slots) =>
       slots.map((s, idx) =>
-        idx === i ? { ...s, [field]: field === "price" ? value : Number(value) } : s
+        idx === i
+          ? { ...s, [field]: field === "price" ? value : Number(value) }
+          : s
       )
     );
   };
@@ -156,29 +170,44 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
 
     // basic validations
     if (!name.trim()) return setError("Please enter the court name.");
-    if (openTime >= closeTime) return setError("Opening time must be earlier than closing time.");
-    if (imageUploading) return setError("Please wait for image upload to finish.");
-    if (!imageUrl) return setError("Please upload a cover image for the court.");
+    if (openTime >= closeTime)
+      return setError("Opening time must be earlier than closing time.");
+    if (imageUploading)
+      return setError("Please wait for image upload to finish.");
+    if (!imageUrl)
+      return setError("Please upload a cover image for the court.");
 
     // prepare slots
     let slots: PriceSlotInput[] = [];
     if (useTieredPricing) {
       const cleaned = priceSlots
-        .map((s) => ({ startTime: Number(s.startTime), price: String(s.price).trim() }))
+        .map((s) => ({
+          startTime: Number(s.startTime),
+          price: String(s.price).trim(),
+        }))
         .sort((a, b) => a.startTime - b.startTime);
 
       // validations: price positive, within hours, no dupes
       for (let i = 0; i < cleaned.length; i++) {
         const s = cleaned[i];
-        if (!s.price || Number(s.price) <= 0) return setError("Please set valid prices for all slots.");
+        if (!s.price || Number(s.price) <= 0)
+          return setError("Please set valid prices for all slots.");
         if (s.startTime < openTime || s.startTime >= closeTime)
-          return setError(`Slot at ${String(s.startTime).padStart(2, "0")}:00 is outside operating hours.`);
+          return setError(
+            `Slot at ${String(s.startTime).padStart(
+              2,
+              "0"
+            )}:00 is outside operating hours.`
+          );
         if (i > 0 && s.startTime === cleaned[i - 1].startTime)
-          return setError(`Duplicate slot at ${String(s.startTime).padStart(2, "0")}:00.`);
+          return setError(
+            `Duplicate slot at ${String(s.startTime).padStart(2, "0")}:00.`
+          );
       }
       slots = cleaned;
     } else {
-      if (!fixedPrice || Number(fixedPrice) <= 0) return setError("Please set a valid fixed price per hour.");
+      if (!fixedPrice || Number(fixedPrice) <= 0)
+        return setError("Please set a valid fixed price per hour.");
       slots = [{ startTime: openTime, price: fixedPrice }];
     }
 
@@ -199,7 +228,8 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
 
       // handle possible server-side error shape
       if (result && typeof result === "object" && "error" in result) {
-        const msg = (result as any).error || "Server error while creating court";
+        const msg =
+          (result as any).error || "Server error while creating court";
         setError(String(msg));
         setLoading(false);
         return;
@@ -238,7 +268,10 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
         {/* header */}
         <div className="flex items-center justify-between p-5 border-b dark:border-gray-700">
           <h3 className="text-lg font-semibold">Add New Court</h3>
-          <button onClick={handleClose} className="text-gray-500 hover:text-gray-800">
+          <button
+            onClick={handleClose}
+            className="text-gray-500 hover:text-gray-800"
+          >
             ✕
           </button>
         </div>
@@ -247,7 +280,9 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
           <div className="p-6 space-y-6 overflow-y-auto">
             {/* name */}
             <div>
-              <label className="block mb-2 text-sm font-medium">Court Name / Number</label>
+              <label className="block mb-2 text-sm font-medium">
+                Court Name / Number
+              </label>
               <input
                 className={inputClasses}
                 placeholder="e.g., Synthetic Court 1"
@@ -260,7 +295,11 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block mb-2 text-sm font-medium">Sport</label>
-                <select className={selectClasses} value={sport} onChange={(e) => setSport(e.target.value)}>
+                <select
+                  className={selectClasses}
+                  value={sport}
+                  onChange={(e) => setSport(e.target.value)}
+                >
                   {Array.isArray(GAMES) ? (
                     GAMES.map((g: string) => (
                       <option key={g} value={g}>
@@ -275,7 +314,11 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
 
               <div>
                 <label className="block mb-2 text-sm font-medium">Type</label>
-                <select className={selectClasses} value={type} onChange={(e) => setType(e.target.value as any)}>
+                <select
+                  className={selectClasses}
+                  value={type}
+                  onChange={(e) => setType(e.target.value as any)}
+                >
                   <option value="Indoor">Indoor</option>
                   <option value="Outdoor">Outdoor</option>
                 </select>
@@ -284,7 +327,9 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
 
             {/* image uploader */}
             <div>
-              <label className="block mb-2 text-sm font-medium">Court Image</label>
+              <label className="block mb-2 text-sm font-medium">
+                Court Image
+              </label>
 
               {/* visually-styled upload control */}
               <div className="flex items-center gap-3">
@@ -293,32 +338,82 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
                   className="inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed rounded-lg cursor-pointer select-none text-sm
                             border-green-600 text-green-600 hover:bg-green-50 transition"
                 >
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M12 3v12" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M8 7l4-4 4 4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <rect x="3" y="10" width="18" height="11" rx="2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      d="M12 3v12"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M8 7l4-4 4 4"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <rect
+                      x="3"
+                      y="10"
+                      width="18"
+                      height="11"
+                      rx="2"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
-                  <span>{imageUploading ? "Uploading..." : imageUrl ? "Change image" : "Upload image"}</span>
+                  <span>
+                    {imageUploading
+                      ? "Uploading..."
+                      : imageUrl
+                      ? "Change image"
+                      : "Upload image"}
+                  </span>
                 </label>
 
-                <input id="court-image" type="file" accept="image/*" className="sr-only" onChange={handleImageChange} />
+                <input
+                  id="court-image"
+                  type="file"
+                  accept="image/*"
+                  className="sr-only"
+                  onChange={handleImageChange}
+                />
 
                 {/* small preview badge */}
                 {previewUrl ? (
-                  <img src={previewUrl} alt="preview" className="w-28 h-20 object-cover rounded-md border" />
+                  <img
+                    src={previewUrl}
+                    alt="preview"
+                    className="w-28 h-20 object-cover rounded-md border"
+                  />
                 ) : (
-                  <div className="w-28 h-20 bg-gray-100 rounded-md flex items-center justify-center text-xs text-gray-500">No image</div>
+                  <div className="w-28 h-20 bg-gray-100 rounded-md flex items-center justify-center text-xs text-gray-500">
+                    No image
+                  </div>
                 )}
               </div>
 
-              <p className="mt-2 text-xs text-gray-500">Recommended: 1200×800 px. Max size: 5MB.</p>
+              <p className="mt-2 text-xs text-gray-500">
+                Recommended: 1200×800 px. Max size: 5MB.
+              </p>
             </div>
 
             {/* hours */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block mb-2 text-sm font-medium">Opens At</label>
-                <select className={selectClasses} value={openTime} onChange={(e) => setOpenTime(Number(e.target.value))}>
+                <label className="block mb-2 text-sm font-medium">
+                  Opens At
+                </label>
+                <select
+                  className={selectClasses}
+                  value={openTime}
+                  onChange={(e) => setOpenTime(Number(e.target.value))}
+                >
                   {allHours.map((h) => (
                     <option key={h} value={h}>
                       {String(h).padStart(2, "0")}:00
@@ -328,8 +423,14 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
               </div>
 
               <div>
-                <label className="block mb-2 text-sm font-medium">Closes At</label>
-                <select className={selectClasses} value={closeTime} onChange={(e) => setCloseTime(Number(e.target.value))}>
+                <label className="block mb-2 text-sm font-medium">
+                  Closes At
+                </label>
+                <select
+                  className={selectClasses}
+                  value={closeTime}
+                  onChange={(e) => setCloseTime(Number(e.target.value))}
+                >
                   {allHours.map((h) => (
                     <option key={h} value={h}>
                       {String(h).padStart(2, "0")}:00
@@ -342,7 +443,11 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
             {/* pricing */}
             <div className="space-y-4 border rounded-lg p-4">
               <label className="flex items-center gap-3">
-                <input type="checkbox" checked={useTieredPricing} onChange={(e) => setUseTieredPricing(e.target.checked)} />
+                <input
+                  type="checkbox"
+                  checked={useTieredPricing}
+                  onChange={(e) => setUseTieredPricing(e.target.checked)}
+                />
                 <span className="text-sm">Use tiered pricing</span>
               </label>
 
@@ -351,39 +456,59 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
                   {priceSlots.map((slot, i) => (
                     <div key={i} className="flex gap-2 items-center">
                       {i === 0 ? (
-                        <div className="px-3 py-2 bg-gray-100 rounded-md text-sm w-28 text-center">{String(slot.startTime).padStart(2, "0")}:00</div>
+                        <div className="px-3 py-2 bg-gray-100 rounded-md text-sm text-center">
+                          {String(slot.startTime).padStart(2, "0")}:00
+                        </div>
                       ) : (
                         <select
-                          className="rounded-lg border border-gray-300 px-2 py-2 text-sm"
+                          className="w-24 rounded-lg border border-gray-300 bg-white dark:bg-gray-700 px-2 py-2 text-sm"
                           value={slot.startTime}
-                          onChange={(e) => updateSlot(i, "startTime", e.target.value)}
+                          onChange={(e) =>
+                            updateSlot(
+                              i,
+                              "price",
+                              validatePriceInput(e.target.value)
+                            )
+                          }
                         >
-                          {allHours.filter((h) => h > openTime && h < closeTime).map((h) => (
-                            <option key={h} value={h}>
-                              {String(h).padStart(2, "0")}:00
-                            </option>
-                          ))}
+                          {allHours
+                            .filter((h) => h >= openTime && h < closeTime)
+                            .map((h) => (
+                              <option key={h} value={h}>
+                                {String(h).padStart(2, "0")}:00
+                              </option>
+                            ))}
                         </select>
                       )}
 
                       <input
-                        className="input-style flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm"
+                        className="input-style w-full flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm"
                         type="number"
                         min={0}
                         placeholder="₹ Price"
                         value={slot.price}
-                        onChange={(e) => updateSlot(i, "price", e.target.value)}
+                        onChange={(e) =>
+                          setFixedPrice(validatePriceInput(e.target.value))
+                        }
                       />
 
                       {i > 0 && (
-                        <button type="button" onClick={() => removeSlot(i)} className="text-red-500 px-2">
+                        <button
+                          type="button"
+                          onClick={() => removeSlot(i)}
+                          className="text-red-500 px-2"
+                        >
                           ✕
                         </button>
                       )}
                     </div>
                   ))}
 
-                  <button type="button" onClick={addSlot} className="block w-full text-blue-600 border border-blue-600 rounded-lg py-1 text-sm">
+                  <button
+                    type="button"
+                    onClick={addSlot}
+                    className="block w-full text-blue-600 border border-blue-600 rounded-lg py-1 text-sm"
+                  >
                     + Add Slot
                   </button>
                 </div>
@@ -400,7 +525,9 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
           </div>
 
           {/* error */}
-          {error && <div className="px-6 pb-2 text-sm text-red-600">{error}</div>}
+          {error && (
+            <div className="px-6 pb-2 text-sm text-red-600">{error}</div>
+          )}
 
           {/* actions */}
           <div className="flex justify-end gap-3 p-6 border-t dark:border-gray-700">
