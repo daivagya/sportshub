@@ -1,5 +1,5 @@
 // src/app/(user)/layout.tsx
-import { VenuesProvider } from "../context/VenuesContext";
+import  VenuesProvider  from "../context/VenuesContext";
 import Navbar from "@/components/user/client-components/Navbar";
 async function getVenues() {
   const base = process.env.NEXTAUTH_URL ?? "http://localhost:3000";

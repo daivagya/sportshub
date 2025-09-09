@@ -11,8 +11,8 @@ function page() {
     <div className="min-h-screen relative">
       <Hero />
       <div className="container mx-auto px-4 space-y-2.5">
-        {/* <VenueSlider />
-        <TopRatedCourts />
+        {/* <VenueSlider /> */}
+        {/* <TopRatedCourts />
         <SportsWeOffer /> */}
       </div>
       <Footer />

@@ -305,7 +305,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\On-internship-Daivagya\\Internship\\HTML-CSS-JS\\Next-practice\\sportshub\\src\\generated\\prisma",
+      "value": "C:\\On-internship-Daivagya\\Internship\\Next-practice\\sportshub\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -319,7 +319,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\On-internship-Daivagya\\Internship\\HTML-CSS-JS\\Next-practice\\sportshub\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\On-internship-Daivagya\\Internship\\Next-practice\\sportshub\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -333,6 +333,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

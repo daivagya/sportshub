@@ -27,17 +27,33 @@ declare module "next-auth/jwt" {
 }
 
 //VENUE
-export type Venue = {
+
+export interface Venue {
+  // `id` is intentionally omitted for client-side security and data minimization.
+  slug: string; // Used for URLs and as the unique key in React lists.
   name: string;
-  slug: string;
   description?: string | null;
+  
+  // Location Details
   city: string;
+  address: string;
   state?: string | null;
   country?: string | null;
-  address: string;
-  amenities: string[]; // array of amenities
-  photos: string[]; // array of photo URLs
-};
+
+  // Venue Features
+  amenities: string[]; // e.g., ["Parking", "Restrooms", "Drinking Water"]
+  photos: string[];    // Array of image URLs
+
+  // --- Fields for Filtering & Display ---
+  sport: string;
+  price?: number;
+  venueType?: "Indoor" | "Outdoor";
+
+  // This will be calculated on the server from the VenueReview model
+  // before being sent to the client.
+  averageRating?: number; 
+}
+
 
 //COURT
 
