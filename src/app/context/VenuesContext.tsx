@@ -1,60 +1,79 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { Venue } from "@/types/next-auth";  
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import type { Venue } from "@/types/next-auth";
 import { getVenues } from "../(user)/_userActions/venues.actions";
 
-// Define the shape of the data that the context will provide.
+// --- Context Type ---
 export type VenuesContextType = {
-  venues: Venue[]; // The full, unfiltered list of all venues.
-  isLoading: boolean; // A flag to indicate if the initial data fetch is complete.
-  filter: string;
+  venues: Venue[];            // Current list of venues (filtered or full)
+  totalPages: number;         // Total pages for pagination
+  currentPage: number;        // Current page number
+  isLoading: boolean;         // Loading state
+  refreshVenues: (page?: number, limit?: number) => Promise<void>; // Refresh data
 };
 
-// Create the context with a default undefined value.
+// --- Props for Provider ---
+type VenuesProviderProps = {
+  children: React.ReactNode;
+  initialVenues: Venue[];
+  initialTotalPages: number;
+  initialCurrentPage: number;
+};
+
+// --- Create Context ---
 const VenuesContext = createContext<VenuesContextType | undefined>(undefined);
 
-// --- Mock Data Fetching Function ---
-// In a real application, this would be an API call to your backend.
-async function fetchAllVenues(): Promise<Venue[]> {
-  const { venues } = await getVenues({ page: 1, limit: 9 });
-  return venues; //  return the array directly
-}
+// --- Provider Component ---
+export default function VenuesProvider({
+  children,
+  initialVenues,
+  initialTotalPages,
+  initialCurrentPage,
+}: VenuesProviderProps) {
+  const [venues, setVenues] = useState<Venue[]>(initialVenues);
+  const [totalPages, setTotalPages] = useState<number>(initialTotalPages);
+  const [currentPage, setCurrentPage] = useState<number>(initialCurrentPage);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-
-
-
-// This is the provider component. It is now the default export.
-export default function VenuesProvider({ children }: { children: React.ReactNode }) {
-  const [venues, setVenues] = useState<Venue[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Fetch the data only once when the provider is first mounted.
-  useEffect(() => {
-    const loadVenues = async () => {
-      setIsLoading(true);
-      const fetchedVenues = await fetchAllVenues();
-      setVenues(fetchedVenues);
-      setIsLoading(false);
-    };
-    loadVenues();
-  }, []); // Empty dependency array means this runs only once.
+  // Function to refresh venues (can be called after clearing filters, changing page, etc.)
+  const refreshVenues = useCallback(
+    async (page: number = 1, limit: number = 9) => {
+      try {
+        setIsLoading(true);
+        const { venues: fetchedVenues, totalPages, currentPage } = await getVenues({ page, limit });
+        setVenues(fetchedVenues);
+        setTotalPages(totalPages);
+        setCurrentPage(currentPage);
+      } catch (err) {
+        console.error("Failed to refresh venues:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
 
   return (
-    <VenuesContext.Provider value={{ venues, isLoading }}>
+    <VenuesContext.Provider
+      value={{
+        venues,
+        totalPages,
+        currentPage,
+        isLoading,
+        refreshVenues,
+      }}
+    >
       {children}
     </VenuesContext.Provider>
   );
 }
 
-// This is the custom hook that your components will use to access the venue data.
+// --- Custom Hook to Use Context ---
 export function useVenues() {
   const context = useContext(VenuesContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error("useVenues must be used within a VenuesProvider");
   }
   return context;
 }
-

@@ -1,53 +1,51 @@
-"use client";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import FilterSidebar from "@/components/user/client-components/FilterSidebar";
-import VenueList from "@/components/user/client-components/VenueList";
-export const revalidate = 10;
-export default function VenueSearchSystem() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+import type { Metadata } from "next";
+import { getVenueBySlug } from "@/app/(user)/_userActions/venues.actions";
+import VenueHeader from "@/components/user/client-components/VenueDetailsForClient/VenueHeader";
+import VenueCourts from "@/components/user/client-components/VenueDetailsForClient/VenueCourts";
+import VenueReviews from "@/components/user/client-components/VenueDetailsForClient/VenueReviews";
+import NearbyVenues from "@/components/user/client-components/VenueDetailsForClient/NearbyVenues";
+import VenueAmenities from "@/components/user/client-components/VenueDetailsForClient/VenueAmenities";
 
-  // State for your venues and loading status
-  const [venues, setVenues] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  // When a filter changes, this function updates the URL
-  const handleFilterChange = (filterName, value) => {
-    const currentParams = new URLSearchParams(searchParams);
-    if (value) {
-      currentParams.set(filterName, value);
-    } else {
-      currentParams.delete(filterName); // Clear the filter if value is empty
-    }
-    // This updates the URL without reloading the page
-    router.push(`${pathname}?${currentParams.toString()}`);
+export async function generateMetadata({ params }: { params: { venue: string } }): Promise<Metadata> {
+  const venueData = await getVenueBySlug(params.venue);
+  return {
+    title: venueData?.name ?? "Venue Details",
   };
+}
 
-  // This effect runs whenever the URL (searchParams) changes
-  useEffect(() => {
-    const fetchVenues = async () => {
-      setIsLoading(true);
-      // The searchParams object is directly used to call your API
-      const response = await fetch(`/api/venues?${searchParams.toString()}`);
-      const data = await response.json();
-      setVenues(data.venues);
-      // You'd also get pagination info from the API
-      // setTotalPages(data.totalPages);
-      setIsLoading(false);
-    };
-
-    fetchVenues();
-  }, [searchParams]); // The dependency array is key!
+export default async function VenuePage({ params }: { params: { venue: string } }) {
+  const venueSlug = await params.venue;
+  const venueData = await getVenueBySlug(venueSlug);
+  console.log("Venue data-----from user/[venue]/page.tsx:", venueData);
+  if (!venueData) {
+    return (
+      <div className="text-center py-20 text-gray-500">
+        Venue not found.
+      </div>
+    );
+  }
 
   return (
-    <div className="flex">
-      <FilterSidebar
-        currentParams={searchParams}
-        onFilterChange={handleFilterChange}
-      />
-      <VenueList venues={venues} isLoading={isLoading} />
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto space-y-12">
+        <VenueHeader
+          name={venueData.name}
+          address={venueData.address}
+          city={venueData.city}
+          state={venueData.state}
+          rating={4.7} // Replace with actual venueData.rating
+        />
+
+        {/* <VenueImagesAndDescription
+          images={venueData.images || []}
+          description={venueData.description}
+        /> */}
+        <VenueAmenities amenities={venueData.amenities || []} />
+        <VenueCourts courts={venueData.courts || []} />
+
+        <VenueReviews />
+        <NearbyVenues />
+      </div>
     </div>
   );
 }
