@@ -1,9 +1,10 @@
 "use server";
 
-import { PrismaClient,Prisma } from "@/generated/prisma/client";
+import { PrismaClient, Prisma } from "@/generated/prisma/client";
 import { Venue } from "@/types/next-auth";
 import { VenueFilters } from "@/types/next-auth";
 import { VenueDetails } from "@/types/next-auth";
+import { Court } from "@/types/next-auth";
 const prisma = new PrismaClient();
 
 export interface GetVenuesResult {
@@ -11,7 +12,6 @@ export interface GetVenuesResult {
   totalPages: number;
   currentPage: number;
 }
-
 
 // --- Reusable Helper Function ---
 // To avoid repeating code, this function transforms the database object
@@ -124,54 +124,61 @@ const venueDetailsSelect = {
   // },
 } satisfies Prisma.VenueSelect; // ✅ this type exists
 
-
-
 type VenueDetailsFromDB = Prisma.VenueGetPayload<{
   select: typeof venueDetailsSelect;
 }>;
 
 export async function getVenueBySlug(slug: string) {
-  try {
-    const dbVenue: VenueDetailsFromDB | null = await prisma.venue.findUnique({
-      where: { slug },
-      select: venueDetailsSelect,
-    });
+  const venue = await prisma.venue.findUnique({
+    where: { slug },
+    include: {
+      courts: {
+        include: {
+          priceSlots: true, // include slots
+          reviews: true, // include reviews for rating
+        },
+      },
+    },
+  });
 
-    if (!dbVenue) return null;
+  if (!venue) return null;
 
-    // const totalRating = dbVenue.reviews.reduce((acc, r) => acc + r.rating, 0);
-    // const averageRating =
-    //   dbVenue.reviews.length > 0 ? totalRating / dbVenue.reviews.length : 0;
+  // Map courts to match the Court type
+  const mappedCourts: Court[] = venue.courts.map((c) => ({
+    id: c.id,
+    name: c.name,
+    sport: c.sport,
+    type: c.type,
+    currency: c.currency,
+    openTime: c.openTime,
+    closeTime: c.closeTime,
+    priceSlots: c.priceSlots,
+    slug: c.slug,
+    venueName: venue.name,
+    imageUrl: c.imageUrl ?? "/placeholder-court.jpg",
+    reviewCount: c.reviews.length,
+    averageRating:
+      c.reviews.length > 0
+        ? c.reviews.reduce((sum, r) => sum + r.rating, 0) / c.reviews.length
+        : 0,
+  }));
 
-    return {
-      ...dbVenue,
-      // averageRating: parseFloat(averageRating.toFixed(1)),
-      courts: dbVenue.courts.map((court) => ({
-        id: court.id,
-        name: court.name,
-        slug: court.slug,
-        sport: court.sport,
-        image: court.imageUrl,
-        price: court.priceSlots[0]?.pricePerHour ?? null,
-      })),
-      // reviews: dbVenue.reviews.map((review) => ({
-      //   id: review.id,
-      //   rating: review.rating,
-      //   comment: review.comment,
-      //   createdAt: review.createdAt,
-      //   userName: review.user.name,
-      // })),
-    };
-  } catch (error) {
-    console.error(`Failed to fetch venue with slug ${slug}:`, error);
-    return null;
-  }
+  return {
+    id: venue.id,
+    name: venue.name,
+    slug: venue.slug,
+    description: venue.description,
+    address: venue.address,
+    city: venue.city,
+    state: venue.state,
+    amenities: venue.amenities ?? [],
+    courts: mappedCourts,
+  };
 }
-
 
 // Paginated query
 export async function filterVenues(
-  filters:  Partial<VenueFilters> = {}
+  filters: Partial<VenueFilters> = {}
 ): Promise<GetVenuesResult> {
   try {
     const {

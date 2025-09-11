@@ -11881,9 +11881,11 @@ export namespace Prisma {
   export type PaymentMinAggregateOutputType = {
     id: number | null
     bookingId: number | null
-    gateway: string | null
+    stripeSessionId: string | null
+    stripeSessionUrl: string | null
     stripePaymentIntentId: string | null
     stripeChargeId: string | null
+    gateway: string | null
     amount: number | null
     currency: string | null
     status: $Enums.PaymentStatus | null
@@ -11895,9 +11897,11 @@ export namespace Prisma {
   export type PaymentMaxAggregateOutputType = {
     id: number | null
     bookingId: number | null
-    gateway: string | null
+    stripeSessionId: string | null
+    stripeSessionUrl: string | null
     stripePaymentIntentId: string | null
     stripeChargeId: string | null
+    gateway: string | null
     amount: number | null
     currency: string | null
     status: $Enums.PaymentStatus | null
@@ -11909,9 +11913,11 @@ export namespace Prisma {
   export type PaymentCountAggregateOutputType = {
     id: number
     bookingId: number
-    gateway: number
+    stripeSessionId: number
+    stripeSessionUrl: number
     stripePaymentIntentId: number
     stripeChargeId: number
+    gateway: number
     amount: number
     currency: number
     status: number
@@ -11937,9 +11943,11 @@ export namespace Prisma {
   export type PaymentMinAggregateInputType = {
     id?: true
     bookingId?: true
-    gateway?: true
+    stripeSessionId?: true
+    stripeSessionUrl?: true
     stripePaymentIntentId?: true
     stripeChargeId?: true
+    gateway?: true
     amount?: true
     currency?: true
     status?: true
@@ -11951,9 +11959,11 @@ export namespace Prisma {
   export type PaymentMaxAggregateInputType = {
     id?: true
     bookingId?: true
-    gateway?: true
+    stripeSessionId?: true
+    stripeSessionUrl?: true
     stripePaymentIntentId?: true
     stripeChargeId?: true
+    gateway?: true
     amount?: true
     currency?: true
     status?: true
@@ -11965,9 +11975,11 @@ export namespace Prisma {
   export type PaymentCountAggregateInputType = {
     id?: true
     bookingId?: true
-    gateway?: true
+    stripeSessionId?: true
+    stripeSessionUrl?: true
     stripePaymentIntentId?: true
     stripeChargeId?: true
+    gateway?: true
     amount?: true
     currency?: true
     status?: true
@@ -12066,9 +12078,11 @@ export namespace Prisma {
   export type PaymentGroupByOutputType = {
     id: number
     bookingId: number | null
-    gateway: string
+    stripeSessionId: string | null
+    stripeSessionUrl: string | null
     stripePaymentIntentId: string | null
     stripeChargeId: string | null
+    gateway: string
     amount: number
     currency: string
     status: $Enums.PaymentStatus
@@ -12099,9 +12113,11 @@ export namespace Prisma {
   export type PaymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     bookingId?: boolean
-    gateway?: boolean
+    stripeSessionId?: boolean
+    stripeSessionUrl?: boolean
     stripePaymentIntentId?: boolean
     stripeChargeId?: boolean
+    gateway?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -12114,9 +12130,11 @@ export namespace Prisma {
   export type PaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     bookingId?: boolean
-    gateway?: boolean
+    stripeSessionId?: boolean
+    stripeSessionUrl?: boolean
     stripePaymentIntentId?: boolean
     stripeChargeId?: boolean
+    gateway?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -12129,9 +12147,11 @@ export namespace Prisma {
   export type PaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     bookingId?: boolean
-    gateway?: boolean
+    stripeSessionId?: boolean
+    stripeSessionUrl?: boolean
     stripePaymentIntentId?: boolean
     stripeChargeId?: boolean
+    gateway?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -12144,9 +12164,11 @@ export namespace Prisma {
   export type PaymentSelectScalar = {
     id?: boolean
     bookingId?: boolean
-    gateway?: boolean
+    stripeSessionId?: boolean
+    stripeSessionUrl?: boolean
     stripePaymentIntentId?: boolean
     stripeChargeId?: boolean
+    gateway?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -12155,7 +12177,7 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bookingId" | "gateway" | "stripePaymentIntentId" | "stripeChargeId" | "amount" | "currency" | "status" | "receiptUrl" | "paymentMethod" | "createdAt", ExtArgs["result"]["payment"]>
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bookingId" | "stripeSessionId" | "stripeSessionUrl" | "stripePaymentIntentId" | "stripeChargeId" | "gateway" | "amount" | "currency" | "status" | "receiptUrl" | "paymentMethod" | "createdAt", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     booking?: boolean | Payment$bookingArgs<ExtArgs>
   }
@@ -12174,9 +12196,11 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       bookingId: number | null
-      gateway: string
+      stripeSessionId: string | null
+      stripeSessionUrl: string | null
       stripePaymentIntentId: string | null
       stripeChargeId: string | null
+      gateway: string
       amount: number
       currency: string
       status: $Enums.PaymentStatus
@@ -12609,9 +12633,11 @@ export namespace Prisma {
   interface PaymentFieldRefs {
     readonly id: FieldRef<"Payment", 'Int'>
     readonly bookingId: FieldRef<"Payment", 'Int'>
-    readonly gateway: FieldRef<"Payment", 'String'>
+    readonly stripeSessionId: FieldRef<"Payment", 'String'>
+    readonly stripeSessionUrl: FieldRef<"Payment", 'String'>
     readonly stripePaymentIntentId: FieldRef<"Payment", 'String'>
     readonly stripeChargeId: FieldRef<"Payment", 'String'>
+    readonly gateway: FieldRef<"Payment", 'String'>
     readonly amount: FieldRef<"Payment", 'Int'>
     readonly currency: FieldRef<"Payment", 'String'>
     readonly status: FieldRef<"Payment", 'PaymentStatus'>
@@ -17504,9 +17530,11 @@ export namespace Prisma {
   export const PaymentScalarFieldEnum: {
     id: 'id',
     bookingId: 'bookingId',
-    gateway: 'gateway',
+    stripeSessionId: 'stripeSessionId',
+    stripeSessionUrl: 'stripeSessionUrl',
     stripePaymentIntentId: 'stripePaymentIntentId',
     stripeChargeId: 'stripeChargeId',
+    gateway: 'gateway',
     amount: 'amount',
     currency: 'currency',
     status: 'status',
@@ -18402,9 +18430,11 @@ export namespace Prisma {
     NOT?: PaymentWhereInput | PaymentWhereInput[]
     id?: IntFilter<"Payment"> | number
     bookingId?: IntNullableFilter<"Payment"> | number | null
-    gateway?: StringFilter<"Payment"> | string
+    stripeSessionId?: StringNullableFilter<"Payment"> | string | null
+    stripeSessionUrl?: StringNullableFilter<"Payment"> | string | null
     stripePaymentIntentId?: StringNullableFilter<"Payment"> | string | null
     stripeChargeId?: StringNullableFilter<"Payment"> | string | null
+    gateway?: StringFilter<"Payment"> | string
     amount?: IntFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
@@ -18417,9 +18447,11 @@ export namespace Prisma {
   export type PaymentOrderByWithRelationInput = {
     id?: SortOrder
     bookingId?: SortOrderInput | SortOrder
-    gateway?: SortOrder
+    stripeSessionId?: SortOrderInput | SortOrder
+    stripeSessionUrl?: SortOrderInput | SortOrder
     stripePaymentIntentId?: SortOrderInput | SortOrder
     stripeChargeId?: SortOrderInput | SortOrder
+    gateway?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -18432,12 +18464,14 @@ export namespace Prisma {
   export type PaymentWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     bookingId?: number
+    stripeSessionId?: string
     stripePaymentIntentId?: string
     AND?: PaymentWhereInput | PaymentWhereInput[]
     OR?: PaymentWhereInput[]
     NOT?: PaymentWhereInput | PaymentWhereInput[]
-    gateway?: StringFilter<"Payment"> | string
+    stripeSessionUrl?: StringNullableFilter<"Payment"> | string | null
     stripeChargeId?: StringNullableFilter<"Payment"> | string | null
+    gateway?: StringFilter<"Payment"> | string
     amount?: IntFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: EnumPaymentStatusFilter<"Payment"> | $Enums.PaymentStatus
@@ -18445,14 +18479,16 @@ export namespace Prisma {
     paymentMethod?: StringNullableFilter<"Payment"> | string | null
     createdAt?: DateTimeFilter<"Payment"> | Date | string
     booking?: XOR<BookingNullableScalarRelationFilter, BookingWhereInput> | null
-  }, "id" | "bookingId" | "stripePaymentIntentId">
+  }, "id" | "bookingId" | "stripeSessionId" | "stripePaymentIntentId">
 
   export type PaymentOrderByWithAggregationInput = {
     id?: SortOrder
     bookingId?: SortOrderInput | SortOrder
-    gateway?: SortOrder
+    stripeSessionId?: SortOrderInput | SortOrder
+    stripeSessionUrl?: SortOrderInput | SortOrder
     stripePaymentIntentId?: SortOrderInput | SortOrder
     stripeChargeId?: SortOrderInput | SortOrder
+    gateway?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -18472,9 +18508,11 @@ export namespace Prisma {
     NOT?: PaymentScalarWhereWithAggregatesInput | PaymentScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Payment"> | number
     bookingId?: IntNullableWithAggregatesFilter<"Payment"> | number | null
-    gateway?: StringWithAggregatesFilter<"Payment"> | string
+    stripeSessionId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    stripeSessionUrl?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     stripePaymentIntentId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
     stripeChargeId?: StringNullableWithAggregatesFilter<"Payment"> | string | null
+    gateway?: StringWithAggregatesFilter<"Payment"> | string
     amount?: IntWithAggregatesFilter<"Payment"> | number
     currency?: StringWithAggregatesFilter<"Payment"> | string
     status?: EnumPaymentStatusWithAggregatesFilter<"Payment"> | $Enums.PaymentStatus
@@ -19459,9 +19497,11 @@ export namespace Prisma {
   }
 
   export type PaymentCreateInput = {
-    gateway?: string
+    stripeSessionId?: string | null
+    stripeSessionUrl?: string | null
     stripePaymentIntentId?: string | null
     stripeChargeId?: string | null
+    gateway?: string
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
@@ -19474,9 +19514,11 @@ export namespace Prisma {
   export type PaymentUncheckedCreateInput = {
     id?: number
     bookingId?: number | null
-    gateway?: string
+    stripeSessionId?: string | null
+    stripeSessionUrl?: string | null
     stripePaymentIntentId?: string | null
     stripeChargeId?: string | null
+    gateway?: string
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
@@ -19486,9 +19528,11 @@ export namespace Prisma {
   }
 
   export type PaymentUpdateInput = {
-    gateway?: StringFieldUpdateOperationsInput | string
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
     stripeChargeId?: NullableStringFieldUpdateOperationsInput | string | null
+    gateway?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -19501,9 +19545,11 @@ export namespace Prisma {
   export type PaymentUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     bookingId?: NullableIntFieldUpdateOperationsInput | number | null
-    gateway?: StringFieldUpdateOperationsInput | string
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
     stripeChargeId?: NullableStringFieldUpdateOperationsInput | string | null
+    gateway?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -19515,9 +19561,11 @@ export namespace Prisma {
   export type PaymentCreateManyInput = {
     id?: number
     bookingId?: number | null
-    gateway?: string
+    stripeSessionId?: string | null
+    stripeSessionUrl?: string | null
     stripePaymentIntentId?: string | null
     stripeChargeId?: string | null
+    gateway?: string
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
@@ -19527,9 +19575,11 @@ export namespace Prisma {
   }
 
   export type PaymentUpdateManyMutationInput = {
-    gateway?: StringFieldUpdateOperationsInput | string
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
     stripeChargeId?: NullableStringFieldUpdateOperationsInput | string | null
+    gateway?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -19541,9 +19591,11 @@ export namespace Prisma {
   export type PaymentUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     bookingId?: NullableIntFieldUpdateOperationsInput | number | null
-    gateway?: StringFieldUpdateOperationsInput | string
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
     stripeChargeId?: NullableStringFieldUpdateOperationsInput | string | null
+    gateway?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -20565,9 +20617,11 @@ export namespace Prisma {
   export type PaymentCountOrderByAggregateInput = {
     id?: SortOrder
     bookingId?: SortOrder
-    gateway?: SortOrder
+    stripeSessionId?: SortOrder
+    stripeSessionUrl?: SortOrder
     stripePaymentIntentId?: SortOrder
     stripeChargeId?: SortOrder
+    gateway?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -20585,9 +20639,11 @@ export namespace Prisma {
   export type PaymentMaxOrderByAggregateInput = {
     id?: SortOrder
     bookingId?: SortOrder
-    gateway?: SortOrder
+    stripeSessionId?: SortOrder
+    stripeSessionUrl?: SortOrder
     stripePaymentIntentId?: SortOrder
     stripeChargeId?: SortOrder
+    gateway?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -20599,9 +20655,11 @@ export namespace Prisma {
   export type PaymentMinOrderByAggregateInput = {
     id?: SortOrder
     bookingId?: SortOrder
-    gateway?: SortOrder
+    stripeSessionId?: SortOrder
+    stripeSessionUrl?: SortOrder
     stripePaymentIntentId?: SortOrder
     stripeChargeId?: SortOrder
+    gateway?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -23183,9 +23241,11 @@ export namespace Prisma {
   }
 
   export type PaymentCreateWithoutBookingInput = {
-    gateway?: string
+    stripeSessionId?: string | null
+    stripeSessionUrl?: string | null
     stripePaymentIntentId?: string | null
     stripeChargeId?: string | null
+    gateway?: string
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
@@ -23196,9 +23256,11 @@ export namespace Prisma {
 
   export type PaymentUncheckedCreateWithoutBookingInput = {
     id?: number
-    gateway?: string
+    stripeSessionId?: string | null
+    stripeSessionUrl?: string | null
     stripePaymentIntentId?: string | null
     stripeChargeId?: string | null
+    gateway?: string
     amount: number
     currency?: string
     status?: $Enums.PaymentStatus
@@ -23316,9 +23378,11 @@ export namespace Prisma {
   }
 
   export type PaymentUpdateWithoutBookingInput = {
-    gateway?: StringFieldUpdateOperationsInput | string
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
     stripeChargeId?: NullableStringFieldUpdateOperationsInput | string | null
+    gateway?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -23329,9 +23393,11 @@ export namespace Prisma {
 
   export type PaymentUncheckedUpdateWithoutBookingInput = {
     id?: IntFieldUpdateOperationsInput | number
-    gateway?: StringFieldUpdateOperationsInput | string
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
     stripeChargeId?: NullableStringFieldUpdateOperationsInput | string | null
+    gateway?: StringFieldUpdateOperationsInput | string
     amount?: IntFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus

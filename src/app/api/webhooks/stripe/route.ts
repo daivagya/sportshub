@@ -1,95 +1,60 @@
-import { NextResponse } from 'next/server';
-import { headers } from 'next/headers';
-import Stripe from 'stripe';
-import { Prisma as db } from '@/generated/prisma';
+import { NextRequest, NextResponse } from "next/server";
+import Stripe from "stripe";
+import {
+  confirmBookingFromStripeSession,
+  cancelPendingBookingBySession,
+} from "@/app/(user)/_userActions/booking.actions";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
- 
-export async function POST(req: Request) {
-  const body = await req.text();
-const signature = (await headers()).get('stripe-signature') as string;
-  let event: Stripe.Event;
- 
-  try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-  } catch (error) {
-   
-    console.error('Error verifying Stripe signature:', error);
-    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
+
+export async function POST(req: NextRequest) {
+  const signature = req.headers.get("stripe-signature");
+  if (!signature) {
+    return new NextResponse("Missing stripe-signature header", { status: 400 });
   }
- 
- 
+
+  const body = await req.text(); // ✅ must use raw body
+  let event: Stripe.Event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET!
+    );
+  } catch (err: any) {
+    console.error("[Webhook] Signature verification failed:", err.message);
+    return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
+  }
+
   try {
     switch (event.type) {
-      case 'checkout.session.completed': {
-        const checkoutSession = event.data.object as Stripe.Checkout.Session;
- 
-        if (!checkoutSession.customer) {
-            console.error('No customer ID found in Stripe checkout session.');
-            throw new Error('Customer ID is missing.');
+      case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const result = await confirmBookingFromStripeSession(session);
+        if (!result.success) {
+          console.error("[Webhook] Failed to confirm booking:", result.error);
         }
- 
-        const user = await db.user.findUnique({
-          where: {
-            email: checkoutSession?.customer_details?.email as string,
-          },
-        });
- 
-        if (!user) {
-          console.error("No user found with email from checkout session");
-          throw new Error('User not found.');
-        }
- 
-        await db.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            hasAccess: true,
-            stripeCustomerId: checkoutSession.customer as string,
-          },
-        });
-       
         break;
       }
- 
-      case 'customer.subscription.deleted':
-      case 'customer.subscription.updated': {
-        const subscription = event.data.object as Stripe.Subscription;
-        const customerId = subscription.customer as string;
- 
-        const user = await db.user.findUnique({
-            where: {
-                stripeCustomerId: customerId as string,
-            }
-        });
- 
-        if (!user) {
-            console.error("No user found with Stripe customer ID: ${customerId}");
-            throw new Error('User with given customer ID not found.');
+
+      case "checkout.session.expired": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const result = await cancelPendingBookingBySession(session);
+        if (!result.success) {
+          console.error("[Webhook] Failed to cancel booking:", result.error);
         }
-        
-        const hasAccess = subscription.status === 'active' || subscription.status === 'trialing';
- 
-        await db.user.update({
-          where: {
-            stripeCustomerId: customerId,
-          },
-          data: {
-            hasAccess: hasAccess,
-          },
-        });
         break;
       }
- 
+
       default:
-        console.log("Unhandled event type: ${event.type}");
+        console.log(`[Webhook] Unhandled event type: ${event.type}`);
     }
-    return NextResponse.json({ message: 'Event processed successfully' }, { status: 200 });
-   
-  } catch (error) {
-    console.error('Error processing Stripe event:', error);
-    return NextResponse.json({ error: 'Error processing Stripe event' }, { status: 400 });
+
+    // ✅ Always acknowledge to Stripe
+    return NextResponse.json({ received: true });
+  } catch (err: any) {
+    console.error("[Webhook] Handler error:", err);
+    return new NextResponse("Webhook handler error", { status: 500 });
   }
 }

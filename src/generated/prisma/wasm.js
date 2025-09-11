@@ -225,9 +225,11 @@ exports.Prisma.PriceSlotScalarFieldEnum = {
 exports.Prisma.PaymentScalarFieldEnum = {
   id: 'id',
   bookingId: 'bookingId',
-  gateway: 'gateway',
+  stripeSessionId: 'stripeSessionId',
+  stripeSessionUrl: 'stripeSessionUrl',
   stripePaymentIntentId: 'stripePaymentIntentId',
   stripeChargeId: 'stripeChargeId',
+  gateway: 'gateway',
   amount: 'amount',
   currency: 'currency',
   status: 'status',

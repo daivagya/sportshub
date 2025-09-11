@@ -151,19 +151,25 @@ model PriceSlot {
 }
 
 model Payment {
-  id                    Int           @id @default(autoincrement())
-  booking               Booking?      @relation(fields: [bookingId], references: [id])
-  bookingId             Int?          @unique
-  gateway               String        @default("stripe")
-  stripePaymentIntentId String?       @unique
-  stripeChargeId        String? // optional
-  amount                Int // smallest currency unit
-  currency              String        @default("INR")
-  status                PaymentStatus @default(PENDING)
-  receiptUrl            String? // Stripe receipt URL
-  paymentMethod         String?
-  createdAt             DateTime      @default(now())
+  id        Int      @id @default(autoincrement())
+  booking   Booking? @relation(fields: [bookingId], references: [id])
+  bookingId Int?     @unique
 
+  // Stripe integration
+  stripeSessionId       String? @unique
+  stripeSessionUrl      String?
+  stripePaymentIntentId String? @unique
+  stripeChargeId        String?
+
+  gateway       String        @default("stripe")
+  amount        Int
+  currency      String        @default("INR")
+  status        PaymentStatus @default(PENDING)
+  receiptUrl    String?
+  paymentMethod String?
+  createdAt     DateTime      @default(now())
+
+  @@index([stripeSessionId])
   @@index([stripePaymentIntentId])
   @@index([status])
 }

@@ -6,22 +6,28 @@ import VenueReviews from "@/components/user/client-components/VenueDetailsForCli
 import NearbyVenues from "@/components/user/client-components/VenueDetailsForClient/NearbyVenues";
 import VenueAmenities from "@/components/user/client-components/VenueDetailsForClient/VenueAmenities";
 
-export async function generateMetadata({ params }: { params: { venue: string } }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { venue: string };
+}): Promise<Metadata> {
   const venueData = await getVenueBySlug(params.venue);
   return {
     title: venueData?.name ?? "Venue Details",
   };
 }
 
-export default async function VenuePage({ params }: { params: { venue: string } }) {
+export default async function VenuePage({
+  params,
+}: {
+  params: { venue: string };
+}) {
   const venueSlug = await params.venue;
   const venueData = await getVenueBySlug(venueSlug);
   console.log("Venue data-----from user/[venue]/page.tsx:", venueData);
   if (!venueData) {
     return (
-      <div className="text-center py-20 text-gray-500">
-        Venue not found.
-      </div>
+      <div className="text-center py-20 text-gray-500">Venue not found.</div>
     );
   }
 
@@ -31,8 +37,8 @@ export default async function VenuePage({ params }: { params: { venue: string } 
         <VenueHeader
           name={venueData.name}
           address={venueData.address}
-          city={venueData.city}
-          state={venueData.state}
+          city={venueData.city!}
+          state={venueData.state!}
           rating={4.7} // Replace with actual venueData.rating
         />
 
@@ -41,7 +47,7 @@ export default async function VenuePage({ params }: { params: { venue: string } 
           description={venueData.description}
         /> */}
         <VenueAmenities amenities={venueData.amenities || []} />
-        <VenueCourts courts={venueData.courts || []} />
+        <VenueCourts courts={venueData.courts || []} venueSlug={venueSlug} />
 
         <VenueReviews />
         <NearbyVenues />
