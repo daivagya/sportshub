@@ -217,6 +217,7 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
         return setError(
           `Please set a valid price for the slot starting at ${s.startTime}:00.`
         );
+      console.log("Price of the slot is", s.price);
       if (s.startTime < openTime || s.endTime > closeTime)
         return setError("A slot is outside operating hours.");
       if (i > 0 && s.startTime !== cleanedSlots[i - 1].endTime)

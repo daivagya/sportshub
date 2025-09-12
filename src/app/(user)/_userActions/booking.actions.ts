@@ -69,7 +69,6 @@ export async function createBooking(args: {
     };
   }
 
-
   try {
     const created = await prisma.$transaction(async (tx) => {
       await tx.$executeRaw`SELECT id FROM "Court" WHERE slug = ${courtSlug} FOR UPDATE`;
@@ -78,24 +77,23 @@ export async function createBooking(args: {
         where: { slug: courtSlug },
         include: { priceSlots: true, venue: true },
       });
-      console.log("Court found in createBooking:", court);
       if (!court) throw new Error("Court not found");
-      
+
       // const overlapping = await tx.booking.findFirst({ /* ... overlap check ... */ });
       // console.log("Overlapping booking check result:", overlapping);
       // if (overlapping) throw new Error("Slot already booked");
-      console.log("No overlapping bookings found.");
 
       // FIX 1: Find the correct price for the booked time slot
       const bookingStartHour = dayjs(startTime).tz(TIMEZONE).hour();
       const relevantPriceSlot = court.priceSlots.find(
-        ps => bookingStartHour >= ps.startTime && bookingStartHour < ps.endTime
+        (ps) =>
+          bookingStartHour >= ps.startTime && bookingStartHour < ps.endTime
       );
-      console.log("Relevant price slot:", relevantPriceSlot);
       const slotPrice = relevantPriceSlot?.pricePerHour ?? 500; // Fallback price
       console.log("Slot price determined:", slotPrice);
 
-      const durationHours = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
+      const durationHours =
+        (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
       console.log("Duration in hours:", durationHours);
       const totalAmount = Math.round(durationHours * slotPrice);
       console.log("Total amount calculated:", totalAmount);
@@ -111,7 +109,6 @@ export async function createBooking(args: {
           idempotencyKey: idempotencyKey ?? "",
         },
       });
-      console.log("Booking created with ID:", booking);
 
       return {
         bookingId: booking.id,
@@ -121,8 +118,10 @@ export async function createBooking(args: {
         venueName: court.venue.name,
       };
     });
-    console.log('cireated:', created);
 
+    //Stripe checkout request created which returns session url
+    // This part is outside the transaction
+    // because it involves an external API call
     const session = await stripe.checkout.sessions.create(
       {
         mode: "payment",
@@ -148,13 +147,28 @@ export async function createBooking(args: {
       { idempotencyKey }
     );
 
-    console.log("Stripe session created:", session.id);
     if (!session.url) throw new Error("Failed to create Stripe session");
-    
-    // The rest of the function (creating the Payment record) remains the same...
-    // await prisma.$transaction(async (tx) => {
-    //     // ...
-    // });
+
+    await prisma.$transaction(async (tx) => {
+      // 1. Create a new Payment record with a PENDING status
+      const payment = await tx.payment.create({
+        data: {
+          bookingId: created.bookingId,
+          gateway: "stripe",
+          stripeSessionId: session.id,
+          stripeSessionUrl: session.url ?? undefined, // Handle case where URL might be null
+          amount: created.amount,
+          currency: created.currency,
+          status: PaymentStatus.PENDING,
+        },
+      });
+
+      // 2. Update the original Booking to link it to this new Payment
+      await tx.booking.update({
+        where: { id: created.bookingId },
+        data: { paymentId: payment.id },
+      });
+    });
 
     return {
       success: true,
@@ -170,7 +184,7 @@ export async function getAvailabilityForCourt(courtSlug: string, date: string) {
   try {
     const court = await prisma.court.findUnique({
       where: { slug: courtSlug },
-      include: { priceSlots: { orderBy: { startTime: 'asc' } } },
+      include: { priceSlots: { orderBy: { startTime: "asc" } } },
     });
 
     if (!court) {
@@ -183,7 +197,7 @@ export async function getAvailabilityForCourt(courtSlug: string, date: string) {
     // NEW: Get the current time in the correct timezone
     const now = dayjs().tz(TIMEZONE);
     // NEW: Check if the selected date is today
-    const isToday = dayStart.isSame(now, 'day');
+    const isToday = dayStart.isSame(now, "day");
 
     const existingBookings = await prisma.booking.findMany({
       where: {
@@ -195,9 +209,11 @@ export async function getAvailabilityForCourt(courtSlug: string, date: string) {
       },
       select: { startTime: true },
     });
-    
+
     const bookedHours = new Set(
-      existingBookings.map(b => dayjs(b.startTime).tz(TIMEZONE).format("HH:00"))
+      existingBookings.map((b) =>
+        dayjs(b.startTime).tz(TIMEZONE).format("HH:00")
+      )
     );
 
     const slots = [];
@@ -211,14 +227,14 @@ export async function getAvailabilityForCourt(courtSlug: string, date: string) {
       }
 
       const relevantPriceSlot = court.priceSlots.find(
-        ps => hour >= ps.startTime && hour < ps.endTime
+        (ps) => hour >= ps.startTime && hour < ps.endTime
       );
 
       const isBooked = bookedHours.has(slotStartMoment.format("HH:00"));
 
       slots.push({
         start: slotStartMoment.format("HH:mm"),
-        end: slotStartMoment.add(1, 'hour').format("HH:mm"),
+        end: slotStartMoment.add(1, "hour").format("HH:mm"),
         price: relevantPriceSlot?.pricePerHour,
         isBooked,
       });
@@ -311,8 +327,6 @@ export async function confirmBookingFromStripeSession(
     return { success: false, error: "Database error during confirmation" };
   }
 }
-
-
 
 // ------------------------------
 // cancelPendingBookingBySession

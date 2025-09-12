@@ -21,7 +21,7 @@ interface VenueCardProps {
   href?: string;
 }
 
-export default memo(function VenueCard({ venue, href }: VenueCardProps) {
+export default function VenueCard({ venue, href }: VenueCardProps) {
   // --- Data Processing using useMemo for performance ---
   const {
     uniqueSports,
@@ -144,4 +144,4 @@ export default memo(function VenueCard({ venue, href }: VenueCardProps) {
       </div>
     </article>
   );
-}); 
+}; 

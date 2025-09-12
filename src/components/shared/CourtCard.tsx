@@ -3,18 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
+import { Court } from "@/types/next-auth"; // FIX: Import the correct, centralized Court type
 
 // --- REFACTORED TYPES ---
-// By defining types separately, they become reusable and the code is cleaner.
-export type Court = {
-  name: string;
-  slug: string;
-  sport?: string;
-  pricePerHour?: number;
-  openTime?: number;
-  closeTime?: number;
-};
-
 export type CourtStatus = "CONFIRMED" | "PENDING" | "AVAILABLE";
 
 export type CourtCardProps = {
@@ -40,9 +31,13 @@ export default function CourtCard({
   rating,
   imageUrl,
 }: CourtCardProps) {
-  // FIX: Used template literal (backticks) for correct URL construction.
-  // Also assumed a more complete URL structure for better navigation.
   const buttonHref = `/venues/${venueSlug}/courts/${court.slug}`;
+
+  // FIX: Logic to find the lowest price from the priceSlots array
+  const lowestPrice = court.priceSlots?.reduce((min, slot) => {
+    const price = typeof slot.price === 'string' ? parseFloat(slot.price) : slot.price;
+    return price < min ? price : min;
+  }, Infinity);
 
   return (
     <div className="relative group rounded-2xl shadow-lg overflow-hidden bg-white border dark:border-gray-700 dark:bg-gray-800 w-full max-w-sm">
@@ -70,12 +65,11 @@ export default function CourtCard({
           </p>
           <p className="text-white text-sm">
             <span className="font-semibold block text-gray-300">Price</span>
-            {/* FIX: Used template literal for string interpolation */}
-            {court.pricePerHour ? `₹${court.pricePerHour}/hr` : "N/A"}
+            {/* FIX: Display the calculated lowest price */}
+            {lowestPrice && lowestPrice !== Infinity ? `Starts at ₹${lowestPrice}/hr` : "N/A"}
           </p>
           <p className="text-white text-sm">
             <span className="font-semibold block text-gray-300">Timings</span>
-            {/* FIX: Used template literal for string interpolation */}
             {court.openTime && court.closeTime
               ? `${court.openTime}:00 - ${court.closeTime}:00`
               : "N/A"}
@@ -85,7 +79,6 @@ export default function CourtCard({
         {/* Rating & Status Badge */}
         <div className="absolute top-3 left-3 flex items-center space-x-2">
           <span
-            // FIX: Used template literal to correctly apply dynamic classes
             className={`px-3 py-1 rounded-full text-xs font-semibold ${STATUS_STYLES[status]} transition-transform duration-300 group-hover:scale-105`}
           >
             {status}

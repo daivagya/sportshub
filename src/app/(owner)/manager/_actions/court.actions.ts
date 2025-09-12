@@ -191,6 +191,7 @@ export async function updateCourtById(data: UpdateCourtByIdInput) {
             deleteMany: {}, // remove old slots
             create: data.priceSlots.map((slot) => ({
               startTime: slot.startTime,
+              endTime: slot.endTime, // BUG FIX: Added missing endTime
               pricePerHour: Number(slot.price),
             })),
           },

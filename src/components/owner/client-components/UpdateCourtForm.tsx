@@ -8,6 +8,7 @@ import { Court } from "@/types/next-auth";
 
 interface PriceSlotInput {
   startTime: number;
+  endTime: number;
   price: string;
 }
 
@@ -35,20 +36,7 @@ export default function UpdateCourtModal({
   const [openTime, setOpenTime] = useState<number>(court?.openTime ?? 8);
   const [closeTime, setCloseTime] = useState<number>(court?.closeTime ?? 22);
 
-  const [useTieredPricing, setUseTieredPricing] = useState<boolean>(
-    (court?.priceSlots?.length ?? 0) > 1
-  );
-  const [fixedPrice, setFixedPrice] = useState<string>(
-    court?.priceSlots?.length === 1
-      ? String(court.priceSlots![0].price ?? "")
-      : ""
-  );
-  const [priceSlots, setPriceSlots] = useState<PriceSlotInput[]>(
-    (court?.priceSlots?.map((s) => ({
-      startTime: s.startTime,
-      price: String(s.price),
-    })) ?? [{ startTime: court?.openTime ?? 8, price: "" }]) as PriceSlotInput[]
-  );
+  const [priceSlots, setPriceSlots] = useState<PriceSlotInput[]>([]);
 
   // Image
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -64,9 +52,6 @@ export default function UpdateCourtModal({
 
   // utility
   const allHours = Array.from({ length: 24 }, (_, i) => i);
-  const availableSlotHours = allHours.filter(
-    (h) => h > openTime && h < closeTime
-  );
 
   // base input styling (consistent)
   const baseInput =
@@ -80,35 +65,31 @@ export default function UpdateCourtModal({
     setType((court?.type as "Indoor" | "Outdoor") ?? "Indoor");
     setOpenTime(court?.openTime ?? 8);
     setCloseTime(court?.closeTime ?? 22);
-    setUseTieredPricing((court?.priceSlots?.length ?? 0) > 1);
-    setFixedPrice(
-      court?.priceSlots?.length === 1
-        ? String(court.priceSlots![0].price ?? "")
-        : ""
-    );
     setPriceSlots(
-      (court?.priceSlots?.map((s) => ({
-        startTime: s.startTime,
-        price: String(s.price),
-      })) ?? [
-        { startTime: court?.openTime ?? 8, price: "" },
-      ]) as PriceSlotInput[]
+      court.priceSlots.length > 0
+        ? court.priceSlots.map((s) => ({
+            ...s,
+            price: String(s.pricePerHour),
+          }))
+        : [{ startTime: court.openTime, endTime: court.closeTime, price: "" }]
     );
     setImageFile(null);
     setPreviewUrl(court?.imageUrl ?? null);
     setError(null);
   }, [isOpen, court]);
 
-  // keep first slot aligned with openTime
+  // keep price slots aligned with open/close times
   useEffect(() => {
+    if (!priceSlots.length) return;
+
     setPriceSlots((slots) => {
-      const updated = slots.map((s, i) =>
-        i === 0 ? { ...s, startTime: openTime } : s
-      );
-      return updated.filter((s) => s.startTime >= openTime);
+      const updated = [...slots];
+      updated[0].startTime = openTime;
+      updated[updated.length - 1].endTime = closeTime;
+      return updated.filter((s) => s.startTime < s.endTime);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openTime]);
+  }, [openTime, closeTime]);
 
   // ESC to close
   useEffect(() => {
@@ -136,38 +117,68 @@ export default function UpdateCourtModal({
     setPreviewUrl(file ? URL.createObjectURL(file) : court?.imageUrl ?? null);
   };
 
-  const handlePriceSlotChange = (
-    i: number,
-    field: "startTime" | "price",
-    value: string
+  const updateSlot = (
+    index: number,
+    field: keyof PriceSlotInput,
+    value: number | string
   ) => {
-    setPriceSlots((slots) =>
-      slots.map((s, idx) =>
-        idx === i
-          ? { ...s, [field]: field === "price" ? value : Number(value) }
-          : s
-      )
-    );
+    setPriceSlots((currentSlots) => {
+      const newSlots = [...currentSlots];
+      const numericValue = Number(value);
+
+      newSlots[index] = { ...newSlots[index], [field]: value }; // Keep price as string
+
+      if (field === "endTime") {
+        newSlots[index] = { ...newSlots[index], [field]: numericValue };
+        if (index < newSlots.length - 1) {
+          newSlots[index + 1] = {
+            ...newSlots[index + 1],
+            startTime: numericValue,
+          };
+        }
+      }
+
+      return newSlots;
+    });
   };
 
-  const handleAddPriceSlot = () => {
-    const last = priceSlots[priceSlots.length - 1];
-    const newStart = last ? last.startTime + 1 : openTime + 1;
-    if (newStart >= closeTime) {
-      setError("Cannot add a slot that starts at or after closing time.");
-      return;
-    }
-    if (priceSlots.some((p) => p.startTime === newStart)) {
-      setError("Slot start time conflicts with existing slot.");
-      return;
-    }
-    setPriceSlots([...priceSlots, { startTime: newStart, price: "" }]);
+  const addSlot = () => {
     setError(null);
+    const lastSlot = priceSlots[priceSlots.length - 1];
+    const duration = lastSlot.endTime - lastSlot.startTime;
+
+    if (duration < 2) {
+      setError(
+        "Cannot split the last slot further. It must be at least 2 hours long."
+      );
+      return;
+    }
+
+    const newSplitTime = lastSlot.startTime + Math.floor(duration / 2);
+
+    const updatedLastSlot = { ...lastSlot, endTime: newSplitTime };
+    const newSlot = {
+      startTime: newSplitTime,
+      endTime: lastSlot.endTime,
+      price: "",
+    };
+
+    setPriceSlots([...priceSlots.slice(0, -1), updatedLastSlot, newSlot]);
   };
 
-  const handleRemovePriceSlot = (i: number) => {
-    if (i === 0 || priceSlots.length <= 1) return;
-    setPriceSlots((s) => s.filter((_, idx) => idx !== i));
+  const removeSlot = (index: number) => {
+    if (index === 0 || priceSlots.length <= 1) return;
+
+    setPriceSlots((slots) => {
+      const prevSlot = slots[index - 1];
+      const currentSlot = slots[index];
+      const mergedSlot = { ...prevSlot, endTime: currentSlot.endTime };
+
+      const newSlots = [...slots];
+      newSlots.splice(index, 1);
+      newSlots[index - 1] = mergedSlot;
+      return newSlots;
+    });
   };
 
   // submit: uploads image (if changed) then calls updateCourtById
@@ -181,36 +192,37 @@ export default function UpdateCourtModal({
     if (imageUploading) return setError("Please wait for the image upload.");
 
     // validate price slots
-    let formattedPriceSlots: PriceSlotInput[] = [];
-    if (useTieredPricing) {
-      const cleaned = [...priceSlots]
-        .map((s) => ({
-          startTime: Number(s.startTime),
-          price: String(s.price).trim(),
-        }))
-        .sort((a, b) => a.startTime - b.startTime);
+    const cleanedSlots = priceSlots
+      .map((s) => ({
+        ...s,
+        price: String(s.price).trim(),
+      }))
+      .sort((a, b) => a.startTime - b.startTime);
 
-      for (let i = 0; i < cleaned.length; i++) {
-        const s = cleaned[i];
-        if (!s.price || Number(s.price) <= 0)
-          return setError("Please set valid prices for all slots.");
-        if (s.startTime < openTime || s.startTime >= closeTime)
-          return setError(
-            `Slot at ${String(s.startTime).padStart(
-              2,
-              "0"
-            )}:00 is outside operating hours.`
-          );
-        if (i > 0 && s.startTime === cleaned[i - 1].startTime)
-          return setError(
-            `Duplicate slot at ${String(s.startTime).padStart(2, "0")}:00.`
-          );
-      }
-      formattedPriceSlots = cleaned;
-    } else {
-      if (!fixedPrice || Number(fixedPrice) <= 0)
-        return setError("Please set a valid fixed price.");
-      formattedPriceSlots = [{ startTime: openTime, price: fixedPrice }];
+    for (let i = 0; i < cleanedSlots.length; i++) {
+      const s = cleanedSlots[i];
+      if (!s.price || Number(s.price) <= 0)
+        return setError(
+          `Please set a valid price for the slot starting at ${s.startTime}:00.`
+        );
+      if (s.startTime < openTime || s.endTime > closeTime)
+        return setError("A slot is outside operating hours.");
+      if (i > 0 && s.startTime !== cleanedSlots[i - 1].endTime)
+        return setError(
+          "There is a gap or overlap in your time slots. Please fix it."
+        );
+    }
+    if (
+      cleanedSlots.length > 0 &&
+      (cleanedSlots[0].startTime !== openTime ||
+        cleanedSlots[cleanedSlots.length - 1].endTime !== closeTime)
+    ) {
+      return setError(
+        "Slots must cover the entire duration from open to close time."
+      );
+    }
+    if (cleanedSlots.length === 0) {
+      return setError("At least one price slot is required.");
     }
 
     setLoading(true);
@@ -272,7 +284,7 @@ export default function UpdateCourtModal({
         type,
         openTime,
         closeTime,
-        priceSlots: formattedPriceSlots,
+        priceSlots: cleanedSlots,
         imageUrl: uploadedImageUrl!,
       } as any);
 
@@ -289,6 +301,8 @@ export default function UpdateCourtModal({
   };
 
   if (!isOpen) return null;
+
+  const formatTime = (hour: number) => String(hour).padStart(2, "0") + ":00";
 
   return (
     <div
@@ -455,129 +469,111 @@ export default function UpdateCourtModal({
               </div>
             </div>
 
-            {/* Pricing */}
-            <div className="space-y-4 p-4 border rounded-lg dark:border-gray-600">
-              <label className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={useTieredPricing}
-                  onChange={(e) => {
-                    const next = e.target.checked;
-                    setUseTieredPricing(next);
-                    // if switching to fixed, set fixedPrice from first slot
-                    if (!next) {
-                      setFixedPrice(priceSlots[0]?.price ?? "");
-                    } else {
-                      // ensure there's at least one slot
-                      if (!priceSlots || priceSlots.length === 0) {
-                        setPriceSlots([
-                          { startTime: openTime, price: fixedPrice || "" },
-                        ]);
-                      }
-                    }
-                  }}
-                />
-                <span className="text-sm">Use tiered pricing</span>
-              </label>
+            {/* Tiered Pricing Section */}
+            <div className="space-y-4 border rounded-lg p-4">
+              <h4 className="text-sm font-medium">Court Pricing (per hour)</h4>
+              <div className="space-y-3">
+                {priceSlots.map((slot, i) => {
+                  const maxEndTime =
+                    i < priceSlots.length - 1
+                      ? priceSlots[i + 1].endTime
+                      : closeTime;
 
-              {useTieredPricing ? (
-                <div className="space-y-3">
-                  {priceSlots.map((slot, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      {i === 0 ? (
-                        <div className="text-center px-3 py-2 bg-gray-100 rounded-md text-sm">
-                          {String(slot.startTime).padStart(2, "0")}:00
-                        </div>
-                      ) : (
+                  return (
+                    <div
+                      key={i}
+                      className="grid grid-cols-[auto_20px_1fr_1fr_auto] gap-2 items-center"
+                    >
+                      <div className="px-3 py-2 bg-gray-100 rounded-md text-sm text-center dark:bg-gray-700">
+                        {formatTime(slot.startTime)}
+                      </div>
+                      <span className="text-center text-gray-500">-</span>
+                      {/* End Time Selector */}
+                      {i < priceSlots.length - 1 ? (
                         <select
-                          className="w-24 rounded-lg border border-gray-300 bg-white dark:bg-gray-700 px-2 py-2 text-sm"
-                          value={String(slot.startTime)}
+                          className={baseInput}
+                          value={slot.endTime}
                           onChange={(e) =>
-                            handlePriceSlotChange(
-                              i,
-                              "startTime",
-                              e.target.value
-                            )
+                            updateSlot(i, "endTime", e.target.value)
                           }
                         >
-                          {availableSlotHours.map((h) => (
-                            <option key={h} value={h}>
-                              {String(h).padStart(2, "0")}:00
-                            </option>
-                          ))}
+                          {allHours
+                            .filter(
+                              (h) => h > slot.startTime && h <= maxEndTime
+                            )
+                            .map((h) => (
+                              <option key={h} value={h}>
+                                {formatTime(h)}
+                              </option>
+                            ))}
                         </select>
+                      ) : (
+                        <div className="px-3 py-2 bg-gray-100 rounded-md text-sm text-center dark:bg-gray-700">
+                          {formatTime(slot.endTime)}
+                        </div>
                       )}
 
+                      {/* Price Input */}
                       <input
-                        className={`${baseInput} flex-1`}
+                        className={baseInput}
                         type="number"
                         min={0}
+                        step={10}
                         placeholder="₹ Price"
                         value={slot.price}
-                        onChange={(e) =>
-                          handlePriceSlotChange(i, "price", e.target.value)
-                        }
+                        onChange={(e) => updateSlot(i, "price", e.target.value)}
                       />
 
-                      {i > 0 && (
+                      {/* Remove Button */}
+                      {i > 0 ? (
                         <button
                           type="button"
-                          onClick={() => handleRemovePriceSlot(i)}
-                          className="text-red-500 px-2"
+                          onClick={() => removeSlot(i)}
+                          className="text-red-500 px-2 text-xl font-bold"
                         >
-                          ✕
+                          ×
                         </button>
+                      ) : (
+                        <div />
                       )}
                     </div>
-                  ))}
-
-                  <button
-                    type="button"
-                    onClick={handleAddPriceSlot}
-                    className="block w-full text-blue-600 border border-blue-600 rounded-lg py-1 text-sm"
-                  >
-                    + Add Price Slot
-                  </button>
-                </div>
-              ) : (
-                <input
-                  className={baseInput}
-                  type="number"
-                  placeholder="Price per hour (₹)"
-                  value={fixedPrice}
-                  onChange={(e) => setFixedPrice(e.target.value)}
-                />
-              )}
-            </div>
-
-            {/* Buttons placed immediately after pricing so they appear right below it and inside the scroll area */}
-            <div className="pt-4 border-t dark:border-gray-700">
-              {error && (
-                <div className="pb-2 text-sm text-red-600">{error}</div>
-              )}
-
-              <div className="flex justify-end gap-3 mt-3">
+                  );
+                })}
                 <button
                   type="button"
-                  onClick={handleClose}
-                  className="min-w-[100px] px-4 py-2 rounded-lg border-2 border-green-600 text-green-700 bg-white hover:bg-green-50 transition"
+                  onClick={addSlot}
+                  className="w-full text-blue-600 border border-blue-600 rounded-lg py-1.5 text-sm font-semibold hover:bg-blue-50 transition"
                 >
-                  Cancel
-                </button>
-
-                <button
-                  type="submit"
-                  disabled={loading || imageUploading}
-                  className={`min-w-[120px] px-4 py-2 rounded-lg text-white transition ${
-                    loading || imageUploading
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-green-600 hover:bg-green-700 hover:ring-2 hover:ring-green-300 focus:ring-2 focus:ring-green-300"
-                  }`}
-                >
-                  {loading ? "Updating..." : "Update Court"}
+                  + Add Price Tier
                 </button>
               </div>
             </div>
+          </div>
+
+          {error && (
+            <div className="px-6 pb-2 text-sm text-red-600">{error}</div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex justify-end gap-3 p-4 border-t dark:border-gray-700">
+            <button
+              type="button"
+              onClick={handleClose}
+              className="px-4 py-2 rounded-lg border-2 border-gray-400 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading || imageUploading}
+              className={`px-4 py-2 rounded-lg text-white font-semibold transition ${
+                loading || imageUploading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-400"
+              }`}
+            >
+              {loading ? "Updating..." : "Update Court"}
+            </button>
           </div>
         </form>
       </div>

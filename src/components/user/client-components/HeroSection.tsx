@@ -20,7 +20,7 @@ export default function HeroSection() {
   useEffect(() => {
     const fetchImages = async () => {
       setImagesLoading(true);
-      const result = await getVenueImages();
+      const result = await getVenueImages(10);
       if (result.success && result.data && result.data.length > 0) {
         setImages(result.data);
       } else {

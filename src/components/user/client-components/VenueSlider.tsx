@@ -80,7 +80,7 @@ export default function VenueSlider() {
           </a>
         </div>
 
-        <div className="relative group">
+        <div className="relative group/slider">
           {/* Slider Container */}
           <div
             ref={containerRef}
@@ -114,7 +114,7 @@ export default function VenueSlider() {
               <button
                 onClick={() => scroll("left")}
                 disabled={isAtStart}
-                className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg rounded-full p-2 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
+                className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg rounded-full p-2 transition-all opacity-0 group-hover/slider:opacity-100 disabled:opacity-0"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-6 h-6 text-gray-700 dark:text-gray-200" />
@@ -122,7 +122,7 @@ export default function VenueSlider() {
               <button
                 onClick={() => scroll("right")}
                 disabled={isAtEnd}
-                className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg rounded-full p-2 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
+                className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg rounded-full p-2 transition-all opacity-0 group-hover/slider:opacity-100 disabled:opacity-0"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-6 h-6 text-gray-700 dark:text-gray-200" />

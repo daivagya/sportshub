@@ -306,32 +306,28 @@ export async function getVenuesByCity({
 }
 
 
-export async function getVenueImages() {
+export async function getVenueImages(limit: number = 10) {
   try {
-    // 1. Fetch the 5 most recently created, approved venues that have photos.
+    // 1. Fetch venues that have photos, take enough to likely satisfy the limit.
     const venuesWithPhotos = await prisma.venue.findMany({
       where: {
-        approved: true, // Only show approved venues
         photos: {
-          isEmpty: false, // Ensure the venue has at least one photo
+          isEmpty: false,
         },
       },
       orderBy: {
-        createdAt: 'desc', // Get the newest ones
+        createdAt: 'desc',
       },
-      take: 5,
-      // 2. Select ONLY the 'photos' field for efficiency.
+      take: limit, // Fetch a number of venues equal to the desired image limit
       select: {
         photos: true,
       },
     });
 
-    // 3. Process the data: Flatten the array of photo arrays into a single array
-    //    and limit the total number of images to a reasonable amount (e.g., 6).
+    // 2. Flatten the array of photo arrays and slice it to the exact limit.
     const allImages = venuesWithPhotos.flatMap(venue => venue.photos);
-    const selectedImages = allImages.slice(0, 6);
+    const selectedImages = allImages.slice(0, limit);
 
-    // If no images are found, return an empty array
     if (selectedImages.length === 0) {
       return { success: true, data: [] };
     }
