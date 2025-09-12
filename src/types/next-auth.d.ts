@@ -131,7 +131,8 @@ export type Court = {
 
 export type PriceSlotInput = {
   startTime: number;
-  price: string;
+  endTime: number;
+  price: number;
 };
 
 export type AddCourtInput = {
@@ -157,7 +158,7 @@ export interface UpdateCourtByIdInput {
   closeTime?: number;
   currency?: string;
   imageUrl?: string;
-  priceSlots?: { startTime: number; price: string }[];
+  priceSlots?: { startTime: number; endTime: number; price: string }[];
 }
 
 export type VenueFilters = {

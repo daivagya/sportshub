@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       bookingId: result.bookingId,
-      stripeCheckoutUrl: result.url,
+      stripeSessionUrl: result.url,
     });
   } catch (err) {
     console.error("❌ API /bookings POST Error:", err);

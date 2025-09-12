@@ -54,6 +54,7 @@ export async function addCourt(input: AddCourtInput) {
         priceSlots: {
           create: priceSlots.map((slot) => ({
             startTime: slot.startTime,
+            endTime: slot.endTime,
             pricePerHour: Number(slot.price), // Map form 'price' to DB 'pricePerHour'
           })),
         },

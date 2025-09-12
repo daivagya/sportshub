@@ -143,6 +143,7 @@ model PriceSlot {
   court        Court    @relation(fields: [courtId], references: [id], onDelete: Cascade)
   courtId      Int
   startTime    Int // The hour (e.g., 8) when this price tier begins
+  endTime      Int // The hour (e.g., 10) when this price tier ends
   pricePerHour Int // The price for this specific slot
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

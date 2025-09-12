@@ -253,56 +253,95 @@ export async function filterVenues(
   }
 }
 
+
 // --- Action 2: Get Venues by City (Paginated) ---
-// export async function getVenuesByCity({
-//   city,
-//   page = 1,
-//   limit = 9,
-// }: {
-//   city: string;
-//   page?: number;
-//   limit?: number;
-// }): Promise<GetVenuesResult> {
-//   try {
-//     const pageNumber = Math.max(1, Number(page));
-//     const venuesPerPage = Math.max(1, Number(limit));
-//     const skip = (pageNumber - 1) * venuesPerPage;
+export async function getVenuesByCity({
+  city,
+  page = 1,
+  limit = 9,
+}: {
+  city: string;
+  page?: number;
+  limit?: number;
+}): Promise<GetVenuesResult> {
+  try {
+    const pageNumber = Math.max(1, Number(page));
+    const venuesPerPage = Math.max(1, Number(limit));
+    const skip = (pageNumber - 1) * venuesPerPage;
 
-//     const whereClause: Prisma.VenueWhereInput = {
-//       city: {
-//         equals: city,
-//         mode: "insensitive",
-//       },
-//     };
+    const whereClause: Prisma.VenueWhereInput = {
+      city: {
+        equals: city,
+        mode: "insensitive",
+      },
+    };
 
-//     const [totalVenuesCount, dbVenues] = await prisma.$transaction([
-//       prisma.venue.count({ where: whereClause }),
-//       prisma.venue.findMany({
-//         where: whereClause,
-//         skip,
-//         take: venuesPerPage,
-//         orderBy: { createdAt: "desc" },
-//         include: {
-//           reviews: { select: { rating: true } },
-//           courts: {
-//             select: {
-//               sport: true,
-//               priceSlots: { orderBy: { pricePerHour: "asc" }, take: 1 },
-//             },
-//           },
-//         },
-//       }),
-//     ]);
+    const [totalVenuesCount, dbVenues] = await prisma.$transaction([
+      prisma.venue.count({ where: whereClause }),
+      prisma.venue.findMany({
+        where: whereClause,
+        skip,
+        take: venuesPerPage,
+        orderBy: { createdAt: "desc" },
+        include: {
+          reviews: { select: { rating: true } },
+          courts: {
+            select: {
+              sport: true,
+              priceSlots: { orderBy: { pricePerHour: "asc" }, take: 1 },
+            },
+          },
+        },
+      }),
+    ]);
 
-//     const totalPages = Math.ceil(totalVenuesCount / venuesPerPage);
-//     const venues = dbVenues.map(transformDbVenue);
+    const totalPages = Math.ceil(totalVenuesCount / venuesPerPage);
+    const venues = dbVenues.map(transformDbVenue);
 
-//     return { venues, totalPages, currentPage: pageNumber };
-//   } catch (error) {
-//     console.error(`Failed to fetch venues for city ${city}:`, error);
-//     return { venues: [], totalPages: 1, currentPage: 1 };
-//   }
-// }
+    return { venues, totalPages, currentPage: pageNumber };
+  } catch (error) {
+    console.error(`Failed to fetch venues for city ${city}:`, error);
+    return { venues: [], totalPages: 1, currentPage: 1 };
+  }
+}
+
+
+export async function getVenueImages() {
+  try {
+    // 1. Fetch the 5 most recently created, approved venues that have photos.
+    const venuesWithPhotos = await prisma.venue.findMany({
+      where: {
+        approved: true, // Only show approved venues
+        photos: {
+          isEmpty: false, // Ensure the venue has at least one photo
+        },
+      },
+      orderBy: {
+        createdAt: 'desc', // Get the newest ones
+      },
+      take: 5,
+      // 2. Select ONLY the 'photos' field for efficiency.
+      select: {
+        photos: true,
+      },
+    });
+
+    // 3. Process the data: Flatten the array of photo arrays into a single array
+    //    and limit the total number of images to a reasonable amount (e.g., 6).
+    const allImages = venuesWithPhotos.flatMap(venue => venue.photos);
+    const selectedImages = allImages.slice(0, 6);
+
+    // If no images are found, return an empty array
+    if (selectedImages.length === 0) {
+      return { success: true, data: [] };
+    }
+
+    return { success: true, data: selectedImages };
+  } catch (error) {
+    console.error("Error fetching venue images:", error);
+    return { success: false, error: "Failed to fetch images." };
+  }
+}
 
 // --- Action 3: Get a Single Venue by its Slug ---
 

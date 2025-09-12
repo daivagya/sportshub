@@ -5,13 +5,28 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const {
+  PrismaClientKnownRequestError,
+  PrismaClientUnknownRequestError,
+  PrismaClientRustPanicError,
+  PrismaClientInitializationError,
+  PrismaClientValidationError,
+  getPrismaClient,
+  sqltag,
+  empty,
+  join,
+  raw,
+  skip,
   Decimal,
+  Debug,
   objectEnumValues,
   makeStrictEnum,
+  Extensions,
+  warnOnce,
+  defineDmmfProperty,
   Public,
   getRuntime,
-  skip
-} = require('./runtime/index-browser.js')
+  createParam,
+} = require('./runtime/wasm-engine-edge.js')
 
 
 const Prisma = {}
@@ -20,79 +35,35 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.15.0
- * Query Engine version: 85179d7826409ee107a6ba334b5e305ae3fba9fb
+ * Prisma Client JS version: 6.16.1
+ * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
  */
 Prisma.prismaVersion = {
-  client: "6.15.0",
-  engine: "85179d7826409ee107a6ba334b5e305ae3fba9fb"
+  client: "6.16.1",
+  engine: "1c57fdcd7e44b29b9313256c76699e91c3ac3c43"
 }
 
-Prisma.PrismaClientKnownRequestError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`PrismaClientKnownRequestError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)};
-Prisma.PrismaClientUnknownRequestError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`PrismaClientUnknownRequestError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.PrismaClientRustPanicError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`PrismaClientRustPanicError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.PrismaClientInitializationError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`PrismaClientInitializationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.PrismaClientValidationError = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`PrismaClientValidationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
+Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
+Prisma.PrismaClientUnknownRequestError = PrismaClientUnknownRequestError
+Prisma.PrismaClientRustPanicError = PrismaClientRustPanicError
+Prisma.PrismaClientInitializationError = PrismaClientInitializationError
+Prisma.PrismaClientValidationError = PrismaClientValidationError
 Prisma.Decimal = Decimal
 
 /**
  * Re-export of sql-template-tag
  */
-Prisma.sql = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`sqltag is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.empty = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`empty is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.join = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`join is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.raw = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`raw is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
+Prisma.sql = sqltag
+Prisma.empty = empty
+Prisma.join = join
+Prisma.raw = raw
 Prisma.validator = Public.validator
 
 /**
 * Extensions
 */
-Prisma.getExtensionContext = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`Extensions.getExtensionContext is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
-Prisma.defineExtension = () => {
-  const runtimeName = getRuntime().prettyName;
-  throw new Error(`Extensions.defineExtension is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
-In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
-)}
+Prisma.getExtensionContext = Extensions.getExtensionContext
+Prisma.defineExtension = Extensions.defineExtension
 
 /**
  * Shorthand utilities for JSON filtering
@@ -109,10 +80,11 @@ Prisma.NullTypes = {
 
 
 
+
+
 /**
  * Enums
  */
-
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
@@ -217,6 +189,7 @@ exports.Prisma.PriceSlotScalarFieldEnum = {
   id: 'id',
   courtId: 'courtId',
   startTime: 'startTime',
+  endTime: 'endTime',
   pricePerHour: 'pricePerHour',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -323,34 +296,82 @@ exports.Prisma.ModelName = {
   Account: 'Account',
   VerificationToken: 'VerificationToken'
 };
-
 /**
- * This is a stub Prisma Client that will error at runtime if called.
+ * Create the Client
  */
-class PrismaClient {
-  constructor() {
-    return new Proxy(this, {
-      get(target, prop) {
-        let message
-        const runtime = getRuntime()
-        if (runtime.isEdge) {
-          message = `PrismaClient is not configured to run in ${runtime.prettyName}. In order to run Prisma Client on edge runtime, either:
-- Use Prisma Accelerate: https://pris.ly/d/accelerate
-- Use Driver Adapters: https://pris.ly/d/driver-adapters
-`;
-        } else {
-          message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
-        }
-
-        message += `
-If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
-
-        throw new Error(message)
+const config = {
+  "generator": {
+    "name": "client",
+    "provider": {
+      "fromEnvVar": null,
+      "value": "prisma-client-js"
+    },
+    "output": {
+      "value": "C:\\On-internship-Daivagya\\Internship\\Next-practice\\sportshub\\src\\generated\\prisma",
+      "fromEnvVar": null
+    },
+    "config": {
+      "engineType": "library"
+    },
+    "binaryTargets": [
+      {
+        "fromEnvVar": null,
+        "value": "windows",
+        "native": true
       }
-    })
+    ],
+    "previewFeatures": [],
+    "sourceFilePath": "C:\\On-internship-Daivagya\\Internship\\Next-practice\\sportshub\\prisma\\schema.prisma",
+    "isCustomOutput": true
+  },
+  "relativeEnvPaths": {
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../.env"
+  },
+  "relativePath": "../../../prisma",
+  "clientVersion": "6.16.1",
+  "engineVersion": "1c57fdcd7e44b29b9313256c76699e91c3ac3c43",
+  "datasourceNames": [
+    "db"
+  ],
+  "activeProvider": "postgresql",
+  "inlineDatasources": {
+    "db": {
+      "url": {
+        "fromEnvVar": "DATABASE_URL",
+        "value": null
+      }
+    }
+  },
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// Models\n\nmodel User {\n  id             Int            @id @default(autoincrement())\n  email          String         @unique\n  fullName       String\n  avatarUrl      String?\n  avatarPublicId String?\n  passwordHash   String\n  role           Role           @default(USER)\n  emailVerified  Boolean        @default(false)\n  ownerProfile   FacilityOwner?\n  ownerProfileId Int?\n  bookings       Booking[]\n  venueReviews   VenueReview[] // relation to venue reviews\n  courtReviews   CourtReview[] // relation to court reviews\n  createdAt      DateTime       @default(now())\n  updatedAt      DateTime       @updatedAt\n  Session        Session[]\n  Account        Account[]\n}\n\nmodel FacilityOwner {\n  id           Int      @id @default(autoincrement())\n  user         User     @relation(fields: [userId], references: [id])\n  userId       Int      @unique\n  phone        String?\n  businessName String?\n  address      String?\n  venues       Venue[]\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n}\n\nmodel Venue {\n  id          Int           @id @default(autoincrement())\n  owner       FacilityOwner @relation(fields: [ownerId], references: [id])\n  ownerId     Int\n  name        String\n  slug        String        @unique\n  description String?\n  address     String\n  city        String?\n  state       String?\n  country     String?       @default(\"India\")\n  latitude    Float?\n  longitude   Float?\n  amenities   String[]      @default([])\n  photos      String[]      @default([])\n  approved    Boolean       @default(false)\n  courts      Court[]\n  reviews     VenueReview[] // venue-specific reviews\n  createdAt   DateTime      @default(now())\n  updatedAt   DateTime      @updatedAt\n\n  @@index([city])\n  @@index([approved])\n}\n\nmodel Court {\n  id         Int           @id @default(autoincrement())\n  venue      Venue         @relation(fields: [venueId], references: [id])\n  venueId    Int\n  name       String\n  slug       String        @unique // globally unique slug for URLs\n  sport      String // e.g., Badminton, Tennis\n  type       String // Indoor or Outdoor\n  priceSlots PriceSlot[]\n  currency   String        @default(\"INR\")\n  openTime   Int\n  closeTime  Int\n  bookings   Booking[]\n  reviews    CourtReview[] // court-specific reviews\n  imageUrl   String // ✅ Single image for the court\n  createdAt  DateTime      @default(now())\n  updatedAt  DateTime      @updatedAt\n\n  // ✅ Ensure names are unique within the same venue\n  @@unique([venueId, name])\n  @@index([sport])\n  @@index([type])\n}\n\nmodel VenueReview {\n  id        Int      @id @default(autoincrement())\n  venue     Venue    @relation(fields: [venueId], references: [id])\n  venueId   Int\n  user      User     @relation(fields: [userId], references: [id])\n  userId    Int\n  rating    Int // 1-5\n  comment   String?\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel CourtReview {\n  id        Int      @id @default(autoincrement())\n  court     Court    @relation(fields: [courtId], references: [id])\n  courtId   Int\n  user      User     @relation(fields: [userId], references: [id])\n  userId    Int\n  rating    Int // 1-5\n  comment   String?\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Booking {\n  id             Int           @id @default(autoincrement())\n  user           User          @relation(fields: [userId], references: [id])\n  userId         Int\n  court          Court         @relation(fields: [courtId], references: [id])\n  courtId        Int\n  startTime      DateTime\n  endTime        DateTime\n  status         BookingStatus @default(PENDING)\n  payment        Payment?\n  paymentId      Int?          @unique\n  idempotencyKey String?       @unique\n  notes          String?\n  createdAt      DateTime      @default(now())\n  totalAmount    Int // The final price of the booking in the smallest currency unit (e.g., cents/paise)\n  currency       String        @default(\"INR\")\n\n  @@unique([courtId, startTime])\n  @@index([userId])\n  @@index([courtId])\n  @@index([status])\n}\n\nmodel PriceSlot {\n  id           Int      @id @default(autoincrement())\n  court        Court    @relation(fields: [courtId], references: [id], onDelete: Cascade)\n  courtId      Int\n  startTime    Int // The hour (e.g., 8) when this price tier begins\n  endTime      Int // The hour (e.g., 10) when this price tier ends\n  pricePerHour Int // The price for this specific slot\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n\n  @@index([courtId])\n}\n\nmodel Payment {\n  id        Int      @id @default(autoincrement())\n  booking   Booking? @relation(fields: [bookingId], references: [id])\n  bookingId Int?     @unique\n\n  // Stripe integration\n  stripeSessionId       String? @unique\n  stripeSessionUrl      String?\n  stripePaymentIntentId String? @unique\n  stripeChargeId        String?\n\n  gateway       String        @default(\"stripe\")\n  amount        Int\n  currency      String        @default(\"INR\")\n  status        PaymentStatus @default(PENDING)\n  receiptUrl    String?\n  paymentMethod String?\n  createdAt     DateTime      @default(now())\n\n  @@index([stripeSessionId])\n  @@index([stripePaymentIntentId])\n  @@index([status])\n}\n\nmodel EmailOtp {\n  id        Int      @id @default(autoincrement())\n  email     String\n  tokenHash String // store hashed OTP (bcrypt or sha256 with salt)\n  expiresAt DateTime\n  attempts  Int      @default(0)\n  verified  Boolean  @default(false)\n  createdAt DateTime @default(now())\n\n  @@index([email])\n  @@index([expiresAt])\n}\n\n// Optional NextAuth-compatible Session / Account models (helpful if you decide to use NextAuth adapter)\nmodel Session {\n  id           Int      @id @default(autoincrement())\n  sessionToken String   @unique\n  user         User     @relation(fields: [userId], references: [id])\n  userId       Int\n  expires      DateTime\n\n  @@index([userId])\n  @@index([expires])\n}\n\nmodel Account {\n  id                Int     @id @default(autoincrement())\n  user              User    @relation(fields: [userId], references: [id])\n  userId            Int\n  provider          String\n  providerAccountId String\n  access_token      String?\n  refresh_token     String?\n  expires_at        Int?\n  token_type        String?\n  scope             String?\n\n  @@unique([provider, providerAccountId])\n  @@index([userId])\n}\n\nmodel VerificationToken {\n  id         Int      @id @default(autoincrement())\n  identifier String\n  token      String   @unique\n  expires    DateTime\n\n  @@index([identifier])\n}\n\n// Enums\nenum Role {\n  USER\n  OWNER\n  ADMIN\n}\n\nenum BookingStatus {\n  PENDING\n  CONFIRMED\n  CANCELLED\n  COMPLETED\n}\n\nenum PaymentStatus {\n  PENDING\n  SUCCEEDED\n  FAILED\n  REFUNDED\n}\n",
+  "inlineSchemaHash": "f519b3f0b3a97482fbd7edf17d4df98af74a85600294d6f4d2af1a0313bfb923",
+  "copyEngine": true
+}
+config.dirname = '/'
+
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fullName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatarUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatarPublicId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"ownerProfile\",\"kind\":\"object\",\"type\":\"FacilityOwner\",\"relationName\":\"FacilityOwnerToUser\"},{\"name\":\"ownerProfileId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bookings\",\"kind\":\"object\",\"type\":\"Booking\",\"relationName\":\"BookingToUser\"},{\"name\":\"venueReviews\",\"kind\":\"object\",\"type\":\"VenueReview\",\"relationName\":\"UserToVenueReview\"},{\"name\":\"courtReviews\",\"kind\":\"object\",\"type\":\"CourtReview\",\"relationName\":\"CourtReviewToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"Session\",\"kind\":\"object\",\"type\":\"Session\",\"relationName\":\"SessionToUser\"},{\"name\":\"Account\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"AccountToUser\"}],\"dbName\":null},\"FacilityOwner\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"FacilityOwnerToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"businessName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"address\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"venues\",\"kind\":\"object\",\"type\":\"Venue\",\"relationName\":\"FacilityOwnerToVenue\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Venue\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"owner\",\"kind\":\"object\",\"type\":\"FacilityOwner\",\"relationName\":\"FacilityOwnerToVenue\"},{\"name\":\"ownerId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"address\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"city\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"country\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"latitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"longitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"amenities\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"photos\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"approved\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"courts\",\"kind\":\"object\",\"type\":\"Court\",\"relationName\":\"CourtToVenue\"},{\"name\":\"reviews\",\"kind\":\"object\",\"type\":\"VenueReview\",\"relationName\":\"VenueToVenueReview\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Court\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"venue\",\"kind\":\"object\",\"type\":\"Venue\",\"relationName\":\"CourtToVenue\"},{\"name\":\"venueId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sport\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"priceSlots\",\"kind\":\"object\",\"type\":\"PriceSlot\",\"relationName\":\"CourtToPriceSlot\"},{\"name\":\"currency\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"openTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"closeTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"bookings\",\"kind\":\"object\",\"type\":\"Booking\",\"relationName\":\"BookingToCourt\"},{\"name\":\"reviews\",\"kind\":\"object\",\"type\":\"CourtReview\",\"relationName\":\"CourtToCourtReview\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"VenueReview\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"venue\",\"kind\":\"object\",\"type\":\"Venue\",\"relationName\":\"VenueToVenueReview\"},{\"name\":\"venueId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToVenueReview\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"rating\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"comment\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CourtReview\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"court\",\"kind\":\"object\",\"type\":\"Court\",\"relationName\":\"CourtToCourtReview\"},{\"name\":\"courtId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CourtReviewToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"rating\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"comment\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Booking\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"BookingToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"court\",\"kind\":\"object\",\"type\":\"Court\",\"relationName\":\"BookingToCourt\"},{\"name\":\"courtId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"startTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"BookingStatus\"},{\"name\":\"payment\",\"kind\":\"object\",\"type\":\"Payment\",\"relationName\":\"BookingToPayment\"},{\"name\":\"paymentId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"idempotencyKey\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"totalAmount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"currency\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"PriceSlot\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"court\",\"kind\":\"object\",\"type\":\"Court\",\"relationName\":\"CourtToPriceSlot\"},{\"name\":\"courtId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"startTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"endTime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"pricePerHour\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Payment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"booking\",\"kind\":\"object\",\"type\":\"Booking\",\"relationName\":\"BookingToPayment\"},{\"name\":\"bookingId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"stripeSessionId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"stripeSessionUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"stripePaymentIntentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"stripeChargeId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"gateway\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"currency\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"PaymentStatus\"},{\"name\":\"receiptUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"paymentMethod\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"EmailOtp\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tokenHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"attempts\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Session\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sessionToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"SessionToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"expires\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Account\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"provider\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"providerAccountId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"access_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"refresh_token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires_at\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"token_type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"scope\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"VerificationToken\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"identifier\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
+config.engineWasm = {
+  getRuntime: async () => require('./query_engine_bg.js'),
+  getQueryEngineWasmModule: async () => {
+    const loader = (await import('#wasm-engine-loader')).default
+    const engine = (await loader).default
+    return engine
   }
 }
+config.compilerWasm = undefined
 
+config.injectableEdgeEnv = () => ({
+  parsed: {
+    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
+  }
+})
+
+if (typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined) {
+  Debug.enable(typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined)
+}
+
+const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient
-
 Object.assign(exports, Prisma)
+

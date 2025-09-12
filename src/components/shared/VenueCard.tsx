@@ -2,120 +2,146 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Star, Clock, Users, Wifi, Car } from "lucide-react";
-import { Venue } from "@/types/next-auth";
-import { memo } from "react";
+import { MapPin, Star, IndianRupee, Swords } from "lucide-react";
+import { memo, useMemo } from "react";
 
+// REFACTORED: Props now include rating and price data for a richer display
 interface VenueCardProps {
-  venue: Venue;
+  venue: {
+    name: string;
+    slug: string;
+    address?: string;
+    photos?: string[];
+    courts?: {
+      sport: string;
+      pricePerHour?: number; // Added for price range calculation
+    }[];
+    rating?: number; // Added for rating display
+  };
   href?: string;
 }
 
-// Helper function to format price
-const formatPrice = (priceInPaisa: number): string => {
-  const rupees = Math.round(priceInPaisa / 100);
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(rupees);
-};
+export default memo(function VenueCard({ venue, href }: VenueCardProps) {
+  // --- Data Processing using useMemo for performance ---
+  const {
+    uniqueSports,
+    courtCount,
+    priceRange,
+    imageUrl,
+    venueName,
+    venueAddress,
+    rating,
+    linkHref,
+  } = useMemo(() => {
+    const courts = venue?.courts ?? [];
+    const photos = venue?.photos ?? [];
 
-// Helper function to get amenity icons
-const getAmenityIcon = (amenity: string) => {
-  const iconMap: Record<string, any> = {
-    wifi: Wifi,
-    parking: Car,
-    locker: Users,
-  };
+    const uniqueSports =
+      courts.length > 0
+        ? [...new Set(courts.map((c) => c.sport).filter(Boolean))]
+        : [];
 
-  const IconComponent = iconMap[amenity.toLowerCase()] || Users;
-  return <IconComponent className="w-4 h-4 text-gray-600 dark:text-gray-300" />;
-};
+    const prices = courts
+      .map((c) => c.pricePerHour)
+      .filter((p): p is number => p != null && p > 0);
+    const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+    const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
+    let priceRange = "Pricing not available";
+    if (minPrice > 0 && maxPrice > 0) {
+      priceRange =
+        minPrice === maxPrice
+          ? `₹${minPrice}/hr`
+          : `₹${minPrice} - ₹${maxPrice}/hr`;
+    }
 
-function VenueCard({ venue, href }: VenueCardProps) {
-  // Calculate pricing from courts
-  const courts = venue?.courts ?? [];
+    // FIX: Corrected template literal syntax
+    const linkHref = href ?? `/venues/${venue?.slug ?? ""}`;
 
-  // Get unique sports from courts
-  const uniqueSports = courts.length > 0 ? [...new Set(courts.map((c) => c.sport).filter(Boolean))] : [];
-
-  // Fallback image
-  const imageUrl = venue?.photos?.[0] ?? "/images/placeholder-venue.jpg";
-  const venueName = venue?.name ?? "Unnamed Venue";
-  const venueAddress = venue?.address ?? "Address not available";
-  const venueSlug = venue?.slug?? "";
-
-  // Determine the correct href
-  const linkHref = href ?? `/venues/${venueSlug}`;
-  const linkText = href ? "Manage details" : "View details";
-  const linkAriaLabel = href ? `Manage details for ${venueName}` : `View details for ${venueName}`;
+    return {
+      uniqueSports,
+      courtCount: courts.length,
+      priceRange,
+      imageUrl: photos[0] ?? "/images/placeholder-venue.jpg",
+      venueName: venue?.name ?? "Unnamed Venue",
+      venueAddress: venue?.address ?? "Address not available",
+      rating: venue?.rating,
+      linkHref,
+    };
+  }, [venue, href]);
 
   return (
-    <article className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden flex flex-col w-full max-w-sm transition-transform hover:scale-105">
-      {/* Image */}
-      <div className="relative w-full h-48">
+    // ENHANCEMENT: Added transition-all and more prominent hover effects to the whole card
+    <article className="relative group rounded-xl shadow-md overflow-hidden bg-white dark:bg-gray-800 flex flex-col h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+      {/* --- Image Container --- */}
+      <div className="relative w-full h-48 overflow-hidden">
         <Image
           src={imageUrl}
           alt={venueName}
           fill
-          className="object-cover"
-          sizes="(max-width: 640px) 100vw, 400px"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
+
+        {/* NEW: Rating badge, z-10 keeps it visible above the hover overlay */}
+        {rating && (
+          <div className="absolute top-3 right-3 z-10 bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1">
+            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+            <span>{rating.toFixed(1)}</span>
+          </div>
+        )}
+
+        {/* PRESERVED: The original slide-up sports overlay and animation */}
+        {uniqueSports.length > 0 && (
+          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transform translate-y-full group-hover:translate-y-0 transition-all duration-500 flex flex-col justify-center items-center gap-2 p-4">
+            <p className="text-white font-semibold mb-1">Available Sports</p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {uniqueSports.slice(0, 3).map((sport) => (
+                <span
+                  key={sport}
+                  className="bg-gray-200 text-gray-800 text-xs px-3 py-1 rounded-full font-medium"
+                >
+                  {sport}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Content */}
-      <div className="p-4 flex flex-col flex-1">
-        {/* Name & Address */}
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 line-clamp-1">
-          {venueName}
-        </h3>
-        <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm mt-1 gap-1">
-          <MapPin className="w-4 h-4" />
-          <span className="line-clamp-1">{venueAddress}</span>
+      {/* --- Info & Action Container --- */}
+      <div className="p-4 flex flex-col justify-between flex-1">
+        <div>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white line-clamp-1">
+            {venueName}
+          </h3>
+          <p className="flex items-start text-gray-500 dark:text-gray-400 text-sm mt-1 gap-1.5 line-clamp-2">
+            <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+            <span>{venueAddress}</span>
+          </p>
+
+          {/* NEW: Meta info section for key details */}
+          <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300 mt-3 border-t dark:border-gray-700 pt-3">
+            <div className="flex items-center gap-1.5 text-sm">
+              <Swords className="w-4 h-4 text-gray-500" />
+              <span className="font-semibold">
+                {courtCount} {courtCount === 1 ? "Court" : "Courts"}
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 text-sm">
+              <IndianRupee className="w-4 h-4 text-gray-500" />
+              <span className="font-semibold">{priceRange}</span>
+            </div>
+          </div>
         </div>
 
-
-        {/* Sports Tags */}
-        {uniqueSports.length > 0 && (
-          <div className="mt-2 flex flex-wrap gap-2">
-            {uniqueSports.map((sport) => (
-              <span
-                key={sport}
-                className="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded-full"
-              >
-                {sport}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Amenities */}
-        {venue.amenities && venue.amenities.length > 0 && (
-          <div className="mt-3 flex items-center gap-3 flex-wrap">
-            {venue.amenities.map((a) => (
-              <div key={a} className="flex items-center gap-1 text-gray-600 dark:text-gray-300 text-xs">
-                {getAmenityIcon(a)}
-                <span className="capitalize">{a}</span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Action Button */}
         <div className="mt-4">
           <Link
             href={linkHref}
-            aria-label={linkAriaLabel}
-            className="block text-center bg-green-600 hover:bg-green-700 text-white rounded-lg py-2 text-sm font-medium transition"
+            className="block text-center bg-green-600 hover:bg-green-700 text-white rounded-lg py-2.5 text-sm font-bold transition-colors"
           >
-            {linkText}
+            See details
           </Link>
         </div>
       </div>
     </article>
   );
-}
-
-export default memo(VenueCard);
+}); 

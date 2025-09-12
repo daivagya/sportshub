@@ -5,37 +5,40 @@ import { useRouter } from "next/navigation";
 import { addCourt } from "@/app/(owner)/manager/_actions/court.actions";
 import GAMES from "@/constants/games";
 
+// Interface for a single price slot
 interface PriceSlotInput {
   startTime: number;
+  endTime: number;
   price: string;
 }
 
+// Component props
 interface AddCourtFormProps {
   venueSlug: string;
   onClose: () => void;
 }
 
 export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
-  // core fields
+  // --- STATE MANAGEMENT ---
+
+  // Core court details
   const [name, setName] = useState("");
   const [sport, setSport] = useState<string>(GAMES?.[0] ?? "Badminton");
   const [type, setType] = useState<"Indoor" | "Outdoor">("Indoor");
   const [openTime, setOpenTime] = useState<number>(8);
   const [closeTime, setCloseTime] = useState<number>(22);
 
-  // pricing
-  const [useTieredPricing, setUseTieredPricing] = useState(false);
-  const [fixedPrice, setFixedPrice] = useState<string>("");
+  // Tiered pricing slots
   const [priceSlots, setPriceSlots] = useState<PriceSlotInput[]>([
-    { startTime: 8, price: "" },
+    { startTime: openTime, endTime: closeTime, price: "" },
   ]);
 
-  // image
+  // Image upload state
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [imageUploading, setImageUploading] = useState(false);
 
-  // ui / state
+  // UI and error state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
@@ -43,31 +46,48 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
   const router = useRouter();
   const allHours = Array.from({ length: 24 }, (_, i) => i);
 
-  // keep first slot aligned to openTime and filter out invalid ones
+  // --- EFFECTS ---
+
+  // Effect to keep price slots in sync with the court's operating hours
   useEffect(() => {
-    setPriceSlots((slots) =>
-      slots
-        .map((s, i) => (i === 0 ? { ...s, startTime: openTime } : s))
-        .filter((s) => s.startTime >= openTime)
-    );
-  }, [openTime]);
+    setPriceSlots((slots) => {
+      const updatedSlots = [...slots];
+      if (updatedSlots.length > 0) {
+        // First slot must start at openTime
+        updatedSlots[0] = { ...updatedSlots[0], startTime: openTime };
+        // Last slot must end at closeTime
+        updatedSlots[updatedSlots.length - 1] = {
+          ...updatedSlots[updatedSlots.length - 1],
+          endTime: closeTime,
+        };
+      }
+      return updatedSlots.filter((s) => s.startTime < s.endTime);
+    });
+  }, [openTime, closeTime]);
+
+  // --- HANDLERS ---
 
   const handleClose = () => {
     setIsClosing(true);
-    setTimeout(onClose, 240);
+    setTimeout(onClose, 240); // Delay to allow for closing animation
   };
 
-  // ---------- IMAGE UPLOAD ----------
+  const generateSlug = (str: string) =>
+    str
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  // --- IMAGE UPLOAD LOGIC ---
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setError(null);
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // preview immediately
     setPreviewUrl(URL.createObjectURL(file));
     setImageUploading(true);
 
-    // Basic env checks
     const preset = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET;
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
     if (!preset || !cloudName) {
@@ -86,22 +106,9 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
         { method: "POST", body: formData }
       );
 
-      if (!res.ok) {
-        const text = await res.text();
-        console.error("Cloudinary upload failed:", res.status, text);
-        setError("Image upload failed. Try again.");
-        setImageUploading(false);
-        return;
-      }
+      if (!res.ok) throw new Error("Upload failed");
 
       const data = await res.json();
-      if (!data?.secure_url) {
-        console.error("Cloudinary response missing secure_url:", data);
-        setError("Image upload failed (invalid response).");
-        setImageUploading(false);
-        return;
-      }
-
       setImageUrl(String(data.secure_url));
     } catch (err) {
       console.error("Image upload error:", err);
@@ -111,104 +118,120 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
     }
   };
 
-  function validatePriceInput(value: string): string {
-    if (!value) return "";
-    const num = parseInt(value, 10);
-    if (isNaN(num)) return "";
+  // --- PRICE SLOT HELPERS ---
 
-    // Round down to nearest 10
-    return Math.round(num / 10) * 10 + "";
-  }
-  // ---------- PRICE SLOTS helpers ----------
+  // Updates a slot and handles cascading changes
   const updateSlot = (
-    i: number,
-    field: "startTime" | "price",
-    value: string
+    index: number,
+    field: keyof PriceSlotInput,
+    value: number | string
   ) => {
-    setPriceSlots((slots) =>
-      slots.map((s, idx) =>
-        idx === i
-          ? { ...s, [field]: field === "price" ? value : Number(value) }
-          : s
-      )
-    );
+    setPriceSlots((currentSlots) => {
+      const newSlots = [...currentSlots];
+      const numericValue = Number(value);
+
+      newSlots[index] = { ...newSlots[index], [field]: value }; // Keep price as string
+
+      if (field === "endTime") {
+        newSlots[index] = { ...newSlots[index], [field]: numericValue };
+        if (index < newSlots.length - 1) {
+          newSlots[index + 1] = {
+            ...newSlots[index + 1],
+            startTime: numericValue,
+          };
+        }
+      }
+
+      return newSlots;
+    });
   };
 
+  // Adds a new price slot by splitting the last one
   const addSlot = () => {
-    const last = priceSlots[priceSlots.length - 1];
-    const newStart = last ? last.startTime + 1 : openTime + 1;
-    if (newStart >= closeTime) {
-      setError("Cannot add a slot that starts at or after closing time.");
-      return;
-    }
-    // prevent duplicate startTime
-    if (priceSlots.some((p) => p.startTime === newStart)) {
-      setError("Slot start time conflicts with existing slot.");
-      return;
-    }
-    setPriceSlots([...priceSlots, { startTime: newStart, price: "" }]);
     setError(null);
+    const lastSlot = priceSlots[priceSlots.length - 1];
+    const duration = lastSlot.endTime - lastSlot.startTime;
+
+    // Prevent splitting a slot that is too short
+    if (duration < 2) {
+      setError(
+        "Cannot split the last slot further. It must be at least 2 hours long."
+      );
+      return;
+    }
+
+    // Split the last slot in the middle
+    const newSplitTime = lastSlot.startTime + Math.floor(duration / 2);
+
+    const updatedLastSlot = { ...lastSlot, endTime: newSplitTime };
+    const newSlot = {
+      startTime: newSplitTime,
+      endTime: lastSlot.endTime,
+      price: "",
+    };
+
+    setPriceSlots([...priceSlots.slice(0, -1), updatedLastSlot, newSlot]);
+  };
+  // Removes a price slot and merges its time range into the previous slot
+  const removeSlot = (index: number) => {
+    if (index === 0 || priceSlots.length <= 1) return; // Cannot remove the first slot
+
+    setPriceSlots((slots) => {
+      const prevSlot = slots[index - 1];
+      const currentSlot = slots[index];
+      // Extend the previous slot's end time to cover the removed slot's time
+      const mergedSlot = { ...prevSlot, endTime: currentSlot.endTime };
+
+      const newSlots = [...slots];
+      newSlots.splice(index, 1); // Remove the slot
+      newSlots[index - 1] = mergedSlot; // Replace previous slot with the merged one
+      return newSlots;
+    });
   };
 
-  const removeSlot = (i: number) => {
-    if (i === 0 || priceSlots.length <= 1) return; // keep first slot
-    setPriceSlots((s) => s.filter((_, idx) => idx !== i));
-  };
-
-  // ---------- SLUG helper ----------
-  const generateSlug = (str: string) =>
-    str
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-
-  // ---------- SUBMIT ----------
+  // --- FORM SUBMISSION ---
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    // basic validations
+    // Basic validations
     if (!name.trim()) return setError("Please enter the court name.");
     if (openTime >= closeTime)
-      return setError("Opening time must be earlier than closing time.");
+      return setError("Opening time must be before closing time.");
     if (imageUploading)
       return setError("Please wait for image upload to finish.");
-    if (!imageUrl)
-      return setError("Please upload a cover image for the court.");
+    if (!imageUrl) return setError("Please upload a court image.");
 
-    // prepare slots
-    let slots: PriceSlotInput[] = [];
-    if (useTieredPricing) {
-      const cleaned = priceSlots
-        .map((s) => ({
-          startTime: Number(s.startTime),
-          price: String(s.price).trim(),
-        }))
-        .sort((a, b) => a.startTime - b.startTime);
+    // Validate all price slots
+    const cleanedSlots = priceSlots
+      .map((s) => ({
+        startTime: Number(s.startTime),
+        endTime: Number(s.endTime),
+        price: String(s.price).trim(),
+      }))
+      .sort((a, b) => a.startTime - b.startTime);
 
-      // validations: price positive, within hours, no dupes
-      for (let i = 0; i < cleaned.length; i++) {
-        const s = cleaned[i];
-        if (!s.price || Number(s.price) <= 0)
-          return setError("Please set valid prices for all slots.");
-        if (s.startTime < openTime || s.startTime >= closeTime)
-          return setError(
-            `Slot at ${String(s.startTime).padStart(
-              2,
-              "0"
-            )}:00 is outside operating hours.`
-          );
-        if (i > 0 && s.startTime === cleaned[i - 1].startTime)
-          return setError(
-            `Duplicate slot at ${String(s.startTime).padStart(2, "0")}:00.`
-          );
-      }
-      slots = cleaned;
-    } else {
-      if (!fixedPrice || Number(fixedPrice) <= 0)
-        return setError("Please set a valid fixed price per hour.");
-      slots = [{ startTime: openTime, price: fixedPrice }];
+    for (let i = 0; i < cleanedSlots.length; i++) {
+      const s = cleanedSlots[i];
+      if (!s.price || Number(s.price) <= 0)
+        return setError(
+          `Please set a valid price for the slot starting at ${s.startTime}:00.`
+        );
+      if (s.startTime < openTime || s.endTime > closeTime)
+        return setError("A slot is outside operating hours.");
+      if (i > 0 && s.startTime !== cleanedSlots[i - 1].endTime)
+        return setError(
+          "There is a gap or overlap in your time slots. Please fix it."
+        );
+    }
+
+    if (
+      cleanedSlots[0].startTime !== openTime ||
+      cleanedSlots[cleanedSlots.length - 1].endTime !== closeTime
+    ) {
+      return setError(
+        "Slots must cover the entire duration from open to close time."
+      );
     }
 
     setLoading(true);
@@ -222,22 +245,16 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
         currency: "INR",
         openTime,
         closeTime,
-        priceSlots: slots,
+        priceSlots: cleanedSlots,
         imageUrl,
-      } as any); // `addCourt` shape depends on your server action - cast if needed
+      } as any);
 
-      // handle possible server-side error shape
       if (result && typeof result === "object" && "error" in result) {
-        const msg =
-          (result as any).error || "Server error while creating court";
-        setError(String(msg));
-        setLoading(false);
-        return;
+        setError((result as any).error || "An unknown server error occurred.");
+      } else {
+        handleClose();
+        startTransition(() => router.refresh());
       }
-
-      // success
-      handleClose();
-      startTransition(() => router.refresh());
     } catch (err) {
       console.error("addCourt error:", err);
       setError("Failed to add court. Please try again.");
@@ -246,12 +263,13 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
     }
   };
 
-  // small UI helpers
+  // --- STYLES ---
   const inputClasses =
     "w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition";
-
   const selectClasses = inputClasses;
+  const formatTime = (hour: number) => String(hour).padStart(2, "0") + ":00";
 
+  // --- JSX ---
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center bg-gray-900/60 p-4 transition-opacity ${
@@ -261,11 +279,10 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
     >
       <div
         className={`bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-lg flex flex-col max-h-[90vh] transition-transform ${
-          isClosing ? "scale-95 opacity-0" : "scale-100 opacity-100"
+          isClosing ? "scale-95" : "scale-100"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* header */}
         <div className="flex items-center justify-between p-5 border-b dark:border-gray-700">
           <h3 className="text-lg font-semibold">Add New Court</h3>
           <button
@@ -278,10 +295,10 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
 
         <form onSubmit={handleSubmit} className="flex flex-col flex-grow">
           <div className="p-6 space-y-6 overflow-y-auto">
-            {/* name */}
+            {/* Name, Sport, Type */}
             <div>
               <label className="block mb-2 text-sm font-medium">
-                Court Name / Number
+                Court Name
               </label>
               <input
                 className={inputClasses}
@@ -290,8 +307,6 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-
-            {/* sport & type */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block mb-2 text-sm font-medium">Sport</label>
@@ -301,17 +316,16 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
                   onChange={(e) => setSport(e.target.value)}
                 >
                   {Array.isArray(GAMES) ? (
-                    GAMES.map((g: string) => (
+                    GAMES.map((g) => (
                       <option key={g} value={g}>
                         {g}
                       </option>
                     ))
                   ) : (
-                    <option>{String(sport)}</option>
+                    <option>{sport}</option>
                   )}
                 </select>
               </div>
-
               <div>
                 <label className="block mb-2 text-sm font-medium">Type</label>
                 <select
@@ -325,85 +339,37 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
               </div>
             </div>
 
-            {/* image uploader */}
+            {/* Image Uploader */}
             <div>
               <label className="block mb-2 text-sm font-medium">
                 Court Image
               </label>
-
-              {/* visually-styled upload control */}
               <div className="flex items-center gap-3">
                 <label
                   htmlFor="court-image"
-                  className="inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed rounded-lg cursor-pointer select-none text-sm
-                            border-green-600 text-green-600 hover:bg-green-50 transition"
+                  className="inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed rounded-lg cursor-pointer select-none text-sm border-green-600 text-green-600 hover:bg-green-50 transition"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                  >
-                    <path
-                      d="M12 3v12"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M8 7l4-4 4 4"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <rect
-                      x="3"
-                      y="10"
-                      width="18"
-                      height="11"
-                      rx="2"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <span>
-                    {imageUploading
-                      ? "Uploading..."
-                      : imageUrl
-                      ? "Change image"
-                      : "Upload image"}
-                  </span>
+                  {imageUploading ? "Uploading..." : "Upload Image"}
                 </label>
-
                 <input
                   id="court-image"
                   type="file"
                   accept="image/*"
                   className="sr-only"
                   onChange={handleImageChange}
+                  disabled={imageUploading}
                 />
-
-                {/* small preview badge */}
-                {previewUrl ? (
+                {previewUrl && (
                   <img
                     src={previewUrl}
                     alt="preview"
                     className="w-28 h-20 object-cover rounded-md border"
                   />
-                ) : (
-                  <div className="w-28 h-20 bg-gray-100 rounded-md flex items-center justify-center text-xs text-gray-500">
-                    No image
-                  </div>
                 )}
               </div>
-
-              <p className="mt-2 text-xs text-gray-500">
-                Recommended: 1200×800 px. Max size: 5MB.
-              </p>
             </div>
 
-            {/* hours */}
+            {/* Operating Hours */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block mb-2 text-sm font-medium">
@@ -416,12 +382,11 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
                 >
                   {allHours.map((h) => (
                     <option key={h} value={h}>
-                      {String(h).padStart(2, "0")}:00
+                      {formatTime(h)}
                     </option>
                   ))}
                 </select>
               </div>
-
               <div>
                 <label className="block mb-2 text-sm font-medium">
                   Closes At
@@ -433,121 +398,117 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
                 >
                   {allHours.map((h) => (
                     <option key={h} value={h}>
-                      {String(h).padStart(2, "0")}:00
+                      {formatTime(h)}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
 
-            {/* pricing */}
+            {/* Tiered Pricing Section */}
             <div className="space-y-4 border rounded-lg p-4">
-              <label className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={useTieredPricing}
-                  onChange={(e) => setUseTieredPricing(e.target.checked)}
-                />
-                <span className="text-sm">Use tiered pricing</span>
-              </label>
+              <h4 className="text-sm font-medium">Court Pricing (per hour)</h4>
+              <div className="space-y-3">
+                {priceSlots.map((slot, i) => {
+                  // ADD THIS LINE: Determine the maximum valid end time for the current slot.
+                  // It's either the end time of the *next* slot or the court's overall closing time.
+                  const maxEndTime =
+                    i < priceSlots.length - 1
+                      ? priceSlots[i + 1].endTime
+                      : closeTime;
 
-              {useTieredPricing ? (
-                <div className="space-y-3">
-                  {priceSlots.map((slot, i) => (
-                    <div key={i} className="flex gap-2 items-center">
-                      {i === 0 ? (
-                        <div className="px-3 py-2 bg-gray-100 rounded-md text-sm text-center">
-                          {String(slot.startTime).padStart(2, "0")}:00
-                        </div>
-                      ) : (
+                  return (
+                    <div
+                      key={i}
+                      className="grid grid-cols-[auto_20px_1fr_1fr_auto] gap-2 items-center"
+                    >
+                      <div className="px-3 py-2 bg-gray-100 rounded-md text-sm text-center dark:bg-gray-700">
+                        {formatTime(slot.startTime)}
+                      </div>
+                      <span className="text-center text-gray-500">-</span>
+                      {/* End Time Selector */}
+                      {i < priceSlots.length - 1 ? (
                         <select
-                          className="w-24 rounded-lg border border-gray-300 bg-white dark:bg-gray-700 px-2 py-2 text-sm"
-                          value={slot.startTime}
+                          className={selectClasses}
+                          value={slot.endTime}
                           onChange={(e) =>
-                            updateSlot(
-                              i,
-                              "price",
-                              validatePriceInput(e.target.value)
-                            )
+                            updateSlot(i, "endTime", e.target.value)
                           }
                         >
+                          {/* THIS FILTER IS NOW SMARTER: It prevents invalid time selections. */}
                           {allHours
-                            .filter((h) => h >= openTime && h < closeTime)
+                            .filter(
+                              (h) => h > slot.startTime && h <= maxEndTime
+                            )
                             .map((h) => (
                               <option key={h} value={h}>
-                                {String(h).padStart(2, "0")}:00
+                                {formatTime(h)}
                               </option>
                             ))}
                         </select>
+                      ) : (
+                        <div className="px-3 py-2 bg-gray-100 rounded-md text-sm text-center dark:bg-gray-700">
+                          {formatTime(slot.endTime)}
+                        </div>
                       )}
 
+                      {/* Price Input */}
                       <input
-                        className="input-style w-full flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm"
+                        className={inputClasses}
                         type="number"
                         min={0}
+                        step={10}
                         placeholder="₹ Price"
                         value={slot.price}
-                        onChange={(e) =>
-                          setFixedPrice(validatePriceInput(e.target.value))
-                        }
+                        onChange={(e) => updateSlot(i, "price", e.target.value)}
                       />
 
-                      {i > 0 && (
+                      {/* Remove Button */}
+                      {i > 0 ? (
                         <button
                           type="button"
                           onClick={() => removeSlot(i)}
-                          className="text-red-500 px-2"
+                          className="text-red-500 px-2 text-xl font-bold"
                         >
-                          ✕
+                          ×
                         </button>
+                      ) : (
+                        <div />
                       )}
                     </div>
-                  ))}
-
-                  <button
-                    type="button"
-                    onClick={addSlot}
-                    className="block w-full text-blue-600 border border-blue-600 rounded-lg py-1 text-sm"
-                  >
-                    + Add Slot
-                  </button>
-                </div>
-              ) : (
-                <input
-                  className="input-style rounded-lg border border-gray-300 px-3 py-2 text-sm"
-                  type="number"
-                  placeholder="Price per hour (₹)"
-                  value={fixedPrice}
-                  onChange={(e) => setFixedPrice(e.target.value)}
-                />
-              )}
+                  );
+                })}
+                <button
+                  type="button"
+                  onClick={addSlot}
+                  className="w-full text-blue-600 border border-blue-600 rounded-lg py-1.5 text-sm font-semibold hover:bg-blue-50 transition"
+                >
+                  + Add Price Tier
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* error */}
           {error && (
             <div className="px-6 pb-2 text-sm text-red-600">{error}</div>
           )}
 
-          {/* actions */}
+          {/* Action Buttons */}
           <div className="flex justify-end gap-3 p-6 border-t dark:border-gray-700">
-            {/* Cancel: outlined green */}
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2 rounded-lg border-2 border-green-600 text-green-700 hover:bg-green-50 transition"
+              className="px-4 py-2 rounded-lg border-2 border-gray-400 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             >
               Cancel
             </button>
-
-            {/* Add: solid green with blue hover ring */}
             <button
               type="submit"
               disabled={loading || imageUploading}
-              className={`px-4 py-2 rounded-lg text-white transition ${
+              className={`px-4 py-2 rounded-lg text-white font-semibold transition ${
                 loading || imageUploading
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-green-600 hover:bg-green-700 hover:ring-2 hover:ring-blue-300 focus:ring-2 focus:ring-blue-300"
+                  : "bg-green-600 hover:bg-green-700 focus:ring-2 focus:ring-green-400"
               }`}
             >
               {loading ? "Adding..." : "Add Court"}
@@ -558,5 +519,3 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
     </div>
   );
 }
-
-export default AddCourtForm;

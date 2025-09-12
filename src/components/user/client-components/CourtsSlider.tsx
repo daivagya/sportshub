@@ -1,42 +1,61 @@
-// "use client";
-// import { Star } from "lucide-react";
-// import { courts, venues, bookings } from "@/lib/dummyData";
-// import CourtCard from "./CourtCard";
-// export default function TopRatedCourts() {
-//   const topCourts = courts.slice(0, 4); // pick top 4 for now
 
-//   const getVenueName = (venueId: number) =>
-//     venues.find((v) => v.id === venueId)?.name ?? "Unknown Venue";
-
-//   const getBookingStatus = (courtId: number) => {
-//     const booking = bookings.find((b) => b.courtId === courtId);
-//     return booking ? booking.status : "AVAILABLE";
-//   };
-
-//   return (
-//     <section className="w-full">
-//       <div className="flex justify-between items-center">
-//         <h2 className="text-2xl font-semibold text-black mb-6">
-//           Top Rated Courts
-//         </h2>
-//         <a href="#" className="text-sm font-semibold text-green-600 px-5 py-2 bg-green-50 border border-green-600 rounded hover:bg-green-600 hover:text-white">
-//           See all
-//         </a>
-//       </div>
-//       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-//         {topCourts.map((court) => {
-//           const venue = getVenueName(court.venueId);
-//           const status = getBookingStatus(court.id);
-//           return (
-//             <CourtCard
-//               key={court.id}
-//               court={court}
-//               venue={venue}
-//               // status={status}
-//             />
-//           );
-//         })}
-//       </div>
-//     </section>
-//   );
-// }
+import React from "react";
+ 
+import Footer from "@/components/shared/Footer";
+import Hero from "@/components/user/client-components/HeroSection";
+import VenueSlider from "@/components/user/client-components/VenueSlider";
+import { Court } from "@/types/next-auth";
+import SportsWeOffer from "@/components/user/client-components/SportsWeOffer";
+import CourtCard from "@/components/shared/CourtCard";
+import { getCourts } from "@/app/(user)/_userActions/court.actions";
+async function Page() {
+  // Fetch the first 10 courts on the server
+  const courts: Court[] = await getCourts(10);
+ 
+  return (
+    <div className="min-h-screen relative">
+      <Hero />
+      <div className="container mx-auto px-4 space-y-2.5">
+        <VenueSlider />
+        <CourtSlider courts={courts} />
+        <SportsWeOffer />
+      </div>
+      <Footer />
+    </div>
+  );
+}
+ 
+type Props = {
+  courts: Court[];
+};
+ 
+export default function CourtSlider({ courts }: Props) {
+  if (!courts || courts.length === 0) {
+    return <p>No courts available</p>;
+  }
+ 
+  return (
+    <div className="overflow-x-auto py-6">
+      <div className="flex gap-4 min-w-max">
+        {courts.map((court) => (
+          <CourtCard
+            key={court.slug}
+            court={{
+              name: court.name,
+              sport: court.sport,
+              pricePerHour: court.priceSlots[0]?.price ?? 0,
+              openTime: court.openTime,
+              closeTime: court.closeTime,
+              slug: court.slug,
+            }}
+            venueName={court.venueName}
+            venueSlug={court.slug}
+            status="AVAILABLE"
+            rating={court.averageRating}
+            imageUrl={court.imageUrl}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}

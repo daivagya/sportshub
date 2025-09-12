@@ -430,8 +430,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.15.0
-   * Query Engine version: 85179d7826409ee107a6ba334b5e305ae3fba9fb
+   * Prisma Client JS version: 6.16.1
+   * Query Engine version: 1c57fdcd7e44b29b9313256c76699e91c3ac3c43
    */
   export type PrismaVersion = {
     client: string
@@ -1884,6 +1884,10 @@ export namespace Prisma {
       timeout?: number
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
+    /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory | null
     /**
      * Global configuration for omitting model fields by default.
      * 
@@ -10753,6 +10757,7 @@ export namespace Prisma {
     id: number | null
     courtId: number | null
     startTime: number | null
+    endTime: number | null
     pricePerHour: number | null
   }
 
@@ -10760,6 +10765,7 @@ export namespace Prisma {
     id: number | null
     courtId: number | null
     startTime: number | null
+    endTime: number | null
     pricePerHour: number | null
   }
 
@@ -10767,6 +10773,7 @@ export namespace Prisma {
     id: number | null
     courtId: number | null
     startTime: number | null
+    endTime: number | null
     pricePerHour: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -10776,6 +10783,7 @@ export namespace Prisma {
     id: number | null
     courtId: number | null
     startTime: number | null
+    endTime: number | null
     pricePerHour: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -10785,6 +10793,7 @@ export namespace Prisma {
     id: number
     courtId: number
     startTime: number
+    endTime: number
     pricePerHour: number
     createdAt: number
     updatedAt: number
@@ -10796,6 +10805,7 @@ export namespace Prisma {
     id?: true
     courtId?: true
     startTime?: true
+    endTime?: true
     pricePerHour?: true
   }
 
@@ -10803,6 +10813,7 @@ export namespace Prisma {
     id?: true
     courtId?: true
     startTime?: true
+    endTime?: true
     pricePerHour?: true
   }
 
@@ -10810,6 +10821,7 @@ export namespace Prisma {
     id?: true
     courtId?: true
     startTime?: true
+    endTime?: true
     pricePerHour?: true
     createdAt?: true
     updatedAt?: true
@@ -10819,6 +10831,7 @@ export namespace Prisma {
     id?: true
     courtId?: true
     startTime?: true
+    endTime?: true
     pricePerHour?: true
     createdAt?: true
     updatedAt?: true
@@ -10828,6 +10841,7 @@ export namespace Prisma {
     id?: true
     courtId?: true
     startTime?: true
+    endTime?: true
     pricePerHour?: true
     createdAt?: true
     updatedAt?: true
@@ -10924,6 +10938,7 @@ export namespace Prisma {
     id: number
     courtId: number
     startTime: number
+    endTime: number
     pricePerHour: number
     createdAt: Date
     updatedAt: Date
@@ -10952,6 +10967,7 @@ export namespace Prisma {
     id?: boolean
     courtId?: boolean
     startTime?: boolean
+    endTime?: boolean
     pricePerHour?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -10962,6 +10978,7 @@ export namespace Prisma {
     id?: boolean
     courtId?: boolean
     startTime?: boolean
+    endTime?: boolean
     pricePerHour?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -10972,6 +10989,7 @@ export namespace Prisma {
     id?: boolean
     courtId?: boolean
     startTime?: boolean
+    endTime?: boolean
     pricePerHour?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -10982,12 +11000,13 @@ export namespace Prisma {
     id?: boolean
     courtId?: boolean
     startTime?: boolean
+    endTime?: boolean
     pricePerHour?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PriceSlotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "courtId" | "startTime" | "pricePerHour" | "createdAt" | "updatedAt", ExtArgs["result"]["priceSlot"]>
+  export type PriceSlotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "courtId" | "startTime" | "endTime" | "pricePerHour" | "createdAt" | "updatedAt", ExtArgs["result"]["priceSlot"]>
   export type PriceSlotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     court?: boolean | CourtDefaultArgs<ExtArgs>
   }
@@ -11007,6 +11026,7 @@ export namespace Prisma {
       id: number
       courtId: number
       startTime: number
+      endTime: number
       pricePerHour: number
       createdAt: Date
       updatedAt: Date
@@ -11437,6 +11457,7 @@ export namespace Prisma {
     readonly id: FieldRef<"PriceSlot", 'Int'>
     readonly courtId: FieldRef<"PriceSlot", 'Int'>
     readonly startTime: FieldRef<"PriceSlot", 'Int'>
+    readonly endTime: FieldRef<"PriceSlot", 'Int'>
     readonly pricePerHour: FieldRef<"PriceSlot", 'Int'>
     readonly createdAt: FieldRef<"PriceSlot", 'DateTime'>
     readonly updatedAt: FieldRef<"PriceSlot", 'DateTime'>
@@ -17519,6 +17540,7 @@ export namespace Prisma {
     id: 'id',
     courtId: 'courtId',
     startTime: 'startTime',
+    endTime: 'endTime',
     pricePerHour: 'pricePerHour',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -18369,6 +18391,7 @@ export namespace Prisma {
     id?: IntFilter<"PriceSlot"> | number
     courtId?: IntFilter<"PriceSlot"> | number
     startTime?: IntFilter<"PriceSlot"> | number
+    endTime?: IntFilter<"PriceSlot"> | number
     pricePerHour?: IntFilter<"PriceSlot"> | number
     createdAt?: DateTimeFilter<"PriceSlot"> | Date | string
     updatedAt?: DateTimeFilter<"PriceSlot"> | Date | string
@@ -18379,6 +18402,7 @@ export namespace Prisma {
     id?: SortOrder
     courtId?: SortOrder
     startTime?: SortOrder
+    endTime?: SortOrder
     pricePerHour?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -18392,6 +18416,7 @@ export namespace Prisma {
     NOT?: PriceSlotWhereInput | PriceSlotWhereInput[]
     courtId?: IntFilter<"PriceSlot"> | number
     startTime?: IntFilter<"PriceSlot"> | number
+    endTime?: IntFilter<"PriceSlot"> | number
     pricePerHour?: IntFilter<"PriceSlot"> | number
     createdAt?: DateTimeFilter<"PriceSlot"> | Date | string
     updatedAt?: DateTimeFilter<"PriceSlot"> | Date | string
@@ -18402,6 +18427,7 @@ export namespace Prisma {
     id?: SortOrder
     courtId?: SortOrder
     startTime?: SortOrder
+    endTime?: SortOrder
     pricePerHour?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -18419,6 +18445,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"PriceSlot"> | number
     courtId?: IntWithAggregatesFilter<"PriceSlot"> | number
     startTime?: IntWithAggregatesFilter<"PriceSlot"> | number
+    endTime?: IntWithAggregatesFilter<"PriceSlot"> | number
     pricePerHour?: IntWithAggregatesFilter<"PriceSlot"> | number
     createdAt?: DateTimeWithAggregatesFilter<"PriceSlot"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"PriceSlot"> | Date | string
@@ -19439,6 +19466,7 @@ export namespace Prisma {
 
   export type PriceSlotCreateInput = {
     startTime: number
+    endTime: number
     pricePerHour: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19449,6 +19477,7 @@ export namespace Prisma {
     id?: number
     courtId: number
     startTime: number
+    endTime: number
     pricePerHour: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19456,6 +19485,7 @@ export namespace Prisma {
 
   export type PriceSlotUpdateInput = {
     startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     pricePerHour?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19466,6 +19496,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     courtId?: IntFieldUpdateOperationsInput | number
     startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     pricePerHour?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19475,6 +19506,7 @@ export namespace Prisma {
     id?: number
     courtId: number
     startTime: number
+    endTime: number
     pricePerHour: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19482,6 +19514,7 @@ export namespace Prisma {
 
   export type PriceSlotUpdateManyMutationInput = {
     startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     pricePerHour?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19491,6 +19524,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     courtId?: IntFieldUpdateOperationsInput | number
     startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     pricePerHour?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20565,6 +20599,7 @@ export namespace Prisma {
     id?: SortOrder
     courtId?: SortOrder
     startTime?: SortOrder
+    endTime?: SortOrder
     pricePerHour?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20574,6 +20609,7 @@ export namespace Prisma {
     id?: SortOrder
     courtId?: SortOrder
     startTime?: SortOrder
+    endTime?: SortOrder
     pricePerHour?: SortOrder
   }
 
@@ -20581,6 +20617,7 @@ export namespace Prisma {
     id?: SortOrder
     courtId?: SortOrder
     startTime?: SortOrder
+    endTime?: SortOrder
     pricePerHour?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20590,6 +20627,7 @@ export namespace Prisma {
     id?: SortOrder
     courtId?: SortOrder
     startTime?: SortOrder
+    endTime?: SortOrder
     pricePerHour?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -20599,6 +20637,7 @@ export namespace Prisma {
     id?: SortOrder
     courtId?: SortOrder
     startTime?: SortOrder
+    endTime?: SortOrder
     pricePerHour?: SortOrder
   }
 
@@ -22605,6 +22644,7 @@ export namespace Prisma {
 
   export type PriceSlotCreateWithoutCourtInput = {
     startTime: number
+    endTime: number
     pricePerHour: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22613,6 +22653,7 @@ export namespace Prisma {
   export type PriceSlotUncheckedCreateWithoutCourtInput = {
     id?: number
     startTime: number
+    endTime: number
     pricePerHour: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22767,6 +22808,7 @@ export namespace Prisma {
     id?: IntFilter<"PriceSlot"> | number
     courtId?: IntFilter<"PriceSlot"> | number
     startTime?: IntFilter<"PriceSlot"> | number
+    endTime?: IntFilter<"PriceSlot"> | number
     pricePerHour?: IntFilter<"PriceSlot"> | number
     createdAt?: DateTimeFilter<"PriceSlot"> | Date | string
     updatedAt?: DateTimeFilter<"PriceSlot"> | Date | string
@@ -24109,6 +24151,7 @@ export namespace Prisma {
   export type PriceSlotCreateManyCourtInput = {
     id?: number
     startTime: number
+    endTime: number
     pricePerHour: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -24139,6 +24182,7 @@ export namespace Prisma {
 
   export type PriceSlotUpdateWithoutCourtInput = {
     startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     pricePerHour?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -24147,6 +24191,7 @@ export namespace Prisma {
   export type PriceSlotUncheckedUpdateWithoutCourtInput = {
     id?: IntFieldUpdateOperationsInput | number
     startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     pricePerHour?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -24155,6 +24200,7 @@ export namespace Prisma {
   export type PriceSlotUncheckedUpdateManyWithoutCourtInput = {
     id?: IntFieldUpdateOperationsInput | number
     startTime?: IntFieldUpdateOperationsInput | number
+    endTime?: IntFieldUpdateOperationsInput | number
     pricePerHour?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

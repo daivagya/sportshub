@@ -1,57 +1,59 @@
-"use client";
 
-import Image from "next/image";
-
-type Props = { image: string; name: string };
-
-export default function CircleCard({ image, name }: Props) {
-  return (
-    <div
-      className="relative h-[180px] w-[180px] cursor-pointer drop-shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 hover:drop-shadow-xl"
-      aria-label={name}
-    >
-      {/* SVG definition for the circular mask */}
-      <svg width="0" height="0" className="absolute">
-        <defs>
-          <clipPath id="circle-clip-path" clipPathUnits="objectBoundingBox">
-            <circle cx="0.5" cy="0.5" r="0.5" />
-          </clipPath>
-        </defs>
-      </svg>
-
-      {/* Container for the image and overlay, clipped to the circle shape */}
-      <div
-        className="relative h-full w-full overflow-hidden"
-        style={{ clipPath: "url(#circle-clip-path)" }}
-      >
-        <Image
-          src={image}
-          alt={name}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-      </div>
-
-      {/* 👇 THE CHANGE IS HERE! 
-        Added `gap-2` to the flex container to create vertical space.
-      */}
-      <div className="absolute inset-0 flex flex-col items-center justify-end gap-2 p-4 pb-6">
-        <span className="rounded-full bg-white/90 px-4 py-1.5 text-sm font-semibold text-gray-900 backdrop-blur-sm">
-          {name}
-        </span>
-        
-        {/* ✅ This image will now have a proper gap above it */}
-        {/*
-        <Image
-          src="/path/to/your/logo.svg"
-          alt="Brand Logo"
-          width={30}
-          height={30}
-        />
-        */}
-      </div>
-    </div>
-  );
-} 
+// "use client";
+ 
+// import React from "react";
+// import { type GameType } from "@/constants/games";
+ 
+// interface Sport {
+//   name: GameType;
+//   image: string; // image path
+// }
+ 
+// // Example: replace these with your actual images
+// const SPORTS_TO_DISPLAY: Sport[] = [
+//   { name: "Badminton", image: "/images/sports/badminton.png" },
+//   { name: "Tennis", image: "/images/sports/tennis.png" },
+//   { name: "Basketball", image: "/images/sports/basketball.png" },
+//   { name: "Football", image: "/images/sports/football.png" },
+//   { name: "Cricket", image: "/images/sports/cricket.png" },
+//   { name: "Volleyball", image: "/images/sports/volleyball.png" },
+//   { name: "Table Tennis", image: "/images/sports/table-tennis.png" },
+//   { name: "Squash", image: "/images/sports/squash.png" },
+// ];
+ 
+// interface SportCardProps {
+//   sport: Sport;
+// }
+ 
+// function SportCard({ sport }: SportCardProps) {
+//   return (
+//     <div className="flex flex-col items-center justify-center bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-4 w-28 h-28 cursor-pointer group">
+//       <img
+//         src={sport.image}
+//         alt={sport.name}
+//         className="w-12 h-12 mb-2 object-contain transition-transform duration-300 group-hover:scale-110"
+//       />
+//       <span className="text-sm font-medium text-gray-800 dark:text-gray-100 text-center">
+//         {sport.name}
+//       </span>
+//     </div>
+//   );
+// }
+ 
+// export default function SportsWeOffer() {
+//   return (
+//     <section className="py-10">
+//       <div className="flex justify-between items-center mb-6">
+//         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+//           Sports We Offer
+//         </h2>
+//       </div>
+ 
+//       <div className="flex gap-4 overflow-x-auto scrollbar-hide py-2">
+//         {SPORTS_TO_DISPLAY.map((sport) => (
+//           <SportCard key={sport.name} sport={sport} />
+//         ))}
+//       </div>
+//     </section>
+//   );
+// }

@@ -11,10 +11,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-console.log(process.env.GOOGLE_CLIENT_ID);
-console.log(process.env.GOOGLE_CLIENT_SECRET);
-console.log(process.env.GOOGLE_REFRESH_TOKEN);
-console.log(process.env.USER_EMAIL);
 
 export async function sendOTPEmail(to: string, otp: string) {
   try {
