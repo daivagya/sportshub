@@ -60,8 +60,6 @@ export const authOptions: NextAuthOptions = {
     // The custom "redirect" callback has been removed.
   },
   pages: {
-    // This is correct. It tells NextAuth and your middleware
-    // to use the homepage for sign-in redirects.
     signIn: "/",
   },
 };

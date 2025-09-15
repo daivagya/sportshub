@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "npx prisma generate && npx prisma migrate dev && next build --turbopack",
@@ -56,6 +59,7 @@
     "prisma": "^6.16.1",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   }
 }
