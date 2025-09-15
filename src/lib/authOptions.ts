@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { db as prisma } from "@/lib/prisma";
 import { verifyPassword } from "@/lib/hash";
 import type { NextAuthOptions } from "next-auth";
+import type { Role } from "@/generated/prisma"; // use your generated client types
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -21,21 +22,28 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials) return null;
+
         const { email, password } = credentials;
         const user = await prisma.user.findUnique({ where: { email } });
+
         if (!user) return null;
+
+        // Prevent login if email is not verified
         if (!user.emailVerified) {
           throw new Error(
             "Email not verified. Please verify your email first."
           );
         }
+
         const isValid = await verifyPassword(password, user.passwordHash);
         if (!isValid) return null;
+
+        // Return minimal user object (merged into JWT)
         return {
           id: String(user.id),
           email: user.email,
           name: user.fullName,
-          role: user.role,
+          role: user.role as Role, // can be USER, MANAGER, or ADMIN
           image: user.avatarUrl ?? null,
           isVerified: user.emailVerified,
         };
@@ -44,6 +52,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
+      // Initial login
       if (user) {
         token.id = user.id;
         token.role = user.role;
@@ -53,13 +62,12 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.role = token.role as string;
+        session.user.role = token.role as Role; // propagate enum role
       }
       return session;
     },
-    // The custom "redirect" callback has been removed.
   },
   pages: {
-    signIn: "/",
+    signIn: "/", // login modal
   },
 };

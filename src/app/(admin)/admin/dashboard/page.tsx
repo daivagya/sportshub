@@ -10,7 +10,6 @@ import {
   CalendarDaysIcon,
   CurrencyDollarIcon,
   ClockIcon,
-  ExclamationTriangleIcon,
   CheckCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
@@ -41,7 +40,7 @@ export default function AdminDashboard() {
     if (status === "loading") return;
 
     if (!session) {
-      router.push("/auth/login");
+      router.push("/login");
       return;
     }
 
@@ -177,25 +176,27 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-green-100 to-emerald-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-gray-600 mt-2">
-            Platform overview and management tools
+          <h1 className="text-3xl font-bold text-emerald-700">
+            Admin Dashboard
+          </h1>
+          <p className="text-gray-700 mt-2">
+            Manage platform overview & approvals
           </p>
         </div>
 
         {/* Quick Actions */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <h2 className="text-lg font-semibold text-emerald-700 mb-4">
             Quick Actions
           </h2>
           <div className="flex flex-wrap gap-4">
             <Link
               href="/admin/facilities"
-              className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg shadow-md hover:from-green-600 hover:to-emerald-700 transition"
             >
               <BuildingOfficeIcon className="w-5 h-5 mr-2" />
               Review Facilities ({stats.pendingApprovals})
@@ -208,34 +209,22 @@ export default function AdminDashboard() {
           {statCards.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <div key={index} className="bg-white rounded-xl shadow-sm p-6">
+              <div
+                key={index}
+                className="bg-white/80 backdrop-blur-md rounded-xl shadow-md p-6 hover:shadow-lg hover:scale-[1.02] transition"
+              >
                 <div className="flex items-center">
                   <div className={`${stat.bgColor} p-3 rounded-lg`}>
                     <Icon className={`w-6 h-6 ${stat.color}`} />
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">
+                    <p className="text-sm font-medium text-gray-700">
                       {stat.title}
                     </p>
-                    <p className="text-2xl font-semibold text-gray-900">
+                    <p className="text-2xl font-bold text-gray-900">
                       {stat.value}
                     </p>
                   </div>
-                </div>
-                <div className="mt-4">
-                  <span
-                    className={`text-sm ${
-                      stat.changeType === "increase"
-                        ? "text-green-600"
-                        : stat.changeType === "decrease"
-                        ? "text-red-600"
-                        : stat.changeType === "warning"
-                        ? "text-orange-600"
-                        : "text-gray-600"
-                    }`}
-                  >
-                    {stat.change}
-                  </span>
                 </div>
               </div>
             );
@@ -243,76 +232,50 @@ export default function AdminDashboard() {
         </div>
 
         {/* Pending Actions */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Pending Actions
+        <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-md p-6">
+          <h3 className="text-lg font-semibold text-emerald-700 mb-4">
+            Pending Approvals
           </h3>
           <div className="space-y-4">
-            {pendingActions.map((action) => (
-              <div
-                key={action.id}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-              >
-                <div className="flex items-center">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      action.urgency === "high"
-                        ? "bg-red-100"
-                        : action.urgency === "medium"
-                        ? "bg-yellow-100"
-                        : "bg-gray-100"
-                    }`}
-                  >
-                    {action.type === "venue_approval" ? (
-                      <BuildingOfficeIcon
-                        className={`w-5 h-5 ${
-                          action.urgency === "high"
-                            ? "text-red-600"
-                            : action.urgency === "medium"
-                            ? "text-yellow-600"
-                            : "text-gray-600"
-                        }`}
-                      />
-                    ) : (
-                      <ExclamationTriangleIcon
-                        className={`w-5 h-5 ${
-                          action.urgency === "high"
-                            ? "text-red-600"
-                            : action.urgency === "medium"
-                            ? "text-yellow-600"
-                            : "text-gray-600"
-                        }`}
-                      />
-                    )}
+            {pendingActions
+              .filter((a) => a.type === "venue_approval") // Only venue approvals
+              .map((action) => (
+                <div
+                  key={action.id}
+                  className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                >
+                  <div className="flex items-center">
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        action.urgency === "high"
+                          ? "bg-red-100"
+                          : action.urgency === "medium"
+                          ? "bg-yellow-100"
+                          : "bg-green-100"
+                      }`}
+                    >
+                      <BuildingOfficeIcon className="w-5 h-5 text-emerald-700" />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-900">
+                        {action.title}
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        {action.description}
+                      </p>
+                      <p className="text-xs text-gray-500">{action.time}</p>
+                    </div>
                   </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-900">
-                      {action.title}
-                    </p>
-                    <p className="text-xs text-gray-600">
-                      {action.description}
-                    </p>
-                    <p className="text-xs text-gray-500">{action.time}</p>
+                  <div className="flex items-center space-x-2">
+                    <button className="p-2 text-green-600 hover:bg-green-100 rounded-full transition-colors">
+                      <CheckCircleIcon className="w-5 h-5" />
+                    </button>
+                    <button className="p-2 text-red-600 hover:bg-red-100 rounded-full transition-colors">
+                      <XCircleIcon className="w-5 h-5" />
+                    </button>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <button className="p-2 text-green-600 hover:bg-green-100 rounded-full transition-colors">
-                    <CheckCircleIcon className="w-5 h-5" />
-                  </button>
-                  <button className="p-2 text-red-600 hover:bg-red-100 rounded-full transition-colors">
-                    <XCircleIcon className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 text-center">
-            <Link
-              href="/admin/actions"
-              className="text-primary-600 hover:text-primary-700 text-sm font-medium"
-            >
-              View All Pending Actions →
-            </Link>
+              ))}
           </div>
         </div>
       </div>
