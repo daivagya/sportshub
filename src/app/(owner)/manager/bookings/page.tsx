@@ -1,7 +1,7 @@
 import { getManagerBookings } from "../_actions/booking.actions";
 import BookingsTable from "@/components/owner/client-components/BookingsTable";
 
-export const revalidate = 60; // ⏳ cache for 1 min (tweak as needed)
+export const revalidate = 60; // cache for 1 min
 
 export default async function BookingsPage() {
   const bookings = await getManagerBookings();

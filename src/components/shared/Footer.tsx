@@ -7,10 +7,10 @@ export default function Footer() {
         {/* About */}
         <div>
           <h3 className="text-lg font-semibold text-white mb-4">
-            About QuickCourt
+            About Sportshub
           </h3>
           <p className="text-sm leading-6">
-            QuickCourt helps you discover, book, and play at the best sports
+            Sportshub helps you discover, book, and play at the best sports
             venues around you. Play. Connect. Compete.
           </p>
         </div>
