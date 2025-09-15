@@ -108,9 +108,10 @@ export async function getOwnedVenues() {
         approved: true,
         createdAt: true,
         updatedAt: true,
+        courts: { select: { id: true,priceSlots: true } },
       },
     });
-    return Response.json(venues);
+    return Response.json(venues); 
   } catch (err) {
     console.error("Error fetching owned venues:", err);
     return new Response("Failed to fetch venues", { status: 500 });

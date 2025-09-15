@@ -3,25 +3,35 @@ import { getToken } from "next-auth/jwt";
 import { db as prisma } from "@/lib/prisma";
 import { Role } from "@/generated/prisma";
 
-// GET all pending venues for admin review
+// GET all pending venues for admin
 export async function GET(req: NextRequest) {
   try {
+    // 1. Authenticate and authorize the user
     const token = await getToken({ req });
     if (!token || token.role !== Role.ADMIN) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
+    // 2. Fetch pending venues from the database
     const pendingVenues = await prisma.venue.findMany({
       where: { approved: false },
       include: {
+        // Include related owner details
         owner: {
           select: {
-            id: true,
-            fullName: true,
-            email: true,
+            // Include owner's business name
             businessName: true,
+            // Include details from the related user model
+            user: {
+              select: {
+                id: true,
+                fullName: true,
+                email: true,
+              },
+            },
           },
         },
+        // Include related court details
         courts: true,
       },
       orderBy: {
@@ -29,8 +39,10 @@ export async function GET(req: NextRequest) {
       },
     });
 
+    // 3. Return the fetched data
     return NextResponse.json(pendingVenues);
   } catch (error) {
+    // 4. Handle any errors during the process
     console.error("Failed to fetch pending venues:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
@@ -50,7 +62,10 @@ export async function PATCH(req: NextRequest) {
     const { venueId, comments } = await req.json();
 
     if (!venueId) {
-      return NextResponse.json({ error: "Venue ID is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Venue ID is required" },
+        { status: 400 }
+      );
     }
 
     const approvedVenue = await prisma.venue.update({
@@ -82,7 +97,10 @@ export async function DELETE(req: NextRequest) {
     const venueId = searchParams.get("venueId");
 
     if (!venueId) {
-      return NextResponse.json({ error: "Venue ID is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Venue ID is required" },
+        { status: 400 }
+      );
     }
 
     // You might want to add the rejection reason to a notification system before deleting

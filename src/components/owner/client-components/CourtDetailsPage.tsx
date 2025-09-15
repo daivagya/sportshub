@@ -6,7 +6,6 @@ import UpdateCourtModal from "./UpdateCourtForm";
 import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline";
 // import { Court } from "@/types/next-auth";
 
-
 export function CourtDetailsPage({ court }: any) {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
@@ -137,5 +136,5 @@ export function CourtDetailsPage({ court }: any) {
         onClose={() => setUpdateModalOpen(false)}
       />
     </div>
-  );
+  );  
 }

@@ -28,6 +28,18 @@ export interface CreateBookingInput {
 }
 export interface CreateBookingResult {
   success: boolean;
-  booking?: any; // Prisma Booking
+  booking?: unknown; // Prisma Booking
   error?: string;
 }
+
+export type UserBooking = {
+  id: number;
+  court: { name: string };
+  venue: { name: string };
+  sport: string;
+  startTime: Date;
+  endTime: Date;
+  amount: number;
+  currency: string;
+  status: string;
+};

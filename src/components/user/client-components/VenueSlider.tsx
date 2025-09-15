@@ -1,20 +1,18 @@
-// FIX: Corrected the directive from "use-client" to "use client"
 "use client";
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
-import VenueCard from "@/components/shared/VenueCard"; // Assuming this path is correct
+import VenueCard from "@/components/shared/VenueCard";
 import { useVenues } from "@/app/context/VenuesContext";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// A skeleton component for a better loading experience
 function VenueCardSkeleton() {
   return (
     <div className="flex flex-col h-full rounded-xl shadow-md bg-white dark:bg-gray-800 animate-pulse">
-      <div className="w-full h-48 bg-gray-300 dark:bg-gray-700 rounded-t-xl"></div>
-      <div className="p-4">
-        <div className="h-6 w-3/4 bg-gray-300 dark:bg-gray-700 rounded mb-2"></div>
+      <div className="w-full aspect-[4/3] bg-gray-300 dark:bg-gray-700 rounded-t-xl"></div>
+      <div className="p-4 flex flex-col flex-1">
+        <div className="h-7 w-3/4 bg-gray-300 dark:bg-gray-700 rounded mb-2"></div>
         <div className="h-4 w-1/2 bg-gray-300 dark:bg-gray-700 rounded mb-4"></div>
-        <div className="h-10 w-full bg-gray-300 dark:bg-gray-700 rounded"></div>
+        <div className="mt-auto h-10 w-full bg-gray-300 dark:bg-gray-700 rounded"></div>
       </div>
     </div>
   );
@@ -23,29 +21,25 @@ function VenueCardSkeleton() {
 export default function VenueSlider() {
   const { venues, isLoading } = useVenues();
   const containerRef = useRef<HTMLDivElement | null>(null);
-
-  // State to manage the visibility/disabled state of scroll buttons
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
+  const [canScroll, setCanScroll] = useState(false);
 
-  // Callback to check scroll position
   const checkScrollPosition = useCallback(() => {
     const el = containerRef.current;
     if (el) {
-      const atStart = el.scrollLeft === 0;
-      // Use a small buffer (5px) to account for sub-pixel rendering issues
-      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 5;
-      setIsAtStart(atStart);
-      setIsAtEnd(atEnd);
+      const hasOverflow = el.scrollWidth > el.clientWidth;
+      setCanScroll(hasOverflow);
+      setIsAtStart(el.scrollLeft <= 0);
+      setIsAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 5);
     }
   }, []);
 
-  // Check scroll position on load, on scroll, and on resize
   useEffect(() => {
     const el = containerRef.current;
-    if (el) {
+    if (el && !isLoading) {
       checkScrollPosition();
-      el.addEventListener("scroll", checkScrollPosition);
+      el.addEventListener("scroll", checkScrollPosition, { passive: true });
       window.addEventListener("resize", checkScrollPosition);
       return () => {
         el.removeEventListener("scroll", checkScrollPosition);
@@ -57,7 +51,7 @@ export default function VenueSlider() {
   const scroll = (direction: "left" | "right") => {
     const el = containerRef.current;
     if (el) {
-      const scrollAmount = el.clientWidth * 0.8; // Scroll by 80% of the visible width
+      const scrollAmount = el.clientWidth * 0.9;
       el.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -65,56 +59,49 @@ export default function VenueSlider() {
     }
   };
 
+  const skeletonCount = 4;
+  const gridColumnClasses =
+    "grid-flow-col auto-cols-[90%] sm:auto-cols-[60%] md:auto-cols-[47%] lg:auto-cols-[31.5%]";
+
   return (
-    <section className="py-10">
-      <div className="container mx-auto px-4">
+    <section className="py-8">
+      <div className="px-4 mx-auto max-w-7xl">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
             Featured Venues
           </h2>
           <a
             href="/venues"
-            className="text-sm font-semibold text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors"
+            className="text-sm font-semibold text-green-600 border border-green-500 bg-green-100 px-4 py-2 rounded-lg hover:bg-green-200 dark:bg-transparent dark:text-green-400 dark:border-green-400 dark:hover:bg-green-900/40 transition-colors"
           >
             See all
           </a>
         </div>
 
-        <div className="relative group/slider">
-          {/* Slider Container */}
+        <div className="relative">
           <div
             ref={containerRef}
-            className="flex gap-6 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory scrollbar-hide"
+            className={`grid ${gridColumnClasses} gap-4 sm:gap-6 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory scrollbar-hide`}
           >
             {isLoading
-              ? // Render skeletons while loading
-                Array.from({ length: 4 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="snap-start flex-shrink-0 w-[85%] sm:w-[45%] md:w-[31%] lg:w-[23.5%]"
-                  >
+              ? Array.from({ length: skeletonCount }).map((_, index) => (
+                  <div key={index} className="snap-center">
                     <VenueCardSkeleton />
                   </div>
                 ))
               : venues.map((venue: any) => (
-                  <div
-                    key={venue.slug}
-                    className="snap-start flex-shrink-0 w-[85%] sm:w-[45%] md:w-[31%] lg:w-[23.5%]"
-                  >
-                    <div className="h-full">
-                      <VenueCard venue={venue} />
-                    </div>
+                  <div key={venue.slug} className="snap-center">
+                    <VenueCard venue={venue} />
                   </div>
                 ))}
           </div>
 
-          {/* Smarter Navigation Buttons */}
-          {!isLoading && venues.length > 4 && (
+          {canScroll && (
             <>
               <button
                 onClick={() => scroll("left")}
                 disabled={isAtStart}
-                className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg rounded-full p-2 transition-all opacity-0 group-hover/slider:opacity-100 disabled:opacity-0"
+                className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-lg rounded-full p-2 transition-opacity disabled:opacity-0 hover:bg-white dark:hover:bg-gray-800"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-6 h-6 text-gray-700 dark:text-gray-200" />
@@ -122,7 +109,7 @@ export default function VenueSlider() {
               <button
                 onClick={() => scroll("right")}
                 disabled={isAtEnd}
-                className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg rounded-full p-2 transition-all opacity-0 group-hover/slider:opacity-100 disabled:opacity-0"
+                className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-lg rounded-full p-2 transition-opacity disabled:opacity-0 hover:bg-white dark:hover:bg-gray-800"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-6 h-6 text-gray-700 dark:text-gray-200" />

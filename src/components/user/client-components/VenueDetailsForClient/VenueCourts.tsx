@@ -48,7 +48,7 @@ export default function VenueCourts({ courts, venueSlug }: VenueCourtsProps) {
             <div className="mt-auto">
               <Link
                 href={`/venues/${venueSlug}/${court.slug}/booking/`}
-                className="inline-block w-full text-center px-4 py-2 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
+                className="inline-block w-full text-center px-4 py-2 rounded-xl bg-green-600 text-white font-medium hover:bg-green-700 transition"
               >
                 Book Now
               </Link>

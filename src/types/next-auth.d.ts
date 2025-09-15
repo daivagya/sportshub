@@ -1,44 +1,53 @@
-import NextAuth from "next-auth";
+// import NextAuth from "next-auth";
 import { UserRole } from "@prisma/client";
 
-const venueDetailsSelector = {
-  name: true,
-  slug: true,
-  description: true,
-  address: true,
-  city: true,
-  state: true,
-  country: true,
-  amenities: true,
-  photos: true, // Get all photos for the gallery
-  courts: {
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      sport: true,
-      imageUrl: true,
-      priceSlots: {
-        orderBy: { pricePerHour: "asc" },
-        take: 1,
-        select: { pricePerHour: true },
-      },
-    },
-  },
-  reviews: {
-    select: {
-      id: true,
-      rating: true,
-      comment: true,
-      createdAt: true,
-      user: {
-        select: { name: true },
-      },
-    },
-    orderBy: { createdAt: "desc" },
-    take: 5, // Get the 5 most recent reviews
-  },
-} satisfies Prisma.VenueSelect;
+// Define a user type that is safe to use on the client
+export type ClientSafeUser = {
+  id: number;
+  fullName: string;
+  email: string;
+  avatarUrl: string | null;
+  role: UserRole;
+};
+
+// const venueDetailsSelector = {
+//   name: true,
+//   slug: true,
+//   description: true,
+//   address: true,
+//   city: true,
+//   state: true,
+//   country: true,
+//   amenities: true,
+//   photos: true, // Get all photos for the gallery
+//   courts: {
+//     select: {
+//       id: true,
+//       name: true,
+//       slug: true,
+//       sport: true,
+//       imageUrl: true,
+//       priceSlots: {
+//         orderBy: { pricePerHour: "asc" },
+//         take: 1,
+//         select: { pricePerHour: true },
+//       },
+//     },
+//   },
+//   reviews: {
+//     select: {
+//       id: true,
+//       rating: true,
+//       comment: true,
+//       createdAt: true,
+//       user: {
+//         select: { name: true },
+//       },
+//     },
+//     orderBy: { createdAt: "desc" },
+//     take: 5, // Get the 5 most recent reviews
+//   },
+// } satisfies Prisma.VenueSelect;
 
 declare module "next-auth" {
   interface Session {
@@ -66,7 +75,7 @@ declare module "next-auth/jwt" {
 }
 
 export type Venue = {
-  slug: string; 
+  slug: string;
   name: string;
   description?: string | null;
   city: string;
@@ -75,7 +84,7 @@ export type Venue = {
   country?: string | null;
   courts?: Court[];
   // Venue Features
-  amenities: string[]; 
+  amenities: string[];
   photos: string[]; // Array of image URLs
   sport: string;
   price?: number;
@@ -122,11 +131,15 @@ export type Court = {
   openTime: number;
   closeTime: number;
   priceSlots: PriceSlot[];
+  pricePerHour?: number; // Optional: lowest price per hour
   slug: string;
   venueName: string;
   imageUrl: string;
   reviewCount: number;
   averageRating: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  venueId?: number;
 };
 
 export type PriceSlotInput = {
@@ -177,7 +190,5 @@ export type GetVenuesResult = {
   totalPages: number;
   currentPage: number;
 };
-
-
 
 export {};

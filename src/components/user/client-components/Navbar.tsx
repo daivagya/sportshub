@@ -20,25 +20,27 @@ export default function Navbar() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [avatarDropdownOpen]);
 
-  // Utility for active link
+  // Utility for active link styling on the new glassy background
   const linkClasses = (path: string) =>
     `px-3 py-2 rounded-md transition-colors duration-200 ${
       pathname === path
-        ? "text-green-600 font-semibold bg-green-50"
-        : "text-gray-700 hover:text-green-600"
+        ? "text-green-700 font-semibold bg-green-100/40"
+        : "text-gray-800 hover:text-green-700 hover:bg-green-100/20"
     }`;
 
   return (
     <nav
       className="
         sticky top-0 z-50 w-full
-        bg-white/40 backdrop-blur-md
-        shadow-lg border-b border-white/20
+        bg-gradient-to-l from-green-400/40 via-green-300/30 to-green-200/60
+        backdrop-blur-xl
+        shadow-lg
+        border-b border-white/20
         px-6 py-3 flex items-center justify-between
       "
     >
       {/* Left: Logo */}
-      <div className="text-2xl font-bold text-green-600 tracking-tight">
+      <div className="text-2xl font-bold text-green-700 tracking-tight">
         <Link href="/">Sportshub</Link>
       </div>
 
@@ -54,8 +56,8 @@ export default function Navbar() {
           Venues
         </Link>
         {session && (
-          <Link href="/my-bookings" className={linkClasses("/my-bookings")}>
-            Your Bookings
+          <Link href="/booking" className={linkClasses("/booking")}>
+            My Bookings
           </Link>
         )}
       </div>
@@ -80,7 +82,6 @@ export default function Navbar() {
 
             {avatarDropdownOpen && (
               <div className="absolute right-0 mt-2 w-56 bg-white/80 backdrop-blur-md shadow-xl rounded-xl overflow-hidden border border-gray-200">
-                {/* User Info */}
                 <div className="px-4 py-3 border-b border-gray-100">
                   <p className="text-sm font-semibold text-gray-800">
                     {session.user?.name || "User"}
@@ -89,8 +90,6 @@ export default function Navbar() {
                     {session.user?.email}
                   </p>
                 </div>
-
-                {/* Links */}
                 <Link
                   href="/profile"
                   className="block px-4 py-2 hover:bg-gray-50 text-gray-700"
@@ -134,7 +133,7 @@ export default function Navbar() {
       <div className="md:hidden flex items-center">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="text-gray-700 focus:outline-none"
+          className="text-gray-800 focus:outline-none"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +163,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white/90 backdrop-blur-md shadow-md flex flex-col items-center md:hidden py-4 space-y-2 border-b border-gray-200">
+        <div className="absolute top-full left-0 w-full bg-white/95 backdrop-blur-md shadow-md flex flex-col items-center md:hidden py-4 space-y-2 border-b border-gray-200">
           <Link href="/" className={linkClasses("/")}>
             Home
           </Link>
@@ -181,7 +180,7 @@ export default function Navbar() {
           )}
           {session ? (
             <>
-              <div className="text-center py-2 border-t border-gray-200">
+              <div className="text-center py-2 border-t border-gray-200 w-full mt-2">
                 <p className="text-sm font-semibold text-gray-800">
                   {session.user?.name || "User"}
                 </p>
@@ -201,7 +200,7 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <>
+            <div className="flex items-center space-x-4 pt-4 border-t border-gray-200 w-full justify-center mt-2">
               <Link
                 href="/login"
                 className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition-colors"
@@ -214,7 +213,7 @@ export default function Navbar() {
               >
                 Sign Up
               </Link>
-            </>
+            </div>
           )}
         </div>
       )}

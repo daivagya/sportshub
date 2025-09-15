@@ -132,6 +132,7 @@ export async function getVenueBySlug(slug: string) {
   const venue = await prisma.venue.findUnique({
     where: { slug },
     include: {
+      reviews: true,
       courts: {
         include: {
           priceSlots: true, // include slots
@@ -170,6 +171,8 @@ export async function getVenueBySlug(slug: string) {
     description: venue.description,
     address: venue.address,
     city: venue.city,
+    country: venue.country,
+    photos: venue.photos ?? [],
     state: venue.state,
     amenities: venue.amenities ?? [],
     courts: mappedCourts,
@@ -253,7 +256,6 @@ export async function filterVenues(
   }
 }
 
-
 // --- Action 2: Get Venues by City (Paginated) ---
 export async function getVenuesByCity({
   city,
@@ -305,7 +307,6 @@ export async function getVenuesByCity({
   }
 }
 
-
 export async function getVenueImages(limit: number = 10) {
   try {
     // 1. Fetch venues that have photos, take enough to likely satisfy the limit.
@@ -316,7 +317,7 @@ export async function getVenueImages(limit: number = 10) {
         },
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: "desc",
       },
       take: limit, // Fetch a number of venues equal to the desired image limit
       select: {
@@ -325,7 +326,7 @@ export async function getVenueImages(limit: number = 10) {
     });
 
     // 2. Flatten the array of photo arrays and slice it to the exact limit.
-    const allImages = venuesWithPhotos.flatMap(venue => venue.photos);
+    const allImages = venuesWithPhotos.flatMap((venue) => venue.photos);
     const selectedImages = allImages.slice(0, limit);
 
     if (selectedImages.length === 0) {

@@ -1,45 +1,63 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
+// Define public routes that do not require authentication
+const PUBLIC_ROUTES = ["/login", "/register"];
+
 export default withAuth(
-  // The `withAuth` HOC ensures an authenticated user is present before this runs.
   function middleware(req) {
     const token = req.nextauth.token;
-    const { pathname } = req.nextUrl; // If a logged-in user tries to visit the login page, redirect them away.
+    const { pathname } = req.nextUrl;
+    const userRole = token?.role;
 
-    if (pathname === "/login") {
-      const url = token?.role === "OWNER" ? "/manager/dashboard" : "/";
-      return NextResponse.redirect(new URL(url, req.url));
-    } // Redirect logged-in OWNER from the homepage to their dashboard.
+    // If the user is authenticated, handle redirects
+    if (token) {
+      // Redirect logged-in users away from public routes (e.g., /login)
+      if (PUBLIC_ROUTES.includes(pathname)) {
+        if (userRole === "ADMIN") return NextResponse.redirect(new URL("/admin/dashboard", req.url));
+        if (userRole === "OWNER") return NextResponse.redirect(new URL("/manager/dashboard", req.url));
+        return NextResponse.redirect(new URL("/", req.url));
+      }
 
-    if (token?.role === "OWNER" && pathname === "/") {
-      return NextResponse.redirect(new URL("/manager/dashboard", req.url));
-    } // Prevent a logged-in USER from accessing any /manager routes.
+      // Redirect ADMIN and OWNER from the homepage to their respective dashboards
+      if (pathname === "/") {
+        if (userRole === "ADMIN") return NextResponse.redirect(new URL("/admin/dashboard", req.url));
+        if (userRole === "OWNER") return NextResponse.redirect(new URL("/manager/dashboard", req.url));
+      }
+    }
 
-    if (token?.role === "USER" && pathname.startsWith("/manager")) {
-      // Redirect them to the homepage or an "access denied" page for better UX.
-      return NextResponse.redirect(new URL("/", req.url));
-    } // If no special rules match, allow the request to proceed.
-
+    // If no specific redirect logic matches, allow the request to proceed.
+    // The `withAuth` HOC will handle the protection of non-public routes.
     return NextResponse.next();
   },
   {
     callbacks: {
-      // This logic runs before the middleware function.
-      // If it returns false, the user is redirected to the `signIn` page.
-      authorized: ({ token }) => !!token,
+      authorized: ({ req, token }) => {
+        const { pathname } = req.nextUrl;
+        
+        // Allow access to public routes for everyone
+        if (PUBLIC_ROUTES.includes(pathname)) {
+          return true;
+        }
+        
+        // For all other routes, user must be authenticated
+        return !!token;
+      },
     },
     pages: {
-      // Custom login page path.
+      // If authorization fails, redirect to the homepage to trigger the login modal
       signIn: "/",
     },
   }
 );
 
-// Apply this middleware to relevant paths.
+// Apply this middleware to all relevant paths
 export const config = {
   matcher: [
-    "/manager/:path*", // Protect all manager routes
-    "/", // Apply rules to the homepage
+    "/admin/:path*",
+    "/manager/:path*",
+    "/",
+    "/login",
+    "/register",
   ],
 };

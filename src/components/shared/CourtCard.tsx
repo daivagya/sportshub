@@ -1,20 +1,22 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
-import { Court } from "@/types/next-auth"; // FIX: Import the correct, centralized Court type
-
+import { getSession } from "next-auth/react";
+import { Court } from "@/types/next-auth";
 // --- REFACTORED TYPES ---
 export type CourtStatus = "CONFIRMED" | "PENDING" | "AVAILABLE";
 
 export type CourtCardProps = {
   court: Court;
   venueName: string;
-  venueSlug: string;
+  venueSlug?: string;
   status: CourtStatus;
-  rating: number;
+  averageRating: number;
   imageUrl: string;
+  
 };
 
 const STATUS_STYLES: Record<CourtStatus, string> = {
@@ -28,19 +30,33 @@ export default function CourtCard({
   venueName,
   venueSlug,
   status,
-  rating,
+  averageRating,
   imageUrl,
 }: CourtCardProps) {
-  const buttonHref = `/venues/${venueSlug}/courts/${court.slug}`;
+  // FIX: Fetch session on the client using hooks to prevent hydration mismatch
+  const [role, setRole] = useState<string | undefined>(undefined);
 
-  // FIX: Logic to find the lowest price from the priceSlots array
+  useEffect(() => {
+    // Asynchronously fetch the session and update the state
+    const fetchSessionRole = async () => {
+      const session = await getSession();
+      setRole(session?.user?.role);
+    };
+
+    fetchSessionRole();
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  const buttonHref = `/venues/${venueSlug}/${court.slug}`;
+
+  // Logic to find the lowest price from the priceSlots array
   const lowestPrice = court.priceSlots?.reduce((min, slot) => {
-    const price = typeof slot.price === 'string' ? parseFloat(slot.price) : slot.price;
+    const price =
+      typeof slot.price === "string" ? parseFloat(slot.price) : slot.price;
     return price < min ? price : min;
   }, Infinity);
 
   return (
-    <div className="relative group rounded-2xl shadow-lg overflow-hidden bg-white border dark:border-gray-700 dark:bg-gray-800 w-full max-w-sm">
+    <div className="relative group rounded-2xl shadow-lg overflow-hidden bg-white border border-green-100 hover:border-green-300 hover:bg-green-50 w-full max-w-sm">
       {/* Court Image */}
       <div className="relative w-full h-56 overflow-hidden">
         <Image
@@ -65,8 +81,9 @@ export default function CourtCard({
           </p>
           <p className="text-white text-sm">
             <span className="font-semibold block text-gray-300">Price</span>
-            {/* FIX: Display the calculated lowest price */}
-            {lowestPrice && lowestPrice !== Infinity ? `Starts at ₹${lowestPrice}/hr` : "N/A"}
+            {lowestPrice && lowestPrice !== Infinity
+              ? `Starts at ₹${lowestPrice}/hr`
+              : "N/A"}
           </p>
           <p className="text-white text-sm">
             <span className="font-semibold block text-gray-300">Timings</span>
@@ -85,20 +102,32 @@ export default function CourtCard({
           </span>
           <span className="bg-black/50 text-yellow-400 px-2 py-0.5 rounded-full text-xs flex items-center">
             <Star className="w-3 h-3 mr-1 fill-current" />
-            {rating.toFixed(1)}
+            {averageRating.toFixed(1)}
           </span>
         </div>
       </div>
 
-      {/* Bottom button */}
-      <div className="p-4 flex justify-center">
-        <Link
-          href={buttonHref}
-          className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-medium transition-transform duration-300 hover:-translate-y-1"
-        >
-          View Court
-        </Link>
-      </div>
+      {/* Bottom button - Conditionally rendered after role is fetched */}
+      {role === "USER" && (
+        <div className="p-4 flex justify-center">
+          <Link
+            href={buttonHref}
+            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-medium transition-transform duration-300 hover:-translate-y-1"
+          >
+            View Court
+          </Link>
+        </div>
+      )}
+      {role === "OWNER" && (
+        <div className="p-2 flex justify-center">
+          <Link
+            href={`/manager/venues/${venueSlug}/${court.slug}`}
+            className="bg-green-600 hover:bg-green-700 text-white px-3 md:px-5 py-1 md:py-2 rounded-lg font-medium transition-transform duration-300 hover:-translate-y-1"
+          >
+            Manage Court
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

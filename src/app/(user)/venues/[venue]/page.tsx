@@ -5,6 +5,7 @@ import VenueCourts from "@/components/user/client-components/VenueDetailsForClie
 import VenueReviews from "@/components/user/client-components/VenueDetailsForClient/VenueReviews";
 import NearbyVenues from "@/components/user/client-components/VenueDetailsForClient/NearbyVenues";
 import VenueAmenities from "@/components/user/client-components/VenueDetailsForClient/VenueAmenities";
+import VenueImagesSwiper from "@/components/user/client-components/VenueDetailsForClient/VenueImagesSwiper";
 
 export async function generateMetadata({
   params,
@@ -24,6 +25,7 @@ export default async function VenuePage({
 }) {
   const venueSlug = await params.venue;
   const venueData = await getVenueBySlug(venueSlug);
+
   console.log("Venue data-----from user/[venue]/page.tsx:", venueData);
   if (!venueData) {
     return (
@@ -42,13 +44,17 @@ export default async function VenuePage({
           rating={4.7} // Replace with actual venueData.rating
         />
 
-        {/* <VenueImagesAndDescription
-          images={venueData.images || []}
-          description={venueData.description}
-        /> */}
+        <VenueImagesSwiper images={venueData.photos || []} />
         <VenueAmenities amenities={venueData.amenities || []} />
         <VenueCourts courts={venueData.courts || []} venueSlug={venueSlug} />
-
+        <div>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+            About this venue
+          </h2>
+          <p className="text-gray-600 leading-relaxed">
+            {venueData.description}
+          </p>
+        </div>
         <VenueReviews />
         <NearbyVenues />
       </div>

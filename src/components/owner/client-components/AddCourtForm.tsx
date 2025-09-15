@@ -4,6 +4,7 @@ import { useState, useEffect, startTransition } from "react";
 import { useRouter } from "next/navigation";
 import { addCourt } from "@/app/(owner)/manager/_actions/court.actions";
 import GAMES from "@/constants/games";
+import toast from "react-hot-toast";
 
 // Interface for a single price slot
 interface PriceSlotInput {
@@ -260,6 +261,7 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
       console.error("addCourt error:", err);
       setError("Failed to add court. Please try again.");
     } finally {
+      toast.success("Court created successfuly!");
       setLoading(false);
     }
   };
@@ -279,8 +281,8 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
       onClick={handleClose}
     >
       <div
-        className={`bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-lg flex flex-col max-h-[90vh] transition-transform ${
-          isClosing ? "scale-95" : "scale-100"
+        className={`bg-white min-h-0 dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-lg flex flex-col max-h-[90vh]  overflow:hidden transition-transform ${
+          isClosing ? "scale-95" : "scale-100 opacity-100"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
@@ -294,8 +296,8 @@ export function AddCourtForm({ venueSlug, onClose }: AddCourtFormProps) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col flex-grow">
-          <div className="p-6 space-y-6 overflow-y-auto">
+        <form onSubmit={handleSubmit} className="flex flex-col min-h-0">
+          <div className="flex-1 overflow-y-auto p-6 space-y-6">
             {/* Name, Sport, Type */}
             <div>
               <label className="block mb-2 text-sm font-medium">

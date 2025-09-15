@@ -92,8 +92,6 @@ export async function getCourtsByVenueSlug(slug: string) {
           priceSlots: true,
           slug: true,
           imageUrl: true,
-          // --- CHANGES ARE HERE ---
-          // 1. Select only the 'rating' from each review
           reviews: {
             select: {
               rating: true,
@@ -160,8 +158,17 @@ export async function getCourtByCourtSlug(slug: string) {
   try {
     const court = await prisma.court.findUnique({
       where: { slug },
-      include: {
-        venue: true, // include relations if needed
+      select: {
+        name: true,
+        slug: true,
+        venue: true,
+        priceSlots: true,
+        reviews: true,
+        bookings: true,
+        openTime: true,
+        closeTime: true,
+        imageUrl: true,
+        sport: true,
       },
     });
 

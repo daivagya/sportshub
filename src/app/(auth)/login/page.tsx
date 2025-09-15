@@ -79,7 +79,11 @@ export default function LoginPage() {
           </div>
 
           {/* Error */}
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-sm text-center">
+              Please signup if not:{error}
+            </p>
+          )}
 
           {/* Submit Button */}
           <button

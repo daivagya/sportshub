@@ -1,6 +1,5 @@
-
 import React from "react";
- 
+
 import Footer from "@/components/shared/Footer";
 import Hero from "@/components/user/client-components/HeroSection";
 import VenueSlider from "@/components/user/client-components/VenueSlider";
@@ -11,7 +10,7 @@ import { getCourts } from "@/app/(user)/_userActions/court.actions";
 async function Page() {
   // Fetch the first 10 courts on the server
   const courts: Court[] = await getCourts(10);
- 
+
   return (
     <div className="min-h-screen relative">
       <Hero />
@@ -24,23 +23,34 @@ async function Page() {
     </div>
   );
 }
- 
+
 type Props = {
   courts: Court[];
 };
- 
+
 export default function CourtSlider({ courts }: Props) {
   if (!courts || courts.length === 0) {
     return <p>No courts available</p>;
   }
- 
+
   return (
-    <div className="overflow-x-auto py-6">
+    <div className="overflow-x-auto py-6 px-2">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Popular Courts
+      </h2>
       <div className="flex gap-4 min-w-max">
         {courts.map((court) => (
           <CourtCard
             key={court.slug}
             court={{
+              id: court.id,
+              type: court.type,
+              currency: court.currency,
+              reviewCount: court.reviewCount,
+              averageRating: court.averageRating,
+              imageUrl: court.imageUrl,
+              venueName: court.venueName,
+              priceSlots: court.priceSlots,
               name: court.name,
               sport: court.sport,
               pricePerHour: court.priceSlots[0]?.price ?? 0,
@@ -51,7 +61,7 @@ export default function CourtSlider({ courts }: Props) {
             venueName={court.venueName}
             venueSlug={court.slug}
             status="AVAILABLE"
-            rating={court.averageRating}
+            averageRating={court.averageRating}
             imageUrl={court.imageUrl}
           />
         ))}

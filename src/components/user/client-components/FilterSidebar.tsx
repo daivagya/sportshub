@@ -10,6 +10,7 @@ type Props = {
   onFilterChange: (venues: Venue[]) => void;
   initialFilters?: Partial<VenueFilters>;
   initialVenues?: Venue[]; // used for reset
+  city?: string;
 };
 
 const SPORTS_OPTIONS = GAMES;
@@ -19,6 +20,7 @@ export default function FilterSidebar({
   onFilterChange,
   initialFilters,
   initialVenues,
+  city,
 }: Props) {
   // committed filters (safe defaults)
   const [filters, setFilters] = useState<VenueFilters>({
@@ -31,7 +33,9 @@ export default function FilterSidebar({
   });
 
   // slider live value
- const [tempPrice, setTempPrice] = useState<number>(filters.price ?? MAX_PRICE);
+  const [tempPrice, setTempPrice] = useState<number>(
+    filters.price ?? MAX_PRICE
+  );
 
   // transition state
   const [isPending, startTransition] = useTransition();

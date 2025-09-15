@@ -1,11 +1,13 @@
 // src/app/(owner)/manager/venues/page.tsx
 import VenuesManager from "@/components/owner/client-components/VenuesManager";
 import OwnedVenuesContent from "@/components/owner/server-components/OwnedVenuesContent";
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 export default function Page() {
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Manage Venues</h1>
+    <div className="min-h-screen container max-w-[1320px] mx-auto p-6">
+      <h1 className="text-3xl ml-6 mt-1 font-bold text-gray-800">
+        Manage Venues
+      </h1>
 
       {/* Client component manages form open/close */}
       <VenuesManager />

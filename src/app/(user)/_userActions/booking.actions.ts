@@ -8,7 +8,7 @@ import { getCurrentUser } from "@/lib/session";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-
+import { UserBooking } from "@/types/bookings";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -373,20 +373,54 @@ export async function cancelPendingBookingBySession(
 // ------------------------------
 // getUserBookings (unchanged, but keep including payment)
 // ------------------------------
-export async function getUserBookings() {
-  const user = await getCurrentUser();
-  if (!user?.id) return [];
 
-  return prisma.booking.findMany({
-    where: { userId: user.id },
+export async function getUserBookings(): Promise<UserBooking[]> {
+  const user = await getCurrentUser();
+  if (!user?.email) return [];
+
+  const bookings = await prisma.booking.findMany({
+    where: { user: { email: user.email } },
     include: {
       court: {
         include: {
           venue: true,
         },
       },
-      payment: true,
     },
     orderBy: { startTime: "desc" },
   });
+
+  //  Map raw Prisma data → clean type
+  return bookings.map((b) => ({
+    id: b.id,
+    court: { name: b.court.name },
+    venue: { name: b.court.venue.name },
+    sport: b.court.sport,
+    startTime: b.startTime,
+    endTime: b.endTime,
+    amount: b.totalAmount,
+    currency: b.currency,
+    status: b.status,
+  }));
+}
+
+// Cancel booking
+export async function cancelUserBooking(id: number) {
+  const user = await getCurrentUser();
+  if (!user?.email) {
+    return { success: false, error: "Unauthorized" };
+  }
+
+  const booking = await prisma.booking.findUnique({ where: { id } });
+  if (!booking) return { success: false, error: "Booking not found" };
+  if (booking.status !== "PENDING" && booking.status !== "CONFIRMED") {
+    return { success: false, error: "Cannot cancel this booking" };
+  }
+
+  await prisma.booking.update({
+    where: { id },
+    data: { status: "CANCELLED" },
+  });
+
+  return { success: true };
 }

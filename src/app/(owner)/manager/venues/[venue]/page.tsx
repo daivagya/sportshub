@@ -14,7 +14,6 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold">Venue Details</h1>
       {/* This part is correctly passing the props object */}
       <CourtsSection venueSlug={venue} />
     </div>

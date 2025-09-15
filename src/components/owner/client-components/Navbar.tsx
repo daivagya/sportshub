@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { ClientSafeUser } from "@/types/next-auth"; // Import the client-safe user type
 
-export default function Navbar() {
-  const { data: session } = useSession();
-  console.log(' session', session);
+// The Navbar now accepts a 'user' prop of the client-safe type
+export default function Navbar({ user }: { user: ClientSafeUser | null }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [avatarDropdownOpen, setAvatarDropdownOpen] = useState(false);
   const pathname = usePathname();
@@ -38,26 +38,32 @@ export default function Navbar() {
 
       {/* Center: Manager Navigation */}
       <div className="hidden md:flex space-x-4 items-center">
-        <Link href="/manager/dashboard" className={linkClasses("/manager/dashboard")}>
+        <Link
+          href="/manager/dashboard"
+          className={linkClasses("/manager/dashboard")}
+        >
           Dashboard
-        </Link>
-        <Link href="/manager/bookings" className={linkClasses("/manager/bookings")}>
-          Bookings
         </Link>
         <Link href="/manager/venues" className={linkClasses("/manager/venues")}>
           Owned Venues
         </Link>
-        <Link href="/manager/earnings" className={linkClasses("/manager/earnings")}>
-          Earnings
+        <Link
+          href="/manager/bookings"
+          className={linkClasses("/manager/bookings")}
+        >
+          Bookings
         </Link>
-        <Link href="/manager/reviews" className={linkClasses("/manager/reviews")}>
+        <Link
+          href="/manager/reviews"
+          className={linkClasses("/manager/reviews")}
+        >
           Reviews
         </Link>
       </div>
 
-      {/* Right: Auth */}
+      {/* Right: Auth - Now uses the 'user' prop */}
       <div className="hidden md:flex items-center space-x-4 relative">
-        {session ? (
+        {user ? (
           <div className="relative">
             <button
               onClick={(e) => {
@@ -67,14 +73,20 @@ export default function Navbar() {
               className="w-10 h-10 rounded-full overflow-hidden border-2 border-green-600 shadow-sm hover:scale-105 transition-transform"
             >
               <img
-                src={session.user?.image || "/default-avatar.png"}
+                src={user.avatarUrl || "/default-avatar.png"}
                 alt="Manager Avatar"
                 className="w-full h-full object-cover"
               />
             </button>
 
             {avatarDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-44 bg-white shadow-lg rounded-lg overflow-hidden">
+              <div className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-lg overflow-hidden border border-gray-100">
+                <div className="px-4 py-3 border-b border-gray-200">
+                  <p className="text-sm font-semibold text-gray-800 truncate">
+                    {user.fullName}
+                  </p>
+                  <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                </div>
                 <Link
                   href="/manager/profile"
                   className="block px-4 py-2 hover:bg-gray-50 text-gray-700"
@@ -89,7 +101,7 @@ export default function Navbar() {
                 </Link>
                 <button
                   onClick={() => signOut()}
-                  className="w-full text-left px-4 py-2 hover:bg-gray-50 text-gray-700"
+                  className="w-full text-left px-4 py-2 hover:bg-gray-50 text-red-600 font-medium"
                 >
                   Logout
                 </button>
@@ -112,48 +124,21 @@ export default function Navbar() {
           onClick={() => setMenuOpen(!menuOpen)}
           className="text-gray-700 focus:outline-none"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-7 w-7"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            {menuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+          {/* SVG Icon */}
         </button>
       </div>
 
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-center md:hidden py-4 space-y-2">
-          <Link href="/manager/dashboard" className={linkClasses("/manager/dashboard")}>
-            Dashboard
-          </Link>
-          <Link href="/manager/bookings" className={linkClasses("/manager/bookings")}>
-            Bookings
-          </Link>
-          <Link href="/manager/venues" className={linkClasses("/manager/venues")}>
-            Venues
-          </Link>
-          <Link href="/manager/earnings" className={linkClasses("/manager/earnings")}>
-            Earnings
-          </Link>
-          <Link href="/manager/reviews" className={linkClasses("/manager/reviews")}>
-            Reviews
-          </Link>
-
-          {session ? (
+          {/* Mobile Links */}
+          {user ? (
             <>
-              <Link href="/manager/profile" className="py-2 text-gray-700 hover:text-green-600 font-medium">
+              <Link
+                href="/manager/profile"
+                className="py-2 text-gray-700 hover:text-green-600 font-medium"
+              >
                 Profile
-              </Link>
-              <Link href="/manager/settings" className="py-2 text-gray-700 hover:text-green-600 font-medium">
-                Settings
               </Link>
               <button
                 onClick={() => signOut()}

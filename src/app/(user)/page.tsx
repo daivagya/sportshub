@@ -17,7 +17,10 @@ function SlidersSkeleton() {
         <div className="h-8 w-1/3 bg-gray-200 dark:bg-gray-700 rounded-lg mb-6"></div>
         <div className="flex gap-6">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="w-1/3 h-64 bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse"></div>
+            <div
+              key={i}
+              className="w-1/3 h-64 bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse"
+            ></div>
           ))}
         </div>
       </div>
@@ -26,14 +29,16 @@ function SlidersSkeleton() {
         <div className="h-8 w-1/3 bg-gray-200 dark:bg-gray-700 rounded-lg mb-6"></div>
         <div className="flex gap-6">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="w-1/3 h-64 bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse"></div>
+            <div
+              key={i}
+              className="w-1/3 h-64 bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse"
+            ></div>
           ))}
         </div>
       </div>
     </div>
   );
 }
-
 
 async function Page() {
   // Data fetching remains on the server - this is efficient!
@@ -44,11 +49,11 @@ async function Page() {
     <>
       <Hero />
       {/* ENHANCEMENT: Use a <main> tag for the primary content of the page */}
-      <main className="container mx-auto px-4 py-16">
+      <main className="">
         {/* ENHANCEMENT: Wrap data-dependent components in Suspense */}
         <Suspense fallback={<SlidersSkeleton />}>
-           {/* ENHANCEMENT: Increased spacing for better visual separation */}
-          <div className="space-y-20">
+          {/* ENHANCEMENT: Increased spacing for better visual separation */}
+          <div className="space-y-16 container mx-auto px-4 py-16 max-w-6xl">
             <VenueSlider />
             <CourtSlider courts={courts} />
             <SportsWeOffer />

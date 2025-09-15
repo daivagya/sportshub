@@ -1,4 +1,3 @@
-
 import { getCourtByCourtSlug } from "../../../_actions/court.actions";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

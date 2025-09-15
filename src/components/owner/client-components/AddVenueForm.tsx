@@ -7,7 +7,15 @@ import { z } from "zod";
 import { createVenue } from "@/app/(owner)/manager/_actions/venue.actions";
 import { uploadImagesToCloudinary } from "@/lib/cloudinary-client";
 import { addVenueSchema } from "@/lib/validationFrontend";
-import { Trash2, Image as ImageIcon, Info, Sparkles } from "lucide-react";
+import {
+  Trash2,
+  Image as ImageIcon,
+  Info,
+  Sparkles,
+  Router,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 type AddVenueFormValues = z.infer<typeof addVenueSchema>;
 
@@ -23,7 +31,7 @@ const AMENITIES_OPTIONS = [
 export default function AddVenueForm({ onClose }: { onClose?: () => void }) {
   const [isLoading, setIsLoading] = useState(false);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -98,9 +106,9 @@ export default function AddVenueForm({ onClose }: { onClose?: () => void }) {
       const result = await createVenue(payload as any);
 
       if (result?.error) {
-        alert(`Error: ${result.error}`);
+        toast.error(result.error);
       } else {
-        alert(result.success || "Venue created successfully!");
+        toast.success(result.success || "Venue created successfully!");
         if (onClose) onClose();
       }
     } catch (err) {
@@ -279,7 +287,7 @@ export default function AddVenueForm({ onClose }: { onClose?: () => void }) {
               </button>
               <button
                 type="button"
-                onClick={onClose}
+                onClick={() => router.back()}
                 className="w-full py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition"
               >
                 Cancel

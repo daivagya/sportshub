@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function VerifyOtpPage() {
+function VerifyOtpInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
+
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,7 +30,6 @@ export default function VerifyOtpPage() {
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
-      // Move focus to previous input if backspace and empty
       inputRefs.current[index - 1]?.focus();
     }
   };
@@ -49,8 +49,8 @@ export default function VerifyOtpPage() {
       if (!res.ok) throw new Error(data.error || "OTP verification failed");
 
       router.push("/login");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -120,5 +120,13 @@ export default function VerifyOtpPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function VerifyOtpPage() {
+  return (
+    <Suspense fallback={<div>Loading verification page...</div>}>
+      <VerifyOtpInner />
+    </Suspense>
   );
 }
