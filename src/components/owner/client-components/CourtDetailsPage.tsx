@@ -25,7 +25,7 @@ export function CourtDetailsPage({ court }: any) {
     );
   }
 
-  console.log("((((((((((((((((--->from court details page", court);
+  console.log("((((((((--->from court details page", court);
   const formatTime = (minutes: number) => {
     if (isNaN(minutes)) return "N/A";
     const hours = String(Math.floor(minutes / 60)).padStart(2, "0");
@@ -136,5 +136,5 @@ export function CourtDetailsPage({ court }: any) {
         onClose={() => setUpdateModalOpen(false)}
       />
     </div>
-  );  
+  );
 }

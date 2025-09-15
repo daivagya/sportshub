@@ -12,7 +12,7 @@ interface CourtsSectionProps {
 export default async function CourtsSection({ venueSlug }: CourtsSectionProps) {
   const { venue, courts } = await getCourtsByVenueSlug(venueSlug);
   if(!venue) toast.error("Venue not found. Please try again.");
-  console.log("------------------courts>>", courts);
+  console.log("------------------courtsSection.tsx>>", courts);
   return (
     <CourtManager
       venueSlug={venueSlug}
